@@ -1,0 +1,489 @@
+openapi: 3.0.1
+info:
+  title: Ably REST API
+  description: API specification for Ably
+  version: "1.1.0"
+schemes:
+- https
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  headers:
+    PaginatedHeader:
+      first:
+        schema:
+          type: string
+        description: A link to the first page of results
+      current:
+        schema:
+          type: string
+        description: A link to the current page of results
+      next:
+        schema:
+          type: string
+        description: A link to the next page of results
+
+  parameters:
+    # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
+    paginationStart:
+      name: start
+      in: query
+      schema:
+        type: string
+        default: '0'
+    paginationLimit:
+      name: limit
+      in: query
+      schema:
+        type: string
+        default: '100'
+    paginationEnd:
+      name: end
+      in: query
+      schema:
+        type: string
+        default: now
+    paginationDirection:
+      name: direction
+      in: query
+      schema:
+        type: string
+        default: backwards
+
+    channelId:
+      name: channel_id
+      in: path
+      schema:
+        type: string
+      required: true
+      description: Channel's ID
+
+  schemas:
+    # Message components
+    Message:
+      type: object
+      description: See our full documentation
+      url: https://www.ably.io/documentation/rest-api
+      properties:
+        name:
+          type: string
+        data:
+          oneof:
+            - type: string
+            - type: object
+        id:
+          type: string
+          readonly: true
+        timestamp:
+          type: integer
+          format: int64
+          readonly: true
+        encoding:
+          type: string
+        clientId:
+          type: string
+        connectionKey:
+          type: string
+        extras:
+          $ref: '#/components/schemas/Extras'
+
+    Extras:
+      type: object
+      properties:
+        push:
+          $ref: '#/components/schemas/Push'
+    Push:
+      type: object
+      properties:
+        data: 
+          type: string
+        notification:
+          $ref: '#/components/schemas/Notification'
+        apns: 
+          type: string
+        fcm:
+          type: string
+        web:
+          type: string
+    Notification:
+      type: object
+      properties:
+        title: 
+          type: string
+        body: 
+          type: string
+        icon:
+          type: string
+        sound: 
+          type: string
+        collapseKey: 
+          type: string
+
+    # PaginatedResult
+    PaginatedResult:
+      type: array
+      items:
+        oneof:
+          $ref: '#/components/schemas/Message'
+          $ref: '#/components/schemas/PresenceMessage'
+
+    PresenceMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        action:
+          type: string
+          enum: [ ABSENT, PRESENT, ENTER, LEAVE, UPDATE ]
+        data:
+          oneof:
+            - type: string
+            - type: object
+        clientId:
+          type: string
+        connectionId:
+          type: string
+        timestamp:
+          type: integer
+          format: int64
+        encoding:
+          type: string
+        extras:
+          $ref: '#/components/schemas/Extras'
+
+    ChannelDetails:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: The required name of the channel including any qualifier, if any.
+          required: true
+        region:
+          type: string
+          description: In events relating to the activity of a channel in a specific region, this optionally identifies the region.
+        isGlobalMaster:
+          type: boolean
+          description: In events relating to the activity of a channel in a specific region, this optionally identifies whether or not that region is responsible for global coordination of the channel.
+        status:
+          $ref: '#/components/schemas/ChannelStatus'
+          description: An optional ChannelStatus instance.
+
+    ChannelStatus:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+          description: A required boolean value indicating whether the channel that is the subject of the event is active. For events indicating regional activity of a channel this indicates activity in that region, not global activity.
+          required: true
+        occupancy:
+          $ref: '#/components/schemas/Occupancy'
+          description: An optional Occupancy instance indicating the occupancy of the channel. For events indicating regional activity of a channel this indicates activity in that region, not global activity.
+
+    Occupancy:
+      type: object
+      properties:
+        publishers:
+          type: integer
+          description: The number of connections attached to the channel that are authorised to publish.
+        subscribers:
+          type: integer
+          description: The number of connections attached that are authorised to subscribe to messages.
+        presenceSubscribers:
+          type: integer
+          description: The number of connections that are authorised to subscribe to presence messages.
+        presenceConnections:
+          type: integer
+          description: The number of connections that are authorised to enter members into the presence channel.
+        presenceMembers:
+          type: integer
+          description: The number of members currently entered into the presence channel.
+
+    DeviceDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the device generated by the device itself.
+        clientId:
+          type: string
+          description: Optional trusted client identifier for the device.
+        formFactor:
+          type: string
+          description: Form factor of the push device.
+          enum: [ phone, tablet, desktop, tv, watch, car, embedded ]
+        metadata:
+          type: object
+          description: Optional metadata object for this device. The metadata for a device may only be set by clients with push-admin privileges and will be used more extensively in the future with smart notifications.
+        platform:
+          type: string
+          description: Platform of the push device.
+          enum: [ ios, android ]
+        deviceSecret:
+          type: string
+          description: Secret value for the device.
+        push.recipient:
+          $ref: '#/components/schemas/Recipient'
+          description: Push recipient details for this device.
+        push.state:
+          type: string
+          description: the current state of the push device.
+          enum: [ Active, Failing, Failed ]
+          readonly: true
+
+
+    # Excludes web for now due to not being supported
+    Recipient:
+      type: object
+      properties:
+        transportType:
+          type: string
+          description: Defines which push platform is being used.
+          enum: [ apns, fcm, gcm ]
+        deviceToken:
+          type: string
+          # TODO: Link to above enum for required
+          description: when using APNs, specifies the required device token
+        registrationToken:
+          type: string
+          # TODO: Link to above enum for required
+          description: when using GCM or FCM, specifies the required registration token
+
+
+  responses:
+    inline_response_201:
+      type: object
+      properties:
+        channel:
+          type: string
+        messageId:
+          type: string
+
+security:
+  - basicAuth: []
+  - bearerAuth: []
+
+servers:
+- url: https://rest.ably.io
+paths:
+  /channels/{channel_id}/messages:
+    get:
+      summary: Get history for a channel
+      tags:
+        - History
+      description: Get history for a channel
+      parameters:
+        - $ref: '#/components/parameters/channelId'
+        - $ref: '#/components/parameters/paginationStart'
+        - $ref: '#/components/parameters/paginationLimit'
+        - $ref: '#/components/parameters/paginationEnd'
+        - $ref: '#/components/parameters/paginationDirection'
+      responses:
+        '200':
+          description: OK
+          headers:
+            $ref: '#/components/headers/PaginatedHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            application/x-msgpack:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            text/html:
+              schema:
+                type: string
+    post:
+      summary: Publish a message to a channel
+      description: Publish a message to the specified channel
+      tags:
+        - Publishing
+      parameters:
+        - $ref: '#/components/parameters/channelId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+            examples:
+              basic:
+                summary: Send a simple message to the channel 'myChannel'
+                value:
+                  name: myChannel
+                  data: My basic message
+          application/x-msgpack:
+            schema:
+              $ref: '#/components/schemas/Message'
+            examples:
+              basic:
+                summary: Send a simple message to the channel 'myChannel'
+                value:
+                  name: myChannel
+                  data: My basic message
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Message'
+            examples:
+              basic:
+                summary: Send a simple message to the channel 'myChannel'
+                value:
+                  name: myChannel
+                  data: My basic message
+      responses:
+        201:
+          description: Success
+
+  # Presence
+  /channels/{channel_id}/presence:
+    get:
+      summary: Get presence of a channel
+      description: Get presence on a channel
+      tags:
+        - Status
+      parameters:
+        - $ref: '#/components/parameters/channelId'
+        - name: clientId
+          in: query
+          schema:
+            type: string
+        - name: connectionId
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 100
+      responses:
+        '200':
+          description: OK
+          headers:
+            $ref: '#/components/headers/PaginatedHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            application/x-msgpack:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            text/html:
+              schema:
+                type: string
+
+  # Presence History
+  /channels/{channel_id}/presence/history:
+    get:
+      summary: Get presence history of a channel
+      description: Get presence on a channel
+      tags:
+        - History
+      parameters:
+        - $ref: '#/components/parameters/channelId'
+        - $ref: '#/components/parameters/paginationStart'
+        - $ref: '#/components/parameters/paginationLimit'
+        - $ref: '#/components/parameters/paginationEnd'
+        - $ref: '#/components/parameters/paginationDirection'
+      responses:
+        '200':
+          description: OK
+          headers:
+            $ref: '#/components/headers/PaginatedHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            application/x-msgpack:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            text/html:
+              schema:
+                type: string
+
+  # Get a channel's metadata
+  /channels/{channel_id}:
+    get:
+      summary: Get metadata of a channel
+      description: Get metadata of a channel
+      tags:
+        - Status
+      parameters:
+        - $ref: '#/components/parameters/channelId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelDetails'
+
+  /channels:
+    get:
+      summary: Enumerate all active channels of the application
+      description: Enumerate all active channels of the application
+      tags:
+        - Status
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 100
+        - name: prefix
+          in: query
+          schema:
+            type: string
+          description: Optionally limits the query to only those channels whose name starts with the given prefix
+        - name: by
+          in: query
+          schema: 
+            type: string
+          enum: [ value, id ]
+          description: optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
+      responses:
+        '200':
+          description: OK
+          headers:
+            $ref: '#/components/headers/PaginatedHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            application/x-msgpack:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+            text/html:
+              schema:
+                type: string
+  # Get a channel's metadata
+  /push/deviceRegistrations:
+    post:
+      summary: Register a device for receiving push notifications
+      description: Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
+      tags:
+        - Push
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceDetails'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDetails'
+            application/x-msgpack:
+              schema:
+                $ref: '#/components/schemas/DeviceDetails'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/DeviceDetails'
