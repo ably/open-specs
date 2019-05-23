@@ -3,8 +3,6 @@ info:
   title: Ably REST API
   description: API specification for Ably
   version: "1.1.0"
-schemes:
-- https
 components:
   securitySchemes:
     basicAuth:
@@ -16,19 +14,18 @@ components:
       bearerFormat: JWT
 
   headers:
-    PaginatedHeader:
-      first:
-        schema:
-          type: string
-        description: A link to the first page of results
-      current:
-        schema:
-          type: string
-        description: A link to the current page of results
-      next:
-        schema:
-          type: string
-        description: A link to the next page of results
+    first:
+      description: A link to the first page of results
+      schema:
+        type: string
+    current:
+      description: A link to the current page of results
+      schema:
+        type: string
+    next:
+      description: A link to the next page of results
+      schema:
+        type: string
 
   parameters:
     # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
@@ -70,21 +67,18 @@ components:
     Message:
       type: object
       description: See our full documentation
-      url: https://www.ably.io/documentation/rest-api
       properties:
         name:
           type: string
         data:
-          oneof:
-            - type: string
-            - type: object
+          type: string
         id:
           type: string
-          readonly: true
+          readOnly: true
         timestamp:
           type: integer
           format: int64
-          readonly: true
+          readOnly: true
         encoding:
           type: string
         clientId:
@@ -126,13 +120,25 @@ components:
         collapseKey: 
           type: string
 
-    # PaginatedResult
-    PaginatedResult:
+    PaginatedResultMessage:
       type: array
       items:
-        oneof:
-          $ref: '#/components/schemas/Message'
-          $ref: '#/components/schemas/PresenceMessage'
+        type: string
+        $ref: '#/components/schemas/Message'
+
+    PaginatedResultPresenceMessage:
+      type: array
+      items:
+        $ref: '#/components/schemas/PresenceMessage'
+
+    PaginatedResultChannelDetails:
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/ChannelDetails'
+        - type: array
+          items:
+            type: string
 
     PresenceMessage:
       type: object
@@ -143,9 +149,7 @@ components:
           type: string
           enum: [ ABSENT, PRESENT, ENTER, LEAVE, UPDATE ]
         data:
-          oneof:
-            - type: string
-            - type: object
+          type: string
         clientId:
           type: string
         connectionId:
@@ -164,7 +168,6 @@ components:
         channelId:
           type: string
           description: The required name of the channel including any qualifier, if any.
-          required: true
         region:
           type: string
           description: In events relating to the activity of a channel in a specific region, this optionally identifies the region.
@@ -174,6 +177,8 @@ components:
         status:
           $ref: '#/components/schemas/ChannelStatus'
           description: An optional ChannelStatus instance.
+      required: 
+        - channelId
 
     ChannelStatus:
       type: object
@@ -181,10 +186,11 @@ components:
         isActive:
           type: boolean
           description: A required boolean value indicating whether the channel that is the subject of the event is active. For events indicating regional activity of a channel this indicates activity in that region, not global activity.
-          required: true
         occupancy:
           $ref: '#/components/schemas/Occupancy'
           description: An optional Occupancy instance indicating the occupancy of the channel. For events indicating regional activity of a channel this indicates activity in that region, not global activity.
+      required: 
+        - isActive
 
     Occupancy:
       type: object
@@ -235,7 +241,7 @@ components:
           type: string
           description: the current state of the push device.
           enum: [ Active, Failing, Failed ]
-          readonly: true
+          readOnly: true
 
 
     # Excludes web for now due to not being supported
@@ -258,12 +264,16 @@ components:
 
   responses:
     inline_response_201:
-      type: object
-      properties:
-        channel:
-          type: string
-        messageId:
-          type: string
+      description: Ok
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              channel:
+                type: string
+              messageId:
+                type: string
 
 security:
   - basicAuth: []
@@ -285,18 +295,35 @@ paths:
         - $ref: '#/components/parameters/paginationEnd'
         - $ref: '#/components/parameters/paginationDirection'
       responses:
-        '200':
+        '2XX':
           description: OK
           headers:
-            $ref: '#/components/headers/PaginatedHeader'
+            first:
+              $ref: '#/components/headers/first'
+            current:
+              $ref: '#/components/headers/current'
+            next:
+              $ref: '#/components/headers/next'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultMessage'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultMessage'
             text/html:
+              schema:
+                type: string
+        '401':
+          description: Error
+          headers:
+            x-ably-errorcode:
+              schema:
+                type: string
+            x-ably-errormessage:
+              schema:
+                type: string
+            x-ably-serverid:
               schema:
                 type: string
     post:
@@ -311,35 +338,16 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Message'
-            examples:
-              basic:
-                summary: Send a simple message to the channel 'myChannel'
-                value:
-                  name: myChannel
-                  data: My basic message
           application/x-msgpack:
             schema:
               $ref: '#/components/schemas/Message'
-            examples:
-              basic:
-                summary: Send a simple message to the channel 'myChannel'
-                value:
-                  name: myChannel
-                  data: My basic message
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Message'
-            examples:
-              basic:
-                summary: Send a simple message to the channel 'myChannel'
-                value:
-                  name: myChannel
-                  data: My basic message
       responses:
         201:
           description: Success
 
-  # Presence
   /channels/{channel_id}/presence:
     get:
       summary: Get presence of a channel
@@ -360,24 +368,28 @@ paths:
           in: query
           schema:
             type: integer
-          default: 100
+            default: 100
       responses:
         '200':
           description: OK
           headers:
-            $ref: '#/components/headers/PaginatedHeader'
+            first:
+              $ref: '#/components/headers/first'
+            current:
+              $ref: '#/components/headers/current'
+            next:
+              $ref: '#/components/headers/next'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
             text/html:
               schema:
                 type: string
 
-  # Presence History
   /channels/{channel_id}/presence/history:
     get:
       summary: Get presence history of a channel
@@ -394,19 +406,23 @@ paths:
         '200':
           description: OK
           headers:
-            $ref: '#/components/headers/PaginatedHeader'
+            first:
+              $ref: '#/components/headers/first'
+            current:
+              $ref: '#/components/headers/current'
+            next:
+              $ref: '#/components/headers/next'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
             text/html:
               schema:
                 type: string
 
-  # Get a channel's metadata
   /channels/{channel_id}:
     get:
       summary: Get metadata of a channel
@@ -430,38 +446,43 @@ paths:
       tags:
         - Status
       parameters:
-        - name: limit
-          in: query
+        - in: query
+          name: limit
           schema:
             type: integer
-          default: 100
-        - name: prefix
-          in: query
+            default: 100
+        - in: query
+          name: prefix
           schema:
             type: string
           description: Optionally limits the query to only those channels whose name starts with the given prefix
-        - name: by
-          in: query
+        - in: query
+          name: by
           schema: 
             type: string
-          enum: [ value, id ]
+            enum: [ value, id ]
           description: optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
       responses:
-        '200':
+        '2XX':
           description: OK
           headers:
-            $ref: '#/components/headers/PaginatedHeader'
+            first:
+              $ref: '#/components/headers/first'
+            current:
+              $ref: '#/components/headers/current'
+            next:
+              $ref: '#/components/headers/next'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultChannelDetails'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResult'
+                $ref: '#/components/schemas/PaginatedResultChannelDetails'
             text/html:
               schema:
                 type: string
-  # Get a channel's metadata
+
   /push/deviceRegistrations:
     post:
       summary: Register a device for receiving push notifications
@@ -472,6 +493,7 @@ paths:
         content:
           application/json:
             schema:
+              type: string
               $ref: '#/components/schemas/DeviceDetails'
 
       responses:
