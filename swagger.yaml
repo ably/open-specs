@@ -187,26 +187,6 @@ components:
           description: Metadata and/or ancillary payloads, if provided. The only currently valid payload for extras is the push object.
           $ref: '#/components/schemas/Extras'
 
-
-    PaginatedResultMessage:
-      type: array
-      items:
-        $ref: '#/components/schemas/Message'
-
-    PaginatedResultPresenceMessage:
-      type: array
-      items:
-        $ref: '#/components/schemas/PresenceMessage'
-
-    PaginatedResultChannelDetails:
-      oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/ChannelDetails'
-        - type: array
-          items:
-            type: string
-
     # TODO: Review token components + descriptions
     Token:
       type: string
@@ -319,6 +299,7 @@ components:
               directPublishes:
                 type: integer
                 description: Number of direct push publishes.
+          # TOOO: Check if returned value is date-time
           inProgress:
             type: string
             format: date-time
@@ -330,12 +311,11 @@ components:
             type: string
             description: unit of time for these stats from the intervalId forwards.
             enum: [ minute, hour, day, month ]
+          # TOOO: Check if returned value is date-time
           intervalId:
             type: string
             format: date-time
             description: Time period for stats in format yyyy-mm-dd:hh:mm:ss.
-
-
 
     StatsMessages:
       type: object
@@ -372,7 +352,6 @@ components:
         refused:
           type: integer
           description: Count of connections refused by Ably in this period.
-
 
     StatsRequests:
       type: object
@@ -513,7 +492,6 @@ components:
           enum: [ Active, Failing, Failed ]
           readOnly: true
 
-
     # Excludes web for now due to not being supported
     Recipient:
       type: object
@@ -555,7 +533,6 @@ components:
           type: string
           description: Must be set when deviceId is empty, cannot be used with deviceId.
 
-
 security:
   - basicAuth: []
   - bearerAuth: []
@@ -588,10 +565,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResultMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResultMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
             text/html:
               schema:
                 type: string
@@ -663,10 +644,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PresenceMessage'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PresenceMessage'
             text/html:
               schema:
                 type: string
@@ -696,10 +681,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PresenceMessage'
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResultPresenceMessage'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PresenceMessage'
             text/html:
               schema:
                 type: string
@@ -756,10 +745,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedResultChannelDetails'
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ChannelDetails'
+                  - type: array
+                    items:
+                      type: string
             application/x-msgpack:
               schema:
-                $ref: '#/components/schemas/PaginatedResultChannelDetails'
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ChannelDetails'
+                  - type: array
+                    items:
+                      type: string
             text/html:
               schema:
                 type: string
@@ -1198,7 +1199,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenDetails'
 
-
   /stats:
     # TODO: Allow for no auth for signed TokenRequest
     post:
@@ -1212,7 +1212,7 @@ paths:
         - $ref: '#/components/parameters/paginationDirection'
         - name: unit
           in: query
-          description: One of the values minute, hour, day or month, specifying the unit of aggregation in the returned results.
+          description: Specifies the unit of aggregation in the returned results.
           schema:
             type: string
             default: minute
@@ -1224,6 +1224,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatsObject'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatsObject'
+  /time:
+    get:
+      # TODO: No auth required
+      summary: Get the service time
+      description: This returns the service time in milliseconds since the epoch.
+        - Stats
+      responses:
+        '2XX':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+            application/x-msgpack:
+              schema:
+                type: array
+                items:
+                  type: integer
+            text/html:
+              schema:
+                type: string
 
 # TODO: Better define pagination responses and flow
