@@ -14,6 +14,7 @@ components:
       bearerFormat: JWT
 
   headers:
+    # TODO: Issue exists for integrating pagination with OpenAPI, https://github.com/OAI/OpenAPI-Specification/issues/667. If this is ever actioned, we should enable it within our spec.
     Link:
       description: Links to related resources, in the format defined by [RFC 5988](https://tools.ietf.org/html/rfc5988#section-5). This will potentially include a link with relation type `next`, `first`, and `current`, where appropiate.
       schema:
@@ -64,7 +65,7 @@ components:
       schema:
         type: string
       required: true
-      description: Name part of an API Key. Comprises of the app ID and key ID.
+      description: The [key name](https://www.ably.io/documentation/rest-api/token-request-spec#api-key-format) comprises of the app ID and key ID of an API key.
 
     deviceId:
       name: deviceId
