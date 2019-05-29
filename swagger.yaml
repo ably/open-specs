@@ -21,6 +21,13 @@ components:
         type: string
         pattern: '(<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>; rel=\"(first|current|last)?\")+' 
       required: true
+      
+    ServerId:
+      description: The ID for the server communicated with.
+      schema:
+        type: string
+      required: true
+      
 
   parameters:
     # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
@@ -530,6 +537,8 @@ paths:
           headers:
             link:
               $ref: '#/components/headers/Link'
+            x-ably-serverid:
+              $ref: '#/components/headers/ServerId'
           content:
             application/json:
               schema:
@@ -544,7 +553,7 @@ paths:
             text/html:
               schema:
                 type: string
-        '401':
+        default:
           description: Error
           headers:
             x-ably-errorcode:
@@ -577,6 +586,36 @@ paths:
       responses:
         '2XX':
           description: OK
+          headers:             
+            x-ably-serverid:
+              $ref: '#/components/headers/ServerId'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  channel:
+                    type: string
+                  messageId: 
+                    type: string
+            application/x-msgpack:
+              schema:
+                type: object
+                properties:
+                  channel:
+                    type: string
+                  messageId: 
+                    type: string
+            text/html:
+              schema:
+                type: object
+                properties:
+                  channel:
+                    type: string
+                  messageId: 
+                    type: string
+        default:
+          description: Error
 
   /channels/{channel_id}/presence:
     get:
