@@ -15,15 +15,15 @@ components:
 
   headers:
     first:
-      description: A link to the first page of results
+      description: A link to the first page of results.
       schema:
         type: string
     current:
-      description: A link to the current page of results
+      description: A link to the current page of results.
       schema:
         type: string
     next:
-      description: A link to the next page of results
+      description: A link to the next page of results.
       schema:
         type: string
 
@@ -60,24 +60,24 @@ components:
       schema:
         type: string
       required: true
-      description: Channel's ID
+      description: Channel's ID.
 
     # TODO: Better document what the name is
     key_name:
-      name: key_name
+      name: keyName
       in: path
       schema:
         type: string
       required: true
-      description: Name of an API Key
+      description: Name of an API Key.
 
     deviceId:
-      name: device_id
+      name: deviceId
       in: path
       schema:
         type: string
       required: true
-      description: Device's ID
+      description: Device's ID.
 
   schemas:
     # Message components
@@ -542,10 +542,10 @@ servers:
 paths:
   /channels/{channel_id}/messages:
     get:
-      summary: Get history for a channel
+      summary: Get message history for a channel
       tags:
         - History
-      description: Get history for a channel
+      description: Get message history for a channel
       parameters:
         - $ref: '#/components/parameters/channelId'
         - $ref: '#/components/parameters/paginationStart'
@@ -1038,46 +1038,71 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                channel:
-                  type: string
-                  description: Channel name.
-                #TODO: Use oneOf for deviceId/clientId
-                deviceId:
-                  type: string
-                  description: Must be set when clientId is empty, cannot be used with clientId.
-                clientId:
-                  type: string
-                  description: Must be set when deviceId is empty, cannot be used with deviceId.
+              oneOf:
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    deviceId:
+                      type: string
+                      description: Must be set when clientId is empty, cannot be used with clientId.
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    clientId:
+                      type: string
+                      description: Must be set when deviceId is empty, cannot be used with deviceId.
+            example:
+              channel: my:channel
+              clientId: myClientId
           application/x-msgpack:
             schema:
-              type: object
-              properties:
-                channel:
-                  type: string
-                  description: Channel name.
-                #TODO: Use oneOf for deviceId/clientId
-                deviceId:
-                  type: string
-                  description: Must be set when clientId is empty, cannot be used with clientId.
-                clientId:
-                  type: string
-                  description: Must be set when deviceId is empty, cannot be used with deviceId.
+              oneOf:
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    deviceId:
+                      type: string
+                      description: Must be set when clientId is empty, cannot be used with clientId.
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    clientId:
+                      type: string
+                      description: Must be set when deviceId is empty, cannot be used with deviceId.
+            example:
+              channel: my:channel
+              clientId: myClientId
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                channel:
-                  type: string
-                  description: Channel name.
-                #TODO: Use oneOf for deviceId/clientId
-                deviceId:
-                  type: string
-                  description: Must be set when clientId is empty, cannot be used with clientId.
-                clientId:
-                  type: string
-                  description: Must be set when deviceId is empty, cannot be used with deviceId.
+              oneOf:
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    deviceId:
+                      type: string
+                      description: Must be set when clientId is empty, cannot be used with clientId.
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel name.
+                    clientId:
+                      type: string
+                      description: Must be set when deviceId is empty, cannot be used with deviceId.
+            example:
+              channel: my:channel
+              clientId: myClientId
+
       responses:
         '2XX':
           description: OK
@@ -1088,17 +1113,23 @@ paths:
       description: Delete a device details object.
       tags: 
         - Push
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChannelSubscription'
-          application/x-msgpack:
-            schema:
-              $ref: '#/components/schemas/ChannelSubscription'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChannelSubscription'
+      parameters:
+        - name: channel
+          in: query
+          description: Filter to restrict to subscriptions associated with that channel.
+          schema:
+            type: string
+        # TODO: Cannot currently use oneOf for below two parameters. If https://github.com/OAI/OpenAPI-Specification/issues/256 is resolved, we should make use of oneOf here.
+        - name: deviceId
+          description: Must be set when clientId is empty, cannot be used with clientId.
+          in: query
+          schema:
+            type: string
+        - name: clientId
+          in: query
+          description: Must be set when deviceId is empty, cannot be used with deviceId.
+          schema:
+            type: string
       responses:
         '2XX':
           description: OK
@@ -1170,8 +1201,8 @@ paths:
         '2XX':
           description: OK
 
-  /keys/{key_name}/requestToken:
-    # TODO: Allow for no auth for signed TokenRequest
+  /keys/{keyName}/requestToken:
+    # TODO: Allow for no auth for SignedTokenRequest. May not be possible to specify.
     post:
       summary: Request an access token
       description: This is the means by which clients obtain access tokens to use the service. The construction of an Ably TokenRequest is described in the Authentication Ably TokenRequest spec documentation. The resulting token response object contains the token properties as defined in Ably TokenRequest spec.
@@ -1184,9 +1215,9 @@ paths:
           text/plain:
             schema:
               oneOf:
-                # TODO: Check about JWT
                 - $ref: '#/components/schemas/Token'
                 - $ref: '#/components/schemas/TokenRequest'
+                - $ref: '#/components/schemas/SignedTokenRequest'
       responses:
         '2XX':
           description: OK
@@ -1200,7 +1231,6 @@ paths:
                 $ref: '#/components/schemas/TokenDetails'
 
   /stats:
-    # TODO: Allow for no auth for signed TokenRequest
     post:
       summary: Retrieve usage statistics for an application
       description: The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
@@ -1229,7 +1259,7 @@ paths:
                   $ref: '#/components/schemas/StatsObject'
   /time:
     get:
-      # TODO: No auth required
+      security: []
       summary: Get the service time
       description: This returns the service time in milliseconds since the epoch.
         - Stats
@@ -1252,3 +1282,4 @@ paths:
                 type: string
 
 # TODO: Better define pagination responses and flow
+# TODO: Links for responses meanings
