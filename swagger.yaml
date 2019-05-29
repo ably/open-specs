@@ -14,18 +14,12 @@ components:
       bearerFormat: JWT
 
   headers:
-    first:
-      description: A link to the first page of results.
+    Link:
+      description: Links to related resources, in the format defined by [RFC 5988](https://tools.ietf.org/html/rfc5988#section-5). This will potentially include a link with relation type `next`, `first`, and `current`, where appropiate.
       schema:
         type: string
-    current:
-      description: A link to the current page of results.
-      schema:
-        type: string
-    next:
-      description: A link to the next page of results.
-      schema:
-        type: string
+        pattern: '(<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>; rel=\"(first|current|last)?\")+' 
+      required: true
 
   parameters:
     # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
@@ -233,7 +227,6 @@ components:
           required:
             - mac
 
-    # TODO: Descriptions for each property
     StatsObject:
         type: object
         properties:
@@ -323,7 +316,6 @@ components:
         all:
           $ref: '#/components/schemas/StatsData'
 
-    # TODO: Better name due to being shared by channels as well?
     StatsConnections:
       type: object
       properties:
@@ -535,12 +527,8 @@ paths:
         '2XX':
           description: OK
           headers:
-            first:
-              $ref: '#/components/headers/first'
-            current:
-              $ref: '#/components/headers/current'
-            next:
-              $ref: '#/components/headers/next'
+            Link:
+              $ref: '#/components/headers/Link'
           content:
             application/json:
               schema:
@@ -614,12 +602,8 @@ paths:
         '200':
           description: OK
           headers:
-            first:
-              $ref: '#/components/headers/first'
-            current:
-              $ref: '#/components/headers/current'
-            next:
-              $ref: '#/components/headers/next'
+            Link:
+              $ref: '#/components/headers/Link'
           content:
             application/json:
               schema:
@@ -651,12 +635,8 @@ paths:
         '200':
           description: OK
           headers:
-            first:
-              $ref: '#/components/headers/first'
-            current:
-              $ref: '#/components/headers/current'
-            next:
-              $ref: '#/components/headers/next'
+            Link:
+              $ref: '#/components/headers/Link'
           content:
             application/json:
               schema:
@@ -715,12 +695,8 @@ paths:
         '2XX':
           description: OK
           headers:
-            first:
-              $ref: '#/components/headers/first'
-            current:
-              $ref: '#/components/headers/current'
-            next:
-              $ref: '#/components/headers/next'
+            Link:
+              $ref: '#/components/headers/Link'
           content:
             application/json:
               schema:
