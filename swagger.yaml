@@ -813,9 +813,6 @@ paths:
           application/x-msgpack:
             schema:
               $ref: '#/components/schemas/DeviceDetails'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/DeviceDetails'
 
       responses:
         '2XX':
