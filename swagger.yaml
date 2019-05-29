@@ -53,6 +53,7 @@ components:
       schema:
         type: string
         default: backwards
+        enum: [forwards, backwards ]
 
     channelId:
       name: channel_id
@@ -69,7 +70,7 @@ components:
       schema:
         type: string
       required: true
-      description: Name of an API Key.
+      description: Name part of an API Key. Comprises of the app ID and key ID.
 
     deviceId:
       name: deviceId
@@ -83,7 +84,7 @@ components:
     # Message components
     Message:
       type: object
-      description: See our full documentation
+      description: Message object.
       properties:
         name:
           description: The event name, if provided.
@@ -115,6 +116,7 @@ components:
 
     Extras:
       type: object
+      description: Extras object. Currently only allows for push extra.
       properties:
         push:
           $ref: '#/components/schemas/Push'
@@ -129,13 +131,22 @@ components:
           $ref: '#/components/schemas/Notification'
         apns:
           description: Extends and overrides generic values when delivering via APNs.
-          type: string
+          type: object
+          properties:
+            notification:
+              $ref: '#/components/schemas/Notification'
         fcm:
           description: Extends and overrides generic values when delivering via GCM/FCM.
-          type: string
+          type: object
+          properties:
+            notification:
+              $ref: '#/components/schemas/Notification'
         web:
           description: Extends and overrides generic values when delivering via web.
-          type: string
+          type: object
+          properties:
+            notification:
+              $ref: '#/components/schemas/Notification'            
 
     Notification:
       type: object
