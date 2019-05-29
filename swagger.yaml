@@ -528,7 +528,7 @@ paths:
         '2XX':
           description: OK
           headers:
-            Link:
+            link:
               $ref: '#/components/headers/Link'
           content:
             application/json:
@@ -603,7 +603,7 @@ paths:
         '200':
           description: OK
           headers:
-            Link:
+            link:
               $ref: '#/components/headers/Link'
           content:
             application/json:
@@ -636,7 +636,7 @@ paths:
         '200':
           description: OK
           headers:
-            Link:
+            link:
               $ref: '#/components/headers/Link'
           content:
             application/json:
@@ -696,7 +696,7 @@ paths:
         '2XX':
           description: OK
           headers:
-            Link:
+            link:
               $ref: '#/components/headers/Link'
           content:
             application/json:
