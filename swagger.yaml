@@ -28,6 +28,15 @@ components:
         type: string
       required: true
       
+    ErrorCode:
+      description: The error code.
+      schema:
+        type: string
+    
+    ErrorMessage:
+      description: The error message.
+      schema:
+        type: string
 
   parameters:
     # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
@@ -112,6 +121,7 @@ components:
         connectionId:
           description: The connection ID of the publisher of this message.
           type: string
+        # TODO: Currently object does not work with application/x-www-form-urlencoded
         extras:
           $ref: '#/components/schemas/Extras'
 
@@ -510,6 +520,47 @@ components:
           # TODO: Link to no transportType
           description: Client ID of recipient
           writeOnly: true
+          
+    Error:
+      type: object
+      description: Returned error from failed REST.
+      properties:
+        message:
+          type: string
+          description: Message explaining the error's cause.
+        code:
+          type: integer
+          description: Error code.
+        statusCode:
+          type: integer
+          description: Status error code.
+        href:
+          type: integer
+          description: Link to help with error.
+        serverId:
+          type: string
+          description: Server ID with which error was encountered.
+
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/x-msgpack:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/html:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        x-ably-errorcode:
+          $ref: '#/components/headers/ErrorCode'
+        x-ably-errormessage:
+          $ref: '#/components/headers/ErrorMessage'
+        x-ably-serverid:
+          $ref: '#/components/headers/ServerId'
 
 security:
   - basicAuth: []
@@ -557,14 +608,11 @@ paths:
           description: Error
           headers:
             x-ably-errorcode:
-              schema:
-                type: string
+              $ref: '#/components/headers/ErrorCode'
             x-ably-errormessage:
-              schema:
-                type: string
+              $ref: '#/components/headers/ErrorMessage'
             x-ably-serverid:
-              schema:
-                type: string
+              $ref: '#/components/headers/ServerId'
     post:
       summary: Publish a message to a channel
       description: Publish a message to the specified channel
@@ -615,7 +663,7 @@ paths:
                   messageId: 
                     type: string
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
 
   /channels/{channel_id}/presence:
     get:
@@ -644,6 +692,8 @@ paths:
           headers:
             link:
               $ref: '#/components/headers/Link'
+            x-ably-serverid:
+              $ref: '#/components/headers/ServerId'
           content:
             application/json:
               schema:
@@ -658,6 +708,8 @@ paths:
             text/html:
               schema:
                 type: string
+        default:
+          $ref: '#/components/responses/Error'
 
   /channels/{channel_id}/presence/history:
     get:
@@ -672,7 +724,7 @@ paths:
         - $ref: '#/components/parameters/paginationEnd'
         - $ref: '#/components/parameters/paginationDirection'
       responses:
-        '200':
+        '2XX':
           description: OK
           headers:
             link:
@@ -691,6 +743,8 @@ paths:
             text/html:
               schema:
                 type: string
+        default:
+          $ref: '#/components/responses/Error'
 
   /channels/{channel_id}:
     get:
@@ -703,10 +757,15 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ably-serverid:
+              $ref: '#/components/headers/ServerId'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChannelDetails'
+        default:
+          $ref: '#/components/responses/Error'
 
   /channels:
     get:
@@ -759,6 +818,8 @@ paths:
             text/html:
               schema:
                 type: string
+        default:
+          $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations:
     get:
@@ -799,7 +860,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     post:
       summary: Register a device for receiving push notifications
       description: Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
@@ -828,7 +889,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     delete:
       summary: Unregister matching devices for push notifications
       description: Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
@@ -851,7 +912,7 @@ paths:
         '2XX':
           description: OK
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations/<device_id>:
     get:
@@ -875,7 +936,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     put:
       summary: Update a device registration
       description: Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
@@ -910,7 +971,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     patch:
       summary: Update a device registration
       description: Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
@@ -944,7 +1005,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     delete:
       summary: Unregister a single device for push notifications
       description: Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
@@ -956,7 +1017,7 @@ paths:
         '2XX':
           description: OK
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations/<device_id>/resetUpdateToken:
     get:
@@ -980,7 +1041,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
 
   /push/channelSubscriptions:
     get:
@@ -1020,7 +1081,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     post:
       summary: Subscribe a device to a channel
       description: Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
@@ -1099,7 +1160,7 @@ paths:
         '2XX':
           description: OK
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
     delete:
       summary: Delete a registered device's update token
       description: Delete a device details object.
@@ -1126,7 +1187,7 @@ paths:
         '2XX':
           description: OK
         default:
-          description: Error
+          $ref: '#/components/responses/Error'
 
   /push/channels:
     get:
@@ -1153,6 +1214,8 @@ paths:
                 type: array
                 items:
                   type: string
+        default:
+          $ref: '#/components/responses/Error'
 
   /push/publish:
     post:
@@ -1196,6 +1259,8 @@ paths:
       responses:
         '2XX':
           description: OK
+        default:
+          $ref: '#/components/responses/Error'
 
   /keys/{keyName}/requestToken:
     # TODO: Allow for no auth for SignedTokenRequest. May not be possible to specify.
@@ -1231,6 +1296,8 @@ paths:
             application/x-msgpack:
               schema:
                 $ref: '#/components/schemas/TokenDetails'
+        default:
+          $ref: '#/components/responses/Error'
 
   /stats:
     post:
@@ -1259,6 +1326,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/StatsObject'
+        default:
+          $ref: '#/components/responses/Error'
   /time:
     get:
       security: []
@@ -1282,6 +1351,8 @@ paths:
             text/html:
               schema:
                 type: string
+        default:
+          $ref: '#/components/responses/Error'
 
 # TODO: Better define pagination responses and flow
 # TODO: Links for responses meanings
