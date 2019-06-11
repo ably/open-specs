@@ -91,6 +91,20 @@ components:
       required: true
       description: Device's ID.
 
+    versionPath:
+      name: v
+      in: path
+      schema:
+        type: string
+      description: The version of the API you wish to use.
+
+    versionHeader:
+      in: header
+      name: X-Ably-Version
+      schema:
+        type: string
+      description: The version of the API you wish to use.
+
   schemas:
     # Message components
     Message:
@@ -582,6 +596,8 @@ paths:
         - $ref: '#/components/parameters/paginationLimit'
         - $ref: '#/components/parameters/paginationEnd'
         - $ref: '#/components/parameters/paginationDirection'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -620,6 +636,8 @@ paths:
         - Publishing
       parameters:
         - $ref: '#/components/parameters/channelId'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -686,6 +704,8 @@ paths:
           schema:
             type: integer
             default: 100
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '200':
           description: OK
@@ -723,6 +743,8 @@ paths:
         - $ref: '#/components/parameters/paginationLimit'
         - $ref: '#/components/parameters/paginationEnd'
         - $ref: '#/components/parameters/paginationDirection'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -754,6 +776,8 @@ paths:
         - Status
       parameters:
         - $ref: '#/components/parameters/channelId'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '200':
           description: OK
@@ -790,6 +814,8 @@ paths:
             type: string
             enum: [ value, id ]
           description: optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -845,6 +871,8 @@ paths:
             type: integer
             default: 100
             maximum: 1000
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
 
       responses:
         '2XX':
@@ -866,6 +894,9 @@ paths:
       description: Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
       tags:
         - Push
+      parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -896,6 +927,8 @@ paths:
       tags:
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         # TODO: Implement a oneOf filter
         - name: deviceId
           description: Optional filter to restrict to devices associated with that deviceId. Cannot be used with clientId.
@@ -907,6 +940,7 @@ paths:
           description: Optional filter to restrict to devices associated with that clientId. Cannot be used with deviceId.
           schema:
             type: string
+
 
       responses:
         '2XX':
@@ -921,6 +955,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -943,6 +979,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       requestBody:
         content:
@@ -978,6 +1016,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       requestBody:
         content:
@@ -1012,6 +1052,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -1026,6 +1068,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -1050,6 +1094,8 @@ paths:
       tags:
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - name: channel
           in: query
           description: Filter to restrict to subscriptions associated with that channel.
@@ -1087,6 +1133,9 @@ paths:
       description: Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
       tags: 
         - Push
+      parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -1167,6 +1216,8 @@ paths:
       tags: 
         - Push
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - name: channel
           in: query
           description: Filter to restrict to subscriptions associated with that channel.
@@ -1195,6 +1246,9 @@ paths:
       description: Returns a paginated response of channel names.
       tags:
         - Push
+      parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -1223,6 +1277,9 @@ paths:
       description: A convenience endpoint to deliver a push notification payload to a single device or set of devices identified by their client identifier.
       tags:
         - Push
+      parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -1270,6 +1327,8 @@ paths:
       tags:
         - Authentication
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/key_name'
       requestBody:
         content:
@@ -1303,8 +1362,11 @@ paths:
     post:
       summary: Retrieve usage statistics for an application
       description: The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
+      tags:
         - Stats
       parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/paginationStart'
         - $ref: '#/components/parameters/paginationLimit'
         - $ref: '#/components/parameters/paginationEnd'
@@ -1333,7 +1395,11 @@ paths:
       security: []
       summary: Get the service time
       description: This returns the service time in milliseconds since the epoch.
+      tags:
         - Stats
+      parameters:
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
