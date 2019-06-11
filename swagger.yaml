@@ -50,7 +50,7 @@ components:
       name: limit
       in: query
       schema:
-        type: string
+        type: integer
         default: '100'
     paginationEnd:
       name: end
