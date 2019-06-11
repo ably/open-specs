@@ -31,7 +31,7 @@ components:
     ErrorCode:
       description: The error code.
       schema:
-        type: string
+        type: integer
     
     ErrorMessage:
       description: The error message.
