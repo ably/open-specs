@@ -72,7 +72,7 @@ components:
       schema:
         type: string
       required: true
-      description: [Channel's ID](https://www.ably.io/documentation/rest/channels).
+      description: The [Channel's ID](https://www.ably.io/documentation/rest/channels).
 
     # TODO: Better document what the name is
     key_name:
@@ -94,6 +94,7 @@ components:
     versionPath:
       name: v
       in: path
+      required: true
       schema:
         type: string
       description: The version of the API you wish to use.
