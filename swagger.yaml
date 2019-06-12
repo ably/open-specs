@@ -42,25 +42,25 @@ components:
 
   parameters:
     # Currently each parameter needs to be defined seperately. If https://github.com/OAI/OpenAPI-Specification/issues/445 ever goes through, can amalagmate pagination parameters
-    paginationStart:
+    filterStart:
       name: start
       in: query
       schema:
         type: string
         default: '0'
-    paginationLimit:
+    filterLimit:
       name: limit
       in: query
       schema:
         type: integer
         default: '100'
-    paginationEnd:
+    filterEnd:
       name: end
       in: query
       schema:
         type: string
         default: now
-    paginationDirection:
+    filterDirection:
       name: direction
       in: query
       schema:
@@ -450,10 +450,10 @@ paths:
       description: Get message history for a channel
       parameters:
         - $ref: '#/components/parameters/channelId'
-        - $ref: '#/components/parameters/paginationStart'
-        - $ref: '#/components/parameters/paginationLimit'
-        - $ref: '#/components/parameters/paginationEnd'
-        - $ref: '#/components/parameters/paginationDirection'
+        - $ref: '#/components/parameters/filterStart'
+        - $ref: '#/components/parameters/filterLimit'
+        - $ref: '#/components/parameters/filterEnd'
+        - $ref: '#/components/parameters/filterDirection'
         - $ref: '#/components/parameters/versionHeader'
         - $ref: '#/components/parameters/versionPath'
       responses:
@@ -597,10 +597,10 @@ paths:
         - History
       parameters:
         - $ref: '#/components/parameters/channelId'
-        - $ref: '#/components/parameters/paginationStart'
-        - $ref: '#/components/parameters/paginationLimit'
-        - $ref: '#/components/parameters/paginationEnd'
-        - $ref: '#/components/parameters/paginationDirection'
+        - $ref: '#/components/parameters/filterStart'
+        - $ref: '#/components/parameters/filterLimit'
+        - $ref: '#/components/parameters/filterEnd'
+        - $ref: '#/components/parameters/filterDirection'
         - $ref: '#/components/parameters/versionHeader'
         - $ref: '#/components/parameters/versionPath'
       responses:
@@ -1225,10 +1225,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/versionHeader'
         - $ref: '#/components/parameters/versionPath'
-        - $ref: '#/components/parameters/paginationStart'
-        - $ref: '#/components/parameters/paginationLimit'
-        - $ref: '#/components/parameters/paginationEnd'
-        - $ref: '#/components/parameters/paginationDirection'
+        - $ref: '#/components/parameters/filterStart'
+        - $ref: '#/components/parameters/filterLimit'
+        - $ref: '#/components/parameters/filterEnd'
+        - $ref: '#/components/parameters/filterDirection'
         - name: unit
           in: query
           description: Specifies the unit of aggregation in the returned results.
