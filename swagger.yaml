@@ -121,7 +121,7 @@ components:
           description: The string encoded payload, with the encoding specified below.
           type: string
         id:
-          description: A Unique ID assigned by Ably to this message.
+          description: A Unique ID that can be specified by the publisher for [idempotent publishing](https://www.ably.io/documentation/rest/messages#idempotent).
           type: string
           readOnly: true
         timestamp:
