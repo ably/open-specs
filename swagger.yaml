@@ -144,7 +144,7 @@ components:
 
     Extras:
       type: object
-      description: Extras object. Currently only allows for push extra.
+      description: Extras object. Currently only allows for [push](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example) extra.
       properties:
         push:
           $ref: '#/components/schemas/Push'
@@ -153,24 +153,24 @@ components:
       type: object
       properties:
         data:
-          description: Arbitrary key-value string-to-string payload.
+          description: Arbitrary [key-value string-to-string payload](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example).
           type: string
         notification:
           $ref: '#/components/schemas/Notification'
         apns:
-          description: Extends and overrides generic values when delivering via APNs.
+          description: Extends and overrides generic values when delivering via APNs. [See examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
           type: object
           properties:
             notification:
               $ref: '#/components/schemas/Notification'
         fcm:
-          description: Extends and overrides generic values when delivering via GCM/FCM.
+          description: Extends and overrides generic values when delivering via GCM/FCM. [See examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
           type: object
           properties:
             notification:
               $ref: '#/components/schemas/Notification'
         web:
-          description: Extends and overrides generic values when delivering via web.
+          description: Extends and overrides generic values when delivering via web. [See examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
           type: object
           properties:
             notification:
