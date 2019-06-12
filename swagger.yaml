@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Ably REST API
-  description: API specification for Ably
+  description: The [REST API specification](https://www.ably.io/documentation/rest-api) for Ably.
   version: "1.1.0"
 components:
   securitySchemes:
