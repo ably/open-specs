@@ -133,7 +133,7 @@ components:
           description: This will typically be empty as all messages received from Ably are automatically decoded client-side using this value. However, if the message encoding cannot be processed, this attribute will contain the remaining transformations not applied to the data payload.
           type: string
         clientId:
-          description: The client ID of the publisher of this message.
+          description: The [client ID](https://www.ably.io/documentation/core-features/authentication#identified-clients) of the publisher of this message.
           type: string
         connectionId:
           description: The connection ID of the publisher of this message.
