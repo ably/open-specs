@@ -407,7 +407,7 @@ components:
           type: integer
           description: Status error code.
         href:
-          type: integer
+          type: string
           description: Link to help with error.
         serverId:
           type: string
