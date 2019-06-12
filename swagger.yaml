@@ -8,10 +8,12 @@ components:
     basicAuth:
       type: http
       scheme: basic
+      description: Basic Authentication using an [API key](https://www.ably.io/documentation/core-features/authentication#basic-authentication).
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
+      description: Token Authentication using an [Ably Token](https://www.ably.io/documentation/core-features/authentication#basic-authentication), or optionally an [Ably JWT](https://www.ably.io/documentation/core-features/authentication#ably-jwt-process).
+      
 
   headers:
     # TODO: Issue exists for integrating pagination with OpenAPI, https://github.com/OAI/OpenAPI-Specification/issues/667. If this is ever actioned, we should enable it within our spec.
