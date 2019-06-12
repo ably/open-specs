@@ -207,6 +207,7 @@ components:
           description: The event signified by a PresenceMessage.
           type: string
           enum: [ ABSENT, PRESENT, ENTER, LEAVE, UPDATE ]
+          readOnly: true
         data:
           description: The presence update payload, if provided.
           type: string
