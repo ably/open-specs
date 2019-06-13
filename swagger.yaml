@@ -13,7 +13,6 @@ components:
       type: http
       scheme: bearer
       description: Token Authentication using an [Ably Token](https://www.ably.io/documentation/core-features/authentication#basic-authentication), or optionally an [Ably JWT](https://www.ably.io/documentation/core-features/authentication#ably-jwt-process).
-      
 
   headers:
     # TODO: Issue exists for integrating pagination with OpenAPI, https://github.com/OAI/OpenAPI-Specification/issues/667. If this is ever actioned, we should enable it within our spec.
@@ -48,18 +47,21 @@ components:
       schema:
         type: string
         default: '0'
+
     filterLimit:
       name: limit
       in: query
       schema:
         type: integer
         default: '100'
+
     filterEnd:
       name: end
       in: query
       schema:
         type: string
         default: now
+
     filterDirection:
       name: direction
       in: query
@@ -107,6 +109,18 @@ components:
       schema:
         type: string
       description: The version of the API you wish to use.
+
+    responseFormat:
+      in: query
+      name: format
+      schema:
+        type: string
+        enum: 
+          - json
+          - jsonp
+          - msgpack
+          - html
+      description: The response format you would like
 
   schemas:
     # Message components
@@ -443,6 +457,11 @@ servers:
 
 paths:
   /channels/{channel_id}/messages:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Get message history for a channel
       tags:
@@ -454,8 +473,6 @@ paths:
         - $ref: '#/components/parameters/filterLimit'
         - $ref: '#/components/parameters/filterEnd'
         - $ref: '#/components/parameters/filterDirection'
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -487,6 +504,7 @@ paths:
               $ref: '#/components/headers/ErrorMessage'
             x-ably-serverid:
               $ref: '#/components/headers/ServerId'
+
     post:
       summary: Publish a message to a channel
       description: Publish a message to the specified channel
@@ -494,8 +512,6 @@ paths:
         - Publishing
       parameters:
         - $ref: '#/components/parameters/channelId'
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -542,6 +558,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /channels/{channel_id}/presence:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Get presence of a channel
       description: Get presence on a channel
@@ -562,8 +583,6 @@ paths:
           schema:
             type: integer
             default: 100
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '200':
           description: OK
@@ -590,6 +609,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /channels/{channel_id}/presence/history:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Get presence history of a channel
       description: Get presence on a channel
@@ -601,8 +625,6 @@ paths:
         - $ref: '#/components/parameters/filterLimit'
         - $ref: '#/components/parameters/filterEnd'
         - $ref: '#/components/parameters/filterDirection'
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -627,6 +649,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /channels/{channel_id}:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Get metadata of a channel
       description: Get metadata of a channel
@@ -634,8 +661,6 @@ paths:
         - Status
       parameters:
         - $ref: '#/components/parameters/channelId'
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '200':
           description: OK
@@ -650,6 +675,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /channels:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Enumerate all active channels of the application
       description: Enumerate all active channels of the application
@@ -672,8 +702,6 @@ paths:
             type: string
             enum: [ value, id ]
           description: optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -706,6 +734,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: List devices registered for receiving push notifications
       description: List of device details of devices registed for push notifications.
@@ -729,9 +762,6 @@ paths:
             type: integer
             default: 100
             maximum: 1000
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
-
       responses:
         '2XX':
           description: OK
@@ -747,14 +777,12 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     post:
       summary: Register a device for receiving push notifications
       description: Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
       tags:
         - Push
-      parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -763,7 +791,6 @@ paths:
           application/x-msgpack:
             schema:
               $ref: '#/components/schemas/DeviceDetails'
-
       responses:
         '2XX':
           description: OK
@@ -779,14 +806,13 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     delete:
       summary: Unregister matching devices for push notifications
       description: Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
       tags:
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         # TODO: Implement a oneOf filter
         - name: deviceId
           description: Optional filter to restrict to devices associated with that deviceId. Cannot be used with clientId.
@@ -798,8 +824,6 @@ paths:
           description: Optional filter to restrict to devices associated with that clientId. Cannot be used with deviceId.
           schema:
             type: string
-
-
       responses:
         '2XX':
           description: OK
@@ -807,14 +831,17 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations/<device_id>:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Get a device registration
       description: Get the full details of a device.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -831,14 +858,13 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     put:
       summary: Update a device registration
       description: Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       requestBody:
         content:
@@ -852,7 +878,6 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/DeviceDetails'
-
       responses:
         '2XX':
           description: OK
@@ -868,14 +893,13 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     patch:
       summary: Update a device registration
       description: Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       requestBody:
         content:
@@ -888,7 +912,6 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/DeviceDetails'
-
       responses:
         '2XX':
           description: OK
@@ -904,14 +927,13 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     delete:
       summary: Unregister a single device for push notifications
       description: Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -920,14 +942,17 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/deviceRegistrations/<device_id>/resetUpdateToken:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: Reset a registered device's update token
       description: Gets an updated device details object.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/deviceId'
       responses:
         '2XX':
@@ -946,14 +971,17 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/channelSubscriptions:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       summary: List channel subscriptions
       description: Get a list of push notification subscriptions to channels.
       tags:
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - name: channel
           in: query
           description: Filter to restrict to subscriptions associated with that channel.
@@ -986,14 +1014,12 @@ paths:
                 $ref: '#/components/schemas/DeviceDetails'
         default:
           $ref: '#/components/responses/Error'
+
     post:
       summary: Subscribe a device to a channel
       description: Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
       tags: 
         - Push
-      parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -1062,20 +1088,18 @@ paths:
             example:
               channel: my:channel
               clientId: myClientId
-
       responses:
         '2XX':
           description: OK
         default:
           $ref: '#/components/responses/Error'
+
     delete:
       summary: Delete a registered device's update token
       description: Delete a device details object.
       tags: 
         - Push
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - name: channel
           in: query
           description: Filter to restrict to subscriptions associated with that channel.
@@ -1099,14 +1123,15 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/channels:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
     get:
       summary: List all channels with at least one subscribed device
       description: Returns a paginated response of channel names.
       tags:
         - Push
-      parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
@@ -1130,14 +1155,16 @@ paths:
           $ref: '#/components/responses/Error'
 
   /push/publish:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     post:
       summary: Publish a push notification to device(s)
       description: A convenience endpoint to deliver a push notification payload to a single device or set of devices identified by their client identifier.
       tags:
         - Push
-      parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       requestBody:
         content:
           application/json:
@@ -1170,7 +1197,6 @@ paths:
                   $ref: '#/components/schemas/Push'
               required:
                 - recipient
-                
       responses:
         '2XX':
           description: OK
@@ -1178,6 +1204,11 @@ paths:
           $ref: '#/components/responses/Error'
 
   /keys/{keyName}/requestToken:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     # TODO: Allow for no auth for SignedTokenRequest. May not be possible to specify.
     post:
       summary: Request an access token
@@ -1185,8 +1216,6 @@ paths:
       tags:
         - Authentication
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/key_name'
       requestBody:
         content:
@@ -1201,7 +1230,6 @@ paths:
               capability:
                 channel1: [ "publish", "subscribe" ]
                 wildcard:channels:*: [ "publish" ]
-
       responses:
         '2XX':
           description: OK
@@ -1217,14 +1245,16 @@ paths:
           $ref: '#/components/responses/Error'
 
   /stats:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
     post:
       summary: Retrieve usage statistics for an application
       description: The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
       tags:
         - Stats
       parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
         - $ref: '#/components/parameters/filterStart'
         - $ref: '#/components/parameters/filterLimit'
         - $ref: '#/components/parameters/filterEnd'
@@ -1246,16 +1276,19 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/Error'
+
   /time:
+    parameters:
+      - $ref: '#/components/parameters/versionHeader'
+      - $ref: '#/components/parameters/versionPath'
+      - $ref: '#/components/parameters/responseFormat'
+
     get:
       security: []
       summary: Get the service time
       description: This returns the service time in milliseconds since the epoch.
       tags:
         - Stats
-      parameters:
-        - $ref: '#/components/parameters/versionHeader'
-        - $ref: '#/components/parameters/versionPath'
       responses:
         '2XX':
           description: OK
