@@ -46,7 +46,6 @@ components:
       in: query
       schema:
         type: string
-        default: '0'
 
     filterLimit:
       name: limit
