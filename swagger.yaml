@@ -3,6 +3,10 @@ info:
   title: Ably REST API
   description: The [REST API specification](https://www.ably.io/documentation/rest-api) for Ably.
   version: "1.1.0"
+  contact:
+    name: "Ably Support"
+    url: "https://www.ably.io/contact"
+    email: "support@ably.io"
 components:
   securitySchemes:
     basicAuth:
@@ -87,20 +91,12 @@ components:
       description: The [key name](https://www.ably.io/documentation/rest-api/token-request-spec#api-key-format) comprises of the app ID and key ID of an API key.
 
     deviceId:
-      name: deviceId
+      name: device_id
       in: path
       schema:
         type: string
       required: true
       description: Device's ID.
-
-    versionPath:
-      name: v
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The version of the API you wish to use.
 
     versionHeader:
       in: header
@@ -458,11 +454,11 @@ paths:
   /channels/{channel_id}/messages:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Get message history for a channel
+      operationId: getMessagesByChannel
       tags:
         - History
       description: Get message history for a channel
@@ -506,6 +502,7 @@ paths:
 
     post:
       summary: Publish a message to a channel
+      operationId: publishMessagesToChannel
       description: Publish a message to the specified channel
       tags:
         - Publishing
@@ -559,11 +556,11 @@ paths:
   /channels/{channel_id}/presence:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Get presence of a channel
+      operationId: getPresenceOfChannel
       description: Get presence on a channel
       tags:
         - Status
@@ -610,11 +607,11 @@ paths:
   /channels/{channel_id}/presence/history:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Get presence history of a channel
+      operationId: getPresenceHistoryOfChannel
       description: Get presence on a channel
       tags:
         - History
@@ -650,11 +647,11 @@ paths:
   /channels/{channel_id}:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Get metadata of a channel
+      operationId: getMetadataOfChannel
       description: Get metadata of a channel
       tags:
         - Status
@@ -676,11 +673,11 @@ paths:
   /channels:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Enumerate all active channels of the application
+      operationId: getMetadataOfAllChannels
       description: Enumerate all active channels of the application
       tags:
         - Status
@@ -735,11 +732,11 @@ paths:
   /push/deviceRegistrations:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: List devices registered for receiving push notifications
+      operationId: getRegisteredPushDevices
       description: List of device details of devices registed for push notifications.
       tags:
         - Push
@@ -779,6 +776,7 @@ paths:
 
     post:
       summary: Register a device for receiving push notifications
+      operationId: registerPushDevice
       description: Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
       tags:
         - Push
@@ -808,6 +806,7 @@ paths:
 
     delete:
       summary: Unregister matching devices for push notifications
+      operationId: unregisterAllPushDevices
       description: Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
       tags:
         - Push
@@ -829,13 +828,13 @@ paths:
         default:
           $ref: '#/components/responses/Error'
 
-  /push/deviceRegistrations/<device_id>:
+  /push/deviceRegistrations/{device_id}:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
+      operationId: getPushDeviceDetails
       summary: Get a device registration
       description: Get the full details of a device.
       tags: 
@@ -860,6 +859,7 @@ paths:
 
     put:
       summary: Update a device registration
+      operationId: putPushDeviceDetails
       description: Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
       tags: 
         - Push
@@ -895,6 +895,7 @@ paths:
 
     patch:
       summary: Update a device registration
+      operationId: patchPushDeviceDetails
       description: Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
       tags: 
         - Push
@@ -929,6 +930,7 @@ paths:
 
     delete:
       summary: Unregister a single device for push notifications
+      operationId: unregisterPushDevice
       description: Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
       tags: 
         - Push
@@ -940,14 +942,14 @@ paths:
         default:
           $ref: '#/components/responses/Error'
 
-  /push/deviceRegistrations/<device_id>/resetUpdateToken:
+  /push/deviceRegistrations/{device_id}/resetUpdateToken:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: Reset a registered device's update token
+      operationId: updatePushDeviceDetails
       description: Gets an updated device details object.
       tags: 
         - Push
@@ -972,11 +974,11 @@ paths:
   /push/channelSubscriptions:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       summary: List channel subscriptions
+      operationId: getPushSubscriptionsOnChannels
       description: Get a list of push notification subscriptions to channels.
       tags:
         - Push
@@ -1016,6 +1018,7 @@ paths:
 
     post:
       summary: Subscribe a device to a channel
+      operationId: subscribePushDeviceToChannel
       description: Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
       tags: 
         - Push
@@ -1095,6 +1098,7 @@ paths:
 
     delete:
       summary: Delete a registered device's update token
+      operationId: deletePushDeviceDetails
       description: Delete a device details object.
       tags: 
         - Push
@@ -1124,10 +1128,10 @@ paths:
   /push/channels:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
     get:
       summary: List all channels with at least one subscribed device
+      operationId: getChannelsWithPushSubscribers
       description: Returns a paginated response of channel names.
       tags:
         - Push
@@ -1156,11 +1160,11 @@ paths:
   /push/publish:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     post:
       summary: Publish a push notification to device(s)
+      operationId: publishPushNotificationToDevices
       description: A convenience endpoint to deliver a push notification payload to a single device or set of devices identified by their client identifier.
       tags:
         - Push
@@ -1205,12 +1209,12 @@ paths:
   /keys/{keyName}/requestToken:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     # TODO: Allow for no auth for SignedTokenRequest. May not be possible to specify.
     post:
       summary: Request an access token
+      operationId: requestAccessToken
       description: This is the means by which clients obtain access tokens to use the service. You can see how to construct an Ably TokenRequest in the [Ably TokenRequest spec](https://www.ably.io/documentation/rest-api/token-request-spec) documentation, although we recommend you use an Ably SDK rather to create a TokenRequest, as the construction of a TokenRequest is complex. The resulting token response object contains the token properties as defined in Ably TokenRequest spec. Authentication is not required if using a Signed TokenRequest.
       tags:
         - Authentication
@@ -1246,10 +1250,10 @@ paths:
   /stats:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
-    post:
+    get:
       summary: Retrieve usage statistics for an application
+      operationId: getStats
       description: The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
       tags:
         - Stats
@@ -1279,12 +1283,12 @@ paths:
   /time:
     parameters:
       - $ref: '#/components/parameters/versionHeader'
-      - $ref: '#/components/parameters/versionPath'
       - $ref: '#/components/parameters/responseFormat'
 
     get:
       security: []
       summary: Get the service time
+      operationId: getTime
       description: This returns the service time in milliseconds since the epoch.
       tags:
         - Stats
