@@ -24,20 +24,20 @@ components:
       description: Links to related resources, in the format defined by [RFC 5988](https://tools.ietf.org/html/rfc5988#section-5). This will potentially include a link with relation type `next`, `first`, and `current`, where appropiate.
       schema:
         type: string
-        pattern: '(<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>; rel=\"(first|current|last)?\")+' 
+        pattern: '(<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>; rel=\"(first|current|last)?\")+'
       required: true
-      
+
     ServerId:
       description: The ID for the server communicated with.
       schema:
         type: string
       required: true
-      
+
     ErrorCode:
       description: The error code.
       schema:
         type: integer
-    
+
     ErrorMessage:
       description: The error message.
       schema:
@@ -110,7 +110,7 @@ components:
       name: format
       schema:
         type: string
-        enum: 
+        enum:
           - json
           - jsonp
           - msgpack
@@ -183,7 +183,7 @@ components:
           type: object
           properties:
             notification:
-              $ref: '#/components/schemas/Notification'            
+              $ref: '#/components/schemas/Notification'
 
     Notification:
       type: object
@@ -308,7 +308,7 @@ components:
           description: In events relating to the activity of a channel in a specific region, this optionally identifies whether or not that region is responsible for global coordination of the channel.
         status:
           $ref: '#/components/schemas/ChannelStatus'
-      required: 
+      required:
         - channelId
 
     ChannelStatus:
@@ -320,7 +320,7 @@ components:
           description: A required boolean value indicating whether the channel that is the subject of the event is active. For events indicating regional activity of a channel this indicates activity in that region, not global activity.
         occupancy:
           $ref: '#/components/schemas/Occupancy'
-      required: 
+      required:
         - isActive
 
     Occupancy:
@@ -391,17 +391,17 @@ components:
           type: string
           # TODO: Link to above enum for required
           description: when using GCM or FCM, specifies the required registration token.
-        clientId: 
+        clientId:
           type: string
           # TODO: Link to no transportType
           description: Client ID of recipient
           writeOnly: true
-        deviceId: 
+        deviceId:
           type: string
           # TODO: Link to no transportType
           description: Client ID of recipient
           writeOnly: true
-          
+
     Error:
       type: object
       description: Returned error from failed REST.
@@ -522,7 +522,7 @@ paths:
       responses:
         '2XX':
           description: OK
-          headers:             
+          headers:
             x-ably-serverid:
               $ref: '#/components/headers/ServerId'
           content:
@@ -532,7 +532,7 @@ paths:
                 properties:
                   channel:
                     type: string
-                  messageId: 
+                  messageId:
                     type: string
             application/x-msgpack:
               schema:
@@ -540,7 +540,7 @@ paths:
                 properties:
                   channel:
                     type: string
-                  messageId: 
+                  messageId:
                     type: string
             text/html:
               schema:
@@ -548,7 +548,7 @@ paths:
                 properties:
                   channel:
                     type: string
-                  messageId: 
+                  messageId:
                     type: string
         default:
           $ref: '#/components/responses/Error'
@@ -694,7 +694,7 @@ paths:
           description: Optionally limits the query to only those channels whose name starts with the given prefix
         - in: query
           name: by
-          schema: 
+          schema:
             type: string
             enum: [ value, id ]
           description: optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
@@ -837,7 +837,7 @@ paths:
       operationId: getPushDeviceDetails
       summary: Get a device registration
       description: Get the full details of a device.
-      tags: 
+      tags:
         - Push
       parameters:
         - $ref: '#/components/parameters/deviceId'
@@ -861,7 +861,7 @@ paths:
       summary: Update a device registration
       operationId: putPushDeviceDetails
       description: Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
-      tags: 
+      tags:
         - Push
       parameters:
         - $ref: '#/components/parameters/deviceId'
@@ -897,7 +897,7 @@ paths:
       summary: Update a device registration
       operationId: patchPushDeviceDetails
       description: Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
-      tags: 
+      tags:
         - Push
       parameters:
         - $ref: '#/components/parameters/deviceId'
@@ -932,7 +932,7 @@ paths:
       summary: Unregister a single device for push notifications
       operationId: unregisterPushDevice
       description: Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
-      tags: 
+      tags:
         - Push
       parameters:
         - $ref: '#/components/parameters/deviceId'
@@ -951,7 +951,7 @@ paths:
       summary: Reset a registered device's update token
       operationId: updatePushDeviceDetails
       description: Gets an updated device details object.
-      tags: 
+      tags:
         - Push
       parameters:
         - $ref: '#/components/parameters/deviceId'
@@ -1020,7 +1020,7 @@ paths:
       summary: Subscribe a device to a channel
       operationId: subscribePushDeviceToChannel
       description: Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
-      tags: 
+      tags:
         - Push
       requestBody:
         content:
@@ -1100,7 +1100,7 @@ paths:
       summary: Delete a registered device's update token
       operationId: deletePushDeviceDetails
       description: Delete a device details object.
-      tags: 
+      tags:
         - Push
       parameters:
         - name: channel
@@ -1268,7 +1268,7 @@ paths:
           schema:
             type: string
             default: minute
-            enum: [ minute, hour, day, month ]     
+            enum: [ minute, hour, day, month ]
 
       responses:
         '2XX':
