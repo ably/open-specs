@@ -1,0 +1,13 @@
+{
+  "name": "ably-open-specs",
+  "version": "1.1.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "4.x.x",
+    "body-parser": "1.x.x",
+    "swagger-ui-express": "4.x.x",
+    "yamljs": "0.3.x"
+  }
+}
