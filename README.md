@@ -1,6 +1,6 @@
 # Ably OpenAPI specifications
 
-This repository contains an OAS3 specification for the [Ably REST API](https://ably.com/documentation/rest-api). In the future additional specifications will be added here.
+This repository contains an OAS3 specification for the [Ably REST API](https://ably.com/documentation/rest-api). In the future, additional specifications will be added here.
 
 ## Ably client library SDKs
 
