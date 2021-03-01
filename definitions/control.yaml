@@ -1,0 +1,2438 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/accounts/{account_id}/apps":
+    get:
+      summary: Lists account apps
+      tags:
+      - apps
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: App list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/app_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates an app
+      tags:
+      - apps
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: App created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/app_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/app_post"
+  "/apps/{id}":
+    patch:
+      summary: Updates an app
+      tags:
+      - apps
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/app_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/app_patch"
+    delete:
+      summary: Deletes an app
+      tags:
+      - apps
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: App deleted
+          content: {}
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+  "/apps/{id}/pkcs12":
+    post:
+      summary: Updates app's APNS info from a .p12 file
+      tags:
+      - apps
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/app_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              "$ref": "#/components/schemas/app_pkcs12"
+  "/apps/{app_id}/keys":
+    get:
+      summary: Lists app keys
+      tags:
+      - keys
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Key list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/key_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates a key
+      tags:
+      - keys
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Key created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/key_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/key_post"
+  "/apps/{app_id}/keys/{key_id}":
+    patch:
+      summary: Updates a key
+      tags:
+      - keys
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Key updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/key_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/key_patch"
+  "/apps/{app_id}/keys/{key_id}/revoke":
+    post:
+      summary: Revokes a key
+      tags:
+      - keys
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Key revoked
+          content: {}
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+  "/apps/{app_id}/namespaces":
+    get:
+      summary: Lists namespaces
+      tags:
+      - namespaces
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Namespace list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/namespace_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates a namespace
+      tags:
+      - namespaces
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Namespace created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/namespace_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/namespace_post"
+  "/apps/{app_id}/namespaces/{namespace_id}":
+    patch:
+      summary: Updates a namespace
+      tags:
+      - namespaces
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: namespace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Namespace updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/namespace_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/namespace_patch"
+    delete:
+      summary: Deletes a namespace
+      tags:
+      - namespaces
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: namespace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: Namespace deleted
+          content: {}
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+  "/apps/{app_id}/queues":
+    get:
+      summary: Lists queues
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Queue list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/queue_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '503':
+          description: 503 Service unavailable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates a queue
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Queue created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/queue_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/queue"
+  "/apps/{app_id}/queues/{queue_name}":
+    delete:
+      summary: Deletes a queue
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: queue_name
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: Queue deleted
+          content: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '503':
+          description: 503 Service unavailable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/queue_endpoint"
+  "/apps/{app_id}/rules":
+    get:
+      summary: Lists reactor rules
+      tags:
+      - rules
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Reactor rule list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/rule_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates a reactor rule
+      tags:
+      - rules
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Reactor rule created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/rule_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/rule_post"
+  "/apps/{app_id}/rules/{rule_id}":
+    get:
+      summary: Gets a reactor rule by ID
+      tags:
+      - rules
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: rule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Reactor rule
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/rule_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    patch:
+      summary: Updates a reactor rule
+      tags:
+      - rules
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: rule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Reactor rule updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/rule_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/rule_patch"
+    delete:
+      summary: Deletes a reactor rule
+      tags:
+      - rules
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: rule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: Reactor rule deleted
+          content: {}
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+  schemas:
+    rule_post:
+      oneOf:
+      - "$ref": "#/components/schemas/webhook_rule_post"
+      - "$ref": "#/components/schemas/generic_http_rule_post"
+      - "$ref": "#/components/schemas/amqp_rule_post"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_post"
+      - "$ref": "#/components/schemas/aws_sqs_rule_post"
+      - "$ref": "#/components/schemas/aws_lambda_rule_post"
+      discriminator:
+        propertyName: type
+        mapping:
+          webhook: "#/components/schemas/webhook_rule_post"
+          generic.http: "#/components/schemas/generic_http_rule_post"
+          amqp: "#/components/schemas/amqp_rule_post"
+          aws.kinesis: "#/components/schemas/aws_kinesis_rule_post"
+          aws.sqs: "#/components/schemas/aws_sqs_rule_post"
+          aws.lambda: "#/components/schemas/aws_lambda_rule_post"
+    rule_patch:
+      oneOf:
+      - "$ref": "#/components/schemas/webhook_rule_patch"
+      - "$ref": "#/components/schemas/generic_http_rule_patch"
+      - "$ref": "#/components/schemas/amqp_rule_patch"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_patch"
+      - "$ref": "#/components/schemas/aws_sqs_rule_patch"
+      - "$ref": "#/components/schemas/aws_lambda_rule_patch"
+      discriminator:
+        propertyName: type
+        mapping:
+          webhook: "#/components/schemas/webhook_rule_patch"
+          generic.http: "#/components/schemas/generic_http_rule_patch"
+          amqp: "#/components/schemas/amqp_rule_patch"
+          aws.kinesis: "#/components/schemas/aws_kinesis_rule_patch"
+          aws.sqs: "#/components/schemas/aws_sqs_rule_patch"
+          aws.lambda: "#/components/schemas/aws_lambda_rule_patch"
+    rule_response:
+      oneOf:
+      - "$ref": "#/components/schemas/webhook_rule_response"
+      - "$ref": "#/components/schemas/generic_http_rule_response"
+      - "$ref": "#/components/schemas/amqp_rule_response"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_response"
+      - "$ref": "#/components/schemas/aws_sqs_rule_response"
+      - "$ref": "#/components/schemas/aws_lambda_rule_response"
+      discriminator:
+        propertyName: type
+        mapping:
+          webhook: "#/components/schemas/webhook_rule_response"
+          generic.http: "#/components/schemas/generic_http_rule_response"
+          amqp: "#/components/schemas/amqp_rule_response"
+          aws.kinesis: "#/components/schemas/aws_kinesis_rule_response"
+          aws.sqs: "#/components/schemas/aws_sqs_rule_response"
+          aws.lambda: "#/components/schemas/aws_lambda_rule_response"
+    webhook_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+          - channel.lifecycle
+        type:
+          type: string
+          enum:
+          - webhook
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required:
+          - url
+      required:
+      - target
+      - type
+      - source
+    webhook_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+          - channel.lifecycle
+        type:
+          type: string
+          enum:
+          - webhook
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required: []
+      required: []
+    webhook_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+          - channel.lifecycle
+        type:
+          type: string
+          enum:
+          - webhook
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required:
+          - url
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - type
+      - source
+    generic_http_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - generic.http
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required:
+          - url
+      required:
+      - target
+      - type
+      - source
+    generic_http_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - generic.http
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required: []
+      required: []
+    generic_http_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        keyId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - generic.http
+        headers:
+          type: array
+          items:
+            type: string
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required:
+          - url
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - type
+      - source
+    amqp_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - amqp
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        routeMandatory:
+          type: boolean
+          default: true
+        routePersistent:
+          type: boolean
+          default: true
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              enum:
+              - internal_shared
+            region:
+              type: string
+              enum:
+              - us-east-1-a
+              - eu-west-1-a
+            url:
+              type: string
+      required:
+      - target
+      - routingKey
+      - type
+      - source
+    amqp_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - amqp
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        routeMandatory:
+          type: boolean
+          default: true
+        routePersistent:
+          type: boolean
+          default: true
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              enum:
+              - internal_shared
+            region:
+              type: string
+              enum:
+              - us-east-1-a
+              - eu-west-1-a
+            url:
+              type: string
+          required: []
+      required: []
+    amqp_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - amqp
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        routeMandatory:
+          type: boolean
+          default: true
+        routePersistent:
+          type: boolean
+          default: true
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              enum:
+              - internal_shared
+            region:
+              type: string
+              enum:
+              - us-east-1-a
+              - eu-west-1-a
+            url:
+              type: string
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - routingKey
+      - type
+      - source
+    aws_kinesis_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - aws.kinesis
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            streamName:
+              type: string
+          required:
+          - streamName
+          - awsRegion
+      required:
+      - target
+      - routingKey
+      - type
+      - source
+    aws_kinesis_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - aws.kinesis
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            streamName:
+              type: string
+          required: []
+      required: []
+    aws_kinesis_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        routingKey:
+          type: string
+        type:
+          type: string
+          enum:
+          - aws.kinesis
+        request_mode:
+          type: string
+          enum:
+          - single
+          - batch
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            streamName:
+              type: string
+          required:
+          - streamName
+          - awsRegion
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - routingKey
+      - type
+      - source
+    aws_sqs_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.sqs
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            url:
+              type: string
+          required:
+          - url
+          - awsRegion
+      required:
+      - target
+      - type
+      - source
+    aws_sqs_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.sqs
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            url:
+              type: string
+          required: []
+      required: []
+    aws_sqs_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.sqs
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            url:
+              type: string
+          required:
+          - url
+          - awsRegion
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - type
+      - source
+    aws_lambda_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.lambda
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            functionName:
+              type: string
+            qualifier:
+              type: string
+          required:
+          - awsRegion
+          - functionName
+      required:
+      - target
+      - type
+      - source
+    aws_lambda_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.lambda
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            functionName:
+              type: string
+            qualifier:
+              type: string
+          required: []
+      required: []
+    aws_lambda_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          nullable: true
+        enveloped:
+          type: boolean
+          nullable: true
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - json
+          - msgpack
+          - 
+        source:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+        type:
+          type: string
+          enum:
+          - aws.lambda
+        request_mode:
+          type: string
+          enum:
+          - single
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            awsCredentials:
+              type: string
+            assumeRoleArn:
+              type: string
+            awsRegion:
+              type: string
+            functionName:
+              type: string
+            qualifier:
+              type: string
+          required:
+          - awsRegion
+          - functionName
+        id:
+          type: string
+        appId:
+          type: string
+        version:
+          type: string
+        status:
+          type: integer
+        created:
+          type: number
+        modified:
+          type: number
+        _links:
+          type: object
+          nullable: true
+      required:
+      - target
+      - type
+      - source
+    queue:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        ttl:
+          type: integer
+        maxLength:
+          type: integer
+        region:
+          type: string
+      required:
+      - name
+      - ttl
+      - maxLength
+      - region
+    queue_endpoint:
+      type: object
+      additionalProperties: false
+      properties:
+        endpointServer:
+          type: string
+        endpointVhost:
+          type: string
+      required:
+      - endpointServer
+      - endpointVhost
+    queue_response:
+      type: object
+      additionalProperties: false
+      properties:
+        endpoint_friendly_name:
+          type: string
+        endpoint_server:
+          type: string
+        endpoint_host:
+          type: string
+        region:
+          type: string
+        name:
+          type: string
+        vhost:
+          type: string
+        state:
+          type: string
+        messages_ready:
+          type: integer
+          nullable: true
+        messages_unacknowledged:
+          type: integer
+          nullable: true
+        messages:
+          type: integer
+          nullable: true
+        ttl:
+          type: integer
+        maxLength:
+          type: integer
+        app_name:
+          type: string
+        app_api_id:
+          type: string
+        friendly_name:
+          type: string
+        deadletter:
+          type: boolean
+    namespace_post:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        authenticated:
+          type: boolean
+          default: false
+        persisted:
+          type: boolean
+          default: false
+        pushEnabled:
+          type: boolean
+          default: false
+        tlsOnly:
+          type: boolean
+          default: false
+      required:
+      - id
+    namespace_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        authenticated:
+          type: boolean
+        persisted:
+          type: boolean
+        pushEnabled:
+          type: boolean
+        tlsOnly:
+          type: boolean
+    namespace_response:
+      type: object
+      additionalProperties: false
+      properties:
+        authenticated:
+          type: boolean
+        created:
+          type: integer
+        modified:
+          type: integer
+        id:
+          type: string
+        persisted:
+          type: boolean
+        pushEnabled:
+          type: boolean
+        tlsOnly:
+          type: boolean
+    app_post:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+        tlsOnly:
+          type: boolean
+          nullable: true
+        enablePusherCompatibility:
+          type: boolean
+          nullable: true
+        fcmKey:
+          type: string
+          nullable: true
+        setupPusherNamespaces:
+          type: boolean
+        apnsCertificate:
+          type: string
+          nullable: true
+        apnsPrivateKey:
+          type: string
+          nullable: true
+        apnsUseSandboxEndpoint:
+          type: boolean
+          nullable: true
+      required:
+      - name
+    app_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+        tlsOnly:
+          type: boolean
+          nullable: true
+        enablePusherCompatibility:
+          type: boolean
+          nullable: true
+        fcmKey:
+          type: string
+          nullable: true
+        setupPusherNamespaces:
+          type: boolean
+        apnsCertificate:
+          type: string
+          nullable: true
+        apnsPrivateKey:
+          type: string
+          nullable: true
+        apnsUseSandboxEndpoint:
+          type: boolean
+          nullable: true
+    app_pkcs12:
+      type: object
+      additionalProperties: false
+      properties:
+        p12File:
+          type: string
+          format: binary
+        p12Pass:
+          type: string
+      required:
+      - p12File
+      - p12Pass
+    app_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+        tlsOnly:
+          type: boolean
+          nullable: true
+        enablePusherCompatibility:
+          type: boolean
+          nullable: true
+        fcmKey:
+          type: string
+          nullable: true
+        apnsCertificate:
+          type: string
+          nullable: true
+        apnsUseSandboxEndpoint:
+          type: boolean
+          nullable: true
+        _links:
+          type: object
+          nullable: true
+    key_post:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        channels:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - subscribe
+            - history
+            - presence
+            - channel-metadata
+            - push-admin
+            - push-subscribe
+            - statistics
+      required:
+      - name
+      - channels
+      - capabilities
+    key_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        channels:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - subscribe
+            - history
+            - presence
+            - channel-metadata
+            - push-admin
+            - push-subscribe
+            - statistics
+    key_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        whole_key:
+          type: string
+        channels:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        created:
+          type: integer
+    error:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        statusCode:
+          type: integer
+        href:
+          type: string
+        details:
+          type: object
+          nullable: true
+      required:
+      - message
+      - code
+      - statusCode
+      - href
+basePath: "/v1"
+servers:
+- url: https://control.ably.net/v1
