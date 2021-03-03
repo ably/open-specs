@@ -1,16 +1,28 @@
 # Ably OpenAPI specifications
 
-This repository contains Ably OAS3 specifications.
+This repository contains Ably OAS3 specifications for the following REST APIs:
+
+* Service API
+* Control API
+
+## Installation
+
+The following command install the requirements (currently, only `http-server`):
+
+```sh
+npm install
+```
 
 ## Viewing the specification locally
 
-1. Install `http-server`, or other web server. To install `http-server`:
+To View the specification locally, run: 
 
 ```
-npm install --global http-server
+http-server -c-1
+
 ```
 
-2. View the specification locally, run `http-server -c-1`, and point your browser at `localhost:8080`.
+Point your browser at http://localhost:8080. You can then select to view the API reference for the API of your choice.
 
 ## About Ably
 
