@@ -18,11 +18,11 @@ npm install
 To View the specification locally, run: 
 
 ```
-http-server -c-1
+npm start
 
 ```
 
-Point your browser at http://localhost:8080. You can then select to view the API reference for the API of your choice.
+Point your browser at http://localhost:8080. You can then select the API reference of your choice, and it will be rendered by Redoc.
 
 ## About Ably
 
