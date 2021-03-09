@@ -25,7 +25,7 @@ To View the specification locally, run:
 npm start
 ```
 
-Point your browser at http://localhost:8080. You can then select the API reference of your choice, rendered by Redoc.
+Point your browser at http://localhost:8080. You can then select the API reference of your choice, rendered by [Redoc](https://github.com/Redocly/redoc).
 
 ## Try out the REST APIs
 
