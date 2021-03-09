@@ -1,18 +1,23 @@
 ---
 openapi: 3.0.1
 info:
-  title: Control API V1
+  title: Control API v1
   version: v1
+  description: |
+    Ably allows you to manage your account using the Control API. Use Control API to manage your applications, queues, keys, rules, and more.
 paths:
   "/accounts/{account_id}/apps":
     get:
-      summary: Lists account apps
+      operationId: listApps
+      summary: Lists apps
+      description: List all applications for the specified account ID.
       tags:
       - apps
       parameters:
       - name: account_id
         in: path
         required: true
+        description: The account ID for which to retrieve the associated applications.
         schema:
           type: string
       security:

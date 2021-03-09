@@ -35,7 +35,7 @@ A convenient way to try out the REST APIs is by importing the OAS3 specification
 
 1. Make sure you have [Postman](https://www.postman.com/) installed.
 
-2. Start Postman and selct File > Import from the main menu. The import dialog is displayed:
+2. Start Postman and select "File > Import" from the main menu. The import dialog is displayed:
 
 ![Postman import dialog](./images/postman-import.png "Postman import dialog")
 
