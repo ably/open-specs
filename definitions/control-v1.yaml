@@ -1223,14 +1223,17 @@ components:
           - channel.message
           - channel.presence
           - channel.lifecycle
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
           - webhook
+          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
         headers:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
@@ -1239,6 +1242,7 @@ components:
               type: string
           required:
           - url
+          description: The URL of the endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -1271,7 +1275,9 @@ components:
           - channel.message
           - channel.presence
           - channel.lifecycle
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
+          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
           type: string
           enum:
           - webhook
@@ -1279,14 +1285,14 @@ components:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
           properties:
             url:
               type: string
-          required: []
-      required: []
+          description: The URL of the endpoint that is invoked when events occur on Ably.
     webhook_rule_response:
       type: object
       additionalProperties: false
@@ -1315,14 +1321,17 @@ components:
           - channel.message
           - channel.presence
           - channel.lifecycle
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
           - webhook
+          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
         headers:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
@@ -1331,21 +1340,27 @@ components:
               type: string
           required:
           - url
+          description: The URL of the endpoint that is invoked when events occur on Ably.
         id:
           type: string
+          description: The rule ID.
         appId:
           type: string
+          description: TODO - I don't seem to receive this in the response when creating a webhook rule.
         version:
           type: string
         status:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - type
@@ -1372,11 +1387,13 @@ components:
         keyId:
           type: string
           nullable: true
+          description: TODO
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -1385,6 +1402,7 @@ components:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
@@ -1393,6 +1411,7 @@ components:
               type: string
           required:
           - url
+          description: The URL of the endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -1424,22 +1443,24 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
           - generic.http
+          description: TODO
         headers:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
           properties:
             url:
               type: string
-          required: []
-      required: []
+          description: The URL of the endpoint that is invoked when events occur on Ably.
     generic_http_rule_response:
       type: object
       additionalProperties: false
@@ -1467,6 +1488,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -1475,6 +1497,7 @@ components:
           type: array
           items:
             type: string
+          description: If you have additional information to send, you'll need to include the relevant headers.
         target:
           type: object
           additionalProperties: false
@@ -1483,6 +1506,7 @@ components:
               type: string
           required:
           - url
+          description: The URL of the endpoint that is invoked when events occur on Ably.        
         id:
           type: string
         appId:
@@ -1493,11 +1517,14 @@ components:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - type
@@ -1526,6 +1553,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1558,6 +1586,7 @@ components:
               - eu-west-1-a
             url:
               type: string
+          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.            
       required:
       - target
       - routingKey
@@ -1587,6 +1616,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1619,8 +1649,7 @@ components:
               - eu-west-1-a
             url:
               type: string
-          required: []
-      required: []
+          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.
     amqp_rule_response:
       type: object
       additionalProperties: false
@@ -1645,6 +1674,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1677,6 +1707,7 @@ components:
               - eu-west-1-a
             url:
               type: string
+          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
@@ -1687,11 +1718,14 @@ components:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - routingKey
@@ -1721,6 +1755,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1747,6 +1782,7 @@ components:
           required:
           - streamName
           - awsRegion
+          description: The URL of the endpoint that is invoked when events occur on Ably.
       required:
       - target
       - routingKey
@@ -1777,6 +1813,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1800,8 +1837,7 @@ components:
               type: string
             streamName:
               type: string
-          required: []
-      required: []
+          description: The URL of the endpoint that is invoked when events occur on Ably.
     aws_kinesis_rule_response:
       type: object
       additionalProperties: false
@@ -1826,6 +1862,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
         type:
@@ -1852,6 +1889,7 @@ components:
           required:
           - streamName
           - awsRegion
+          description: The URL of the endpoint that is invoked when events occur on Ably.        
         id:
           type: string
         appId:
@@ -1862,11 +1900,14 @@ components:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - routingKey
@@ -1895,6 +1936,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -1918,6 +1960,7 @@ components:
           required:
           - url
           - awsRegion
+          description: The URL of the endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -1945,6 +1988,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -1965,8 +2009,7 @@ components:
               type: string
             url:
               type: string
-          required: []
-      required: []
+          description: The URL of the endpoint that is invoked when events occur on Ably.
     aws_sqs_rule_response:
       type: object
       additionalProperties: false
@@ -1990,6 +2033,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -2013,6 +2057,7 @@ components:
           required:
           - url
           - awsRegion
+          description: The URL of the endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
@@ -2023,11 +2068,14 @@ components:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - type
@@ -2056,6 +2104,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -2081,6 +2130,7 @@ components:
           required:
           - awsRegion
           - functionName
+          description: The URL of the endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -2109,6 +2159,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -2131,8 +2182,7 @@ components:
               type: string
             qualifier:
               type: string
-          required: []
-      required: []
+          description: The URL of the endpoint that is invoked when events occur on Ably.
     aws_lambda_rule_response:
       type: object
       additionalProperties: false
@@ -2157,6 +2207,7 @@ components:
           enum:
           - channel.message
           - channel.presence
+          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         type:
           type: string
           enum:
@@ -2182,6 +2233,7 @@ components:
           required:
           - awsRegion
           - functionName
+          description: The URL of the endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
@@ -2192,11 +2244,14 @@ components:
           type: integer
         created:
           type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the rule that has been created.
       required:
       - target
       - type
@@ -2308,8 +2363,10 @@ components:
           type: boolean
         created:
           type: integer
+          description: Unix timestamp representing the date and time of creation of the rule.
         modified:
           type: integer
+          description: Unix timestamp representing the date and time of last modification of the rule.
         id:
           type: string
         persisted:
@@ -2425,6 +2482,7 @@ components:
         _links:
           type: object
           nullable: true
+          description: A link self-referencing the app that has been created.
     key_post:
       type: object
       additionalProperties: false
@@ -2489,6 +2547,7 @@ components:
             type: string
         created:
           type: integer
+          description: Unix timestamp representing the date and time of creation of the key.
     error:
       type: object
       additionalProperties: false
