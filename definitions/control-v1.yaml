@@ -1240,9 +1240,10 @@ components:
           properties:
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably. 
           required:
           - url
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -1292,7 +1293,8 @@ components:
           properties:
             url:
               type: string
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
     webhook_rule_response:
       type: object
       additionalProperties: false
@@ -1338,9 +1340,10 @@ components:
           properties:
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
           - url
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
           description: The rule ID.
@@ -1409,9 +1412,10 @@ components:
           properties:
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
           - url
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -1460,7 +1464,8 @@ components:
           properties:
             url:
               type: string
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
     generic_http_rule_response:
       type: object
       additionalProperties: false
@@ -1504,9 +1509,10 @@ components:
           properties:
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
           - url
-          description: The URL of the endpoint that is invoked when events occur on Ably.        
+          description: The endpoint that is invoked when events occur on Ably.        
         id:
           type: string
         appId:
@@ -1586,7 +1592,8 @@ components:
               - eu-west-1-a
             url:
               type: string
-          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.            
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The Ably-hosted endpoint that is invoked when events occur on Ably.            
       required:
       - target
       - routingKey
@@ -1649,7 +1656,8 @@ components:
               - eu-west-1-a
             url:
               type: string
-          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The Ably-hosted endpoint that is invoked when events occur on Ably.
     amqp_rule_response:
       type: object
       additionalProperties: false
@@ -1707,7 +1715,8 @@ components:
               - eu-west-1-a
             url:
               type: string
-          description: The URL of the Ably-hosted endpoint that is invoked when events occur on Ably.
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The Ably-hosted endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
@@ -1773,6 +1782,7 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
@@ -1782,7 +1792,7 @@ components:
           required:
           - streamName
           - awsRegion
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
       required:
       - target
       - routingKey
@@ -1831,13 +1841,14 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
               type: string
             streamName:
               type: string
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
     aws_kinesis_rule_response:
       type: object
       additionalProperties: false
@@ -1880,6 +1891,7 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
@@ -1889,7 +1901,7 @@ components:
           required:
           - streamName
           - awsRegion
-          description: The URL of the endpoint that is invoked when events occur on Ably.        
+          description: The endpoint that is invoked when events occur on Ably.        
         id:
           type: string
         appId:
@@ -1951,16 +1963,18 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
               type: string
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
           - url
           - awsRegion
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -2003,13 +2017,15 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
               type: string
             url:
               type: string
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+              description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
     aws_sqs_rule_response:
       type: object
       additionalProperties: false
@@ -2048,16 +2064,18 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
               type: string
             url:
               type: string
+              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
           - url
           - awsRegion
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
@@ -2119,6 +2137,7 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
@@ -2130,7 +2149,7 @@ components:
           required:
           - awsRegion
           - functionName
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
       required:
       - target
       - type
@@ -2174,6 +2193,7 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
@@ -2182,7 +2202,7 @@ components:
               type: string
             qualifier:
               type: string
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
     aws_lambda_rule_response:
       type: object
       additionalProperties: false
@@ -2196,8 +2216,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -2222,6 +2241,7 @@ components:
           properties:
             awsCredentials:
               type: string
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
             awsRegion:
@@ -2233,7 +2253,7 @@ components:
           required:
           - awsRegion
           - functionName
-          description: The URL of the endpoint that is invoked when events occur on Ably.
+          description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
         appId:
