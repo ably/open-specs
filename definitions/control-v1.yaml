@@ -2,9 +2,12 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: v1
+  version: 1.0.1
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, queues, keys, rules, and more.
+basePath: "/v1"
+servers:
+- url: https://control.ably.net/v1
 paths:
   "/accounts/{account_id}/apps":
     get:
@@ -24,7 +27,7 @@ paths:
       - bearer_auth: []
       responses:
         '200':
-          description: App list
+          description: List of apps returned
           content:
             application/json:
               schema:
@@ -51,10 +54,12 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates an app
+      description: Creates an application with the specified properties.
       tags:
       - apps
       parameters:
       - name: account_id
+        description: The account ID of the account in which to create the application.
         in: path
         required: true
         schema:
@@ -106,10 +111,12 @@ paths:
   "/apps/{id}":
     patch:
       summary: Updates an app
+      description: Updates the application with the specified application ID.
       tags:
       - apps
       parameters:
       - name: id
+        description: The ID of application to be updated.
         in: path
         required: true
         schema:
@@ -154,10 +161,12 @@ paths:
               "$ref": "#/components/schemas/app_patch"
     delete:
       summary: Deletes an app
+      description: Deletes the application with the specified application ID.
       tags:
       - apps
       parameters:
       - name: id
+        description: The ID of the application to be deleted.
         in: path
         required: true
         schema:
@@ -195,10 +204,12 @@ paths:
   "/apps/{id}/pkcs12":
     post:
       summary: Updates app's APNS info from a .p12 file
+      description: Updates the application's Apple Push Notification Service (APNS) information.
       tags:
       - apps
       parameters:
       - name: id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -244,10 +255,12 @@ paths:
   "/apps/{app_id}/keys":
     get:
       summary: Lists app keys
+      description: Lists the API keys associated with the application ID.
       tags:
       - keys
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -289,10 +302,12 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a key
+      description: Creates an API key for the application specified.
       tags:
       - keys
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -344,15 +359,18 @@ paths:
   "/apps/{app_id}/keys/{key_id}":
     patch:
       summary: Updates a key
+      description: Update the API key with the specified key ID, for the application with the specified application ID.
       tags:
       - keys
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: key_id
+        description: The API key ID.
         in: path
         required: true
         schema:
@@ -410,15 +428,18 @@ paths:
   "/apps/{app_id}/keys/{key_id}/revoke":
     post:
       summary: Revokes a key
+      description: Revokes the API key with the specified ID, with the Application ID.
       tags:
       - keys
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: key_id
+        description: The key ID.
         in: path
         required: true
         schema:
@@ -456,10 +477,12 @@ paths:
   "/apps/{app_id}/namespaces":
     get:
       summary: Lists namespaces
+      description: List the namespaces for the specified application ID.
       tags:
       - namespaces
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -501,10 +524,12 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a namespace
+      description: Creates a namespace for the specified application ID.
       tags:
       - namespaces
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -556,15 +581,18 @@ paths:
   "/apps/{app_id}/namespaces/{namespace_id}":
     patch:
       summary: Updates a namespace
+      description: Updates the namespace with the specified ID, for the application with the specified application ID.
       tags:
       - namespaces
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: namespace_id
+        description: The namespace ID.
         in: path
         required: true
         schema:
@@ -615,15 +643,18 @@ paths:
               "$ref": "#/components/schemas/namespace_patch"
     delete:
       summary: Deletes a namespace
+      description: Deletes the namespace with the specified ID, for the specified application ID.
       tags:
       - namespaces
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: namespace_id
+        description: The namespace ID.
         in: path
         required: true
         schema:
@@ -661,10 +692,12 @@ paths:
   "/apps/{app_id}/queues":
     get:
       summary: Lists queues
+      description: Lists the queues associated with the specified application ID.
       tags:
       - queues
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -712,10 +745,12 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a queue
+      description: Creates a queue for the application specified by application ID. The properties for the queue to be created are specified in the request body.
       tags:
       - queues
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -767,15 +802,18 @@ paths:
   "/apps/{app_id}/queues/{queue_name}":
     delete:
       summary: Deletes a queue
+      description: Delete the queue with the specified queue name, from the application with the specified application ID.
       tags:
       - queues
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: queue_name
+        description: The queue name.
         in: path
         required: true
         schema:
@@ -817,6 +855,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
       requestBody:
+        description: The queue endpoint. 
         content:
           application/json:
             schema:
@@ -824,10 +863,12 @@ paths:
   "/apps/{app_id}/rules":
     get:
       summary: Lists reactor rules
+      description: Lists the rules for the application specified by the application ID.
       tags:
       - rules
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -869,10 +910,12 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a reactor rule
+      description: Creates a rule for the application with the specified application ID. 
       tags:
       - rules
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
@@ -923,6 +966,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
       requestBody:
+        description: The rule properties.
         content:
           application/json:
             schema:
@@ -930,15 +974,18 @@ paths:
   "/apps/{app_id}/rules/{rule_id}":
     get:
       summary: Gets a reactor rule by ID
+      description: Returns the rule specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: rule_id
+        description: The rule ID.
         in: path
         required: true
         schema:
@@ -982,11 +1029,13 @@ paths:
       - rules
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: rule_id
+        description: The rule ID.
         in: path
         required: true
         schema:
@@ -1037,6 +1086,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
       requestBody:
+        description: Properties for the rule.
         content:
           application/json:
             schema:
@@ -1047,11 +1097,13 @@ paths:
       - rules
       parameters:
       - name: app_id
+        description: The application ID.
         in: path
         required: true
         schema:
           type: string
       - name: rule_id
+        description: The rule ID.
         in: path
         required: true
         schema:
@@ -1156,11 +1208,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1203,11 +1253,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1246,11 +1294,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1308,11 +1354,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1354,11 +1398,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1396,11 +1438,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         keyId:
           type: string
           nullable: true
@@ -1457,11 +1497,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1517,11 +1555,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1574,11 +1610,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1649,11 +1683,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1707,7 +1739,6 @@ components:
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1751,11 +1782,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -1820,10 +1849,8 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
-          - 
         source:
           type: string
           enum:
@@ -1869,10 +1896,8 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
-          - 
         source:
           type: string
           enum:
@@ -1913,10 +1938,8 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
-          - 
         source:
           type: string
           enum:
@@ -1977,11 +2000,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -2029,11 +2050,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -2076,11 +2095,9 @@ components:
         format:
           type:
           - string
-          - 'null'
           enum:
           - json
           - msgpack
-          - 
         source:
           type: string
           enum:
@@ -2438,6 +2455,3 @@ components:
       - code
       - statusCode
       - href
-basePath: "/v1"
-servers:
-- url: https://control.ably.net/v1
