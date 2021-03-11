@@ -977,7 +977,6 @@ components:
       oneOf:
       - "$ref": "#/components/schemas/webhook_rule_post"
       - "$ref": "#/components/schemas/generic_http_rule_post"
-      - "$ref": "#/components/schemas/amqp_rule_post"
       - "$ref": "#/components/schemas/aws_kinesis_rule_post"
       - "$ref": "#/components/schemas/aws_sqs_rule_post"
       - "$ref": "#/components/schemas/aws_lambda_rule_post"
@@ -986,7 +985,6 @@ components:
         mapping:
           webhook: "#/components/schemas/webhook_rule_post"
           generic.http: "#/components/schemas/generic_http_rule_post"
-          amqp: "#/components/schemas/amqp_rule_post"
           aws.kinesis: "#/components/schemas/aws_kinesis_rule_post"
           aws.sqs: "#/components/schemas/aws_sqs_rule_post"
           aws.lambda: "#/components/schemas/aws_lambda_rule_post"
@@ -994,7 +992,6 @@ components:
       oneOf:
       - "$ref": "#/components/schemas/webhook_rule_patch"
       - "$ref": "#/components/schemas/generic_http_rule_patch"
-      - "$ref": "#/components/schemas/amqp_rule_patch"
       - "$ref": "#/components/schemas/aws_kinesis_rule_patch"
       - "$ref": "#/components/schemas/aws_sqs_rule_patch"
       - "$ref": "#/components/schemas/aws_lambda_rule_patch"
@@ -1003,7 +1000,6 @@ components:
         mapping:
           webhook: "#/components/schemas/webhook_rule_patch"
           generic.http: "#/components/schemas/generic_http_rule_patch"
-          amqp: "#/components/schemas/amqp_rule_patch"
           aws.kinesis: "#/components/schemas/aws_kinesis_rule_patch"
           aws.sqs: "#/components/schemas/aws_sqs_rule_patch"
           aws.lambda: "#/components/schemas/aws_lambda_rule_patch"
@@ -1011,7 +1007,6 @@ components:
       oneOf:
       - "$ref": "#/components/schemas/webhook_rule_response"
       - "$ref": "#/components/schemas/generic_http_rule_response"
-      - "$ref": "#/components/schemas/amqp_rule_response"
       - "$ref": "#/components/schemas/aws_kinesis_rule_response"
       - "$ref": "#/components/schemas/aws_sqs_rule_response"
       - "$ref": "#/components/schemas/aws_lambda_rule_response"
@@ -1020,7 +1015,6 @@ components:
         mapping:
           webhook: "#/components/schemas/webhook_rule_response"
           generic.http: "#/components/schemas/generic_http_rule_response"
-          amqp: "#/components/schemas/amqp_rule_response"
           aws.kinesis: "#/components/schemas/aws_kinesis_rule_response"
           aws.sqs: "#/components/schemas/aws_sqs_rule_response"
           aws.lambda: "#/components/schemas/aws_lambda_rule_response"
@@ -1037,8 +1031,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1076,6 +1069,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     webhook_rule_patch:
       type: object
@@ -1090,8 +1084,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1137,8 +1130,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1196,6 +1188,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     generic_http_rule_post:
       type: object
@@ -1210,8 +1203,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1248,6 +1240,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     generic_http_rule_patch:
       type: object
@@ -1262,8 +1255,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1363,211 +1355,7 @@ components:
       required:
       - target
       - type
-      - source
-    amqp_rule_post:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type:
-          - string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-        routingKey:
-          type: string
-        type:
-          type: string
-          enum:
-          - amqp
-        request_mode:
-          type: string
-          enum:
-          - single
-          - batch
-        routeMandatory:
-          type: boolean
-          default: true
-        routePersistent:
-          type: boolean
-          default: true
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            name:
-              type: string
-              enum:
-              - internal_shared
-            region:
-              type: string
-              enum:
-              - us-east-1-a
-              - eu-west-1-a
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The Ably-hosted endpoint that is invoked when events occur on Ably.            
-      required:
-      - target
-      - routingKey
-      - type
-      - source
-    amqp_rule_patch:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type:
-          - string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-        routingKey:
-          type: string
-        type:
-          type: string
-          enum:
-          - amqp
-        request_mode:
-          type: string
-          enum:
-          - single
-          - batch
-        routeMandatory:
-          type: boolean
-          default: true
-        routePersistent:
-          type: boolean
-          default: true
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            name:
-              type: string
-              enum:
-              - internal_shared
-            region:
-              type: string
-              enum:
-              - us-east-1-a
-              - eu-west-1-a
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The Ably-hosted endpoint that is invoked when events occur on Ably.
-    amqp_rule_response:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type:
-          - string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-        routingKey:
-          type: string
-        type:
-          type: string
-          enum:
-          - amqp
-        request_mode:
-          type: string
-          enum:
-          - single
-          - batch
-        routeMandatory:
-          type: boolean
-          default: true
-        routePersistent:
-          type: boolean
-          default: true
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            name:
-              type: string
-              enum:
-              - internal_shared
-            region:
-              type: string
-              enum:
-              - us-east-1-a
-              - eu-west-1-a
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The Ably-hosted endpoint that is invoked when events occur on Ably.
-        id:
-          type: string
-        appId:
-          type: string
-        version:
-          type: string
-        status:
-          type: integer
-        created:
-          type: number
-          description: Unix timestamp representing the date and time of creation of the rule.
-        modified:
-          type: number
-          description: Unix timestamp representing the date and time of last modification of the rule.
-        _links:
-          type: object
-          nullable: true
-          description: A link self-referencing the rule that has been created.
-      required:
-      - target
-      - routingKey
-      - type
+      - format
       - source
     aws_kinesis_rule_post:
       type: object
@@ -1582,8 +1370,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1626,6 +1413,7 @@ components:
       - target
       - routingKey
       - type
+      - format
       - source
     aws_kinesis_rule_patch:
       type: object
@@ -1640,9 +1428,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
-          - 'null'
+          type: string
           enum:
           - json
           - msgpack
@@ -1691,8 +1477,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1753,6 +1538,7 @@ components:
       - target
       - routingKey
       - type
+      - format
       - source
     aws_sqs_rule_post:
       type: object
@@ -1767,8 +1553,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
@@ -1807,6 +1592,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     aws_sqs_rule_patch:
       type: object
@@ -1821,8 +1607,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
@@ -1868,8 +1653,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
@@ -1926,6 +1710,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     aws_lambda_rule_post:
       type: object
@@ -1940,8 +1725,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -1982,6 +1766,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     aws_lambda_rule_patch:
       type: object
@@ -1996,8 +1781,7 @@ components:
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
         format:
-          type:
-          - string
+          type: string
           enum:
           - json
           - msgpack
@@ -2104,6 +1888,7 @@ components:
       required:
       - target
       - type
+      - format
       - source
     namespace_post:
       type: object
