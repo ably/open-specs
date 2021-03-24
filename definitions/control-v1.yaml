@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.2
+  version: 1.0.3
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, rules, and more.
 servers:
@@ -966,6 +966,33 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error"
+  "/me":
+    get:
+      summary: Get token details
+      tags:
+      - tokens
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Token details
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/me"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+
 components:
   securitySchemes:
     bearer_auth:
@@ -2113,6 +2140,48 @@ components:
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the key.
+    me:
+      type: object
+      additionalProperties: false
+      properties:
+        token:
+          type: object
+          additionalProperties: false
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            capabilities:
+              type: array
+              items:
+                type: string
+          required:
+          - id
+          - name
+          - capabilities
+        user:
+          type: object
+          additionalProperties: false
+          properties:
+            id:
+              type: integer
+            email:
+              type: string
+          required:
+          - id
+          - email
+        account:
+          type: object
+          additionalProperties: false
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          required:
+          - id
+          - name
     error:
       type: object
       additionalProperties: false
