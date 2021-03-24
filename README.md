@@ -11,7 +11,7 @@ Each specification contains a version number. If a change is made that is breaki
 
 ## Installation
 
-The following command install the requirements (currently, only `http-server`):
+The following command installs the requirements (currently, only `http-server`):
 
 ```sh
 npm install
@@ -26,6 +26,30 @@ npm start
 ```
 
 Point your browser at http://localhost:8080. You can then select the API reference of your choice, rendered by [Redoc](https://github.com/Redocly/redoc).
+
+## Validating the specifications with Spectral
+
+You can validate the OAS3 specifications with Spectral. 
+
+To install Spectral:
+
+```
+npm install -g @stoplight/spectral
+```
+
+Or using Yarn:
+
+```
+yarn global add @stoplight/spectral
+```
+
+You can then validate your specification as required. For example, on the command-line enter:
+
+```
+spectral lint control-v1.yaml
+```
+
+This will then indicate any issues with the specification.
 
 ## Try out the REST APIs
 
