@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.3
+  version: 1.0.4
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, rules, and more.
 servers:
@@ -688,6 +688,177 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error"
+  "/apps/{app_id}/queues":
+    get:
+      summary: Lists queues
+      description: Lists the queues associated with the specified application ID.
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        description: The application ID.
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Queue list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/queue_response"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '503':
+          description: 503 Service unavailable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+    post:
+      summary: Creates a queue
+      description: Creates a queue for the application specified by application ID. The properties for the queue to be created are specified in the request body.
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        description: The application ID.
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Queue created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/queue_response"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/queue"
+  "/apps/{app_id}/queues/{queue_name}":
+    delete:
+      summary: Deletes a queue
+      description: Delete the queue with the specified queue name, from the application with the specified application ID.
+      tags:
+      - queues
+      parameters:
+      - name: app_id
+        description: The application ID.
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: queue_name
+        description: The queue name.
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: Queue deleted
+          content: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '404':
+          description: App not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+        '503':
+          description: 503 Service unavailable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        description: The queue endpoint.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/queue_endpoint"
   "/apps/{app_id}/rules":
     get:
       summary: Lists reactor rules
@@ -1915,6 +2086,73 @@ components:
       - type
       - format
       - source
+    queue:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        ttl:
+          type: integer
+        maxLength:
+          type: integer
+        region:
+          type: string
+      required:
+      - name
+      - ttl
+      - maxLength
+      - region
+    queue_endpoint:
+      type: object
+      additionalProperties: false
+      properties:
+        endpointServer:
+          type: string
+        endpointVhost:
+          type: string
+      required:
+      - endpointServer
+      - endpointVhost
+    queue_response:
+      type: object
+      additionalProperties: false
+      properties:
+        endpoint_friendly_name:
+          type: string
+        endpoint_server:
+          type: string
+        endpoint_host:
+          type: string
+        region:
+          type: string
+        name:
+          type: string
+        vhost:
+          type: string
+        state:
+          type: string
+        messages_ready:
+          type: integer
+          nullable: true
+        messages_unacknowledged:
+          type: integer
+          nullable: true
+        messages:
+          type: integer
+          nullable: true
+        ttl:
+          type: integer
+        maxLength:
+          type: integer
+        app_name:
+          type: string
+        app_api_id:
+          type: string
+        friendly_name:
+          type: string
+        deadletter:
+          type: boolean
     namespace_post:
       type: object
       additionalProperties: false
