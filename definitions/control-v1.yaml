@@ -2,9 +2,12 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.4
+  version: 1.0.5
   description: |
-    Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, rules, and more.
+    Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
+
+    Detailed documentation on using this API can be found <a href="https://ably.com/documentation/control-api">here</a>.
+
 servers:
 - url: https://control.ably.net/v1
 paths:
@@ -202,8 +205,8 @@ paths:
                 "$ref": "#/components/schemas/error"
   "/apps/{id}/pkcs12":
     post:
-      summary: Updates app's APNS info from a .p12 file
-      description: Updates the application's Apple Push Notification Service (APNS) information.
+      summary: Updates app's APNs info from a .p12 file
+      description: Updates the application's Apple Push Notification service (APNs) information.
       tags:
       - apps
       parameters:
@@ -427,7 +430,7 @@ paths:
   "/apps/{app_id}/keys/{key_id}/revoke":
     post:
       summary: Revokes a key
-      description: Revokes the API key with the specified ID, with the Application ID.
+      description: Revokes the API key with the specified ID, with the Application ID. This deletes the key.
       tags:
       - keys
       parameters:
@@ -861,7 +864,7 @@ paths:
               "$ref": "#/components/schemas/queue_endpoint"
   "/apps/{app_id}/rules":
     get:
-      summary: Lists reactor rules
+      summary: Lists Reactor rules
       description: Lists the rules for the application specified by the application ID.
       tags:
       - rules
@@ -908,7 +911,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
     post:
-      summary: Creates a reactor rule
+      summary: Creates a Reactor rule
       description: Creates a rule for the application with the specified application ID. 
       tags:
       - rules
@@ -972,7 +975,7 @@ paths:
               "$ref": "#/components/schemas/rule_post"
   "/apps/{app_id}/rules/{rule_id}":
     get:
-      summary: Gets a reactor rule by ID
+      summary: Gets a reactor rule by rule ID
       description: Returns the rule specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
@@ -1023,7 +1026,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
     patch:
-      summary: Updates a reactor rule
+      summary: Updates a Reactor rule
       tags:
       - rules
       parameters:
@@ -1091,7 +1094,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/rule_patch"
     delete:
-      summary: Deletes a reactor rule
+      summary: Deletes a Reactor rule
       tags:
       - rules
       parameters:
@@ -1169,6 +1172,7 @@ components:
     bearer_auth:
       type: http
       scheme: bearer
+      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found <a href="https://ably.com/documentation/control-api/#authentication">here</a>.
   schemas:
     rule_post:
       oneOf:
@@ -2286,27 +2290,35 @@ components:
       additionalProperties: false
       properties:
         id:
+          description: The application ID.
           type: string
         name:
+          description: The application name.
           type: string
         status:
+          description: The application status. Disabled applications will not accept new connections and will return an error to all clients.
           type: string
           enum:
           - enabled
           - disabled
         tlsOnly:
+          description: Enforce TLS for all connections. This setting overrides any channel setting.
           type: boolean
           nullable: true
         enablePusherCompatibility:
+          description: Enables Pusher protocol adapter. Disabled by default. More information is available <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
           type: boolean
           nullable: true
         fcmKey:
+          description: 
           type: string
           nullable: true
         apnsCertificate:
+          description: Apple Push Notification service certificate.
           type: string
           nullable: true
         apnsUseSandboxEndpoint:
+          description: Apple Push Notification service endpoint.
           type: boolean
           nullable: true
         _links:
@@ -2318,10 +2330,13 @@ components:
       additionalProperties: false
       properties:
         name:
+          description: The name for your API key. This is a friendly name for your reference.
           type: string
         channels:
+          description: Specify the channels and queues that this key can be used with.
           type: string
         capabilities:
+          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
           type: array
           items:
             type: string
@@ -2343,10 +2358,13 @@ components:
       additionalProperties: false
       properties:
         name:
+          description: The name for your API key. This is a friendly name for your reference.
           type: string
         channels:
+          description: Specify the channels and queues that this key can be used with.
           type: string
         capabilities:
+          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
           type: array
           items:
             type: string
@@ -2363,21 +2381,40 @@ components:
       type: object
       additionalProperties: false
       properties:
+        appId:
+          description: The application ID which this key is associated with.
+          type: string
         id:
+          description: The key ID.
           type: string
         name:
+          description: The name of the application this key is associated with.
           type: string
-        whole_key:
+        key:
+          description: The complete API key including API secret.
           type: string
-        channels:
-          type: string
-        capabilities:
-          type: array
-          items:
-            type: string
+        capability:
+          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              enum:
+              - publish
+              - subscribe
+              - history
+              - presence
+              - channel-metadata
+              - push-admin
+              - push-subscribe
+              - statistics        
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the key.
+        modified:
+          type: integer
+          description: Unix timestamp representing the date and time of the last modification of the key.
     me:
       type: object
       additionalProperties: false
