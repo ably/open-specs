@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.6
+  version: 1.0.7
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -2141,12 +2141,20 @@ components:
       properties:
         name:
           type: string
+          description: A friendly name for your queue.
+          example: My queue
         ttl:
           type: integer
+          description: TTL in minutes.
+          example: 60
         maxLength:
           type: integer
+          description: Message limit in number of messages.
+          example: 10000
         region:
           type: string
+          description: The data center region. US East (Virginia) or EU West (Ireland). Values are `us-east-1-a` or `eu-west-1-a`.
+          example: us-east-1-a
       required:
       - name
       - ttl
@@ -2158,8 +2166,12 @@ components:
       properties:
         endpointServer:
           type: string
+          description: The queue endpoint server.
+          example: eu-west-1-a-queue.ably.io:15671
         endpointVhost:
           type: string
+          description: The queue endpoint virtual host.
+          example: shared
       required:
       - endpointServer
       - endpointVhost
@@ -2169,39 +2181,71 @@ components:
       properties:
         endpoint_friendly_name:
           type: string
+          description: The friendly name of the queue endpoint.
+          example: EU West (Ireland)
         endpoint_server:
           type: string
+          description: The queue server endpoint.
+          example: eu-west-1-a-queue.ably.io:15671
         endpoint_host:
           type: string
+          description: The queue endpoint host.
+          example: eu-west-1-a-queue.ably.io
         region:
           type: string
+          description: The data center region for the queue.
+          example: eu-west-1-a
         name:
           type: string
+          description: The friendly name of the queue.
+          example: 28GY6w:My queue
         vhost:
           type: string
+          description: The virtual host.
+          example: shared
         state:
           type: string
+          description: The current state of the queue.
+          example: Running
         messages_ready:
           type: integer
           nullable: true
+          description: The number of ready messages in the queue.
+          example: 0
         messages_unacknowledged:
           type: integer
           nullable: true
+          description: The number of unacknowledged messages in the queue.
+          example: 0
         messages:
           type: integer
           nullable: true
+          description: The number of messages in the queue
+          example: 0
         ttl:
           type: integer
+          description: TTL in minutes.
+          example: 60
         maxLength:
           type: integer
+          description: Message limit in number of messages.
+          example: 10000
         app_name:
           type: string
+          description: The application name.
+          example: Default
         app_api_id:
           type: string
+          description: The application ID.
+          example: 28GY6w
         friendly_name:
           type: string
+          description: The friendly name for the queue.
+          example: Default (28GY6w) - My queue
         deadletter:
           type: boolean
+          description: A boolean that indicates whether this is a dead letter queue or not.
+          example: false
     namespace_post:
       type: object
       additionalProperties: false
