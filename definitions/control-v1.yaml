@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.5
+  version: 1.0.6
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1240,6 +1240,7 @@ components:
         keyId:
           type: string
           nullable: true
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1293,6 +1294,7 @@ components:
         keyId:
           type: string
           nullable: true
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1339,6 +1341,7 @@ components:
         keyId:
           type: string
           nullable: true
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1371,11 +1374,13 @@ components:
           description: The rule ID.
         appId:
           type: string
-          description: TODO - I don't seem to receive this in the response when creating a webhook rule.
+          description: The application ID.
         version:
           type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
           type: integer
+          description: The status of the rule. Rules can be enabled or disabled.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1412,7 +1417,7 @@ components:
         keyId:
           type: string
           nullable: true
-          description: TODO
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1464,6 +1469,7 @@ components:
         keyId:
           type: string
           nullable: true
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1474,7 +1480,7 @@ components:
           type: string
           enum:
           - generic.http
-          description: TODO
+          description: The rule type.
         headers:
           type: array
           items:
@@ -1509,6 +1515,7 @@ components:
         keyId:
           type: string
           nullable: true
+          description: API key ID.
         source:
           type: string
           enum:
@@ -1536,12 +1543,16 @@ components:
           description: The endpoint that is invoked when events occur on Ably.        
         id:
           type: string
+          description: The Reactor rule ID.
         appId:
           type: string
+          description: The application ID that this rule applies to.
         version:
           type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
           type: integer
+          description: The status of the rule. Rules can be enabled or disabled.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1583,28 +1594,34 @@ components:
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
+          description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
         type:
           type: string
           enum:
           - aws.kinesis
+          description: The type of the rule being created.
         request_mode:
           type: string
           enum:
           - single
           - batch
+          description: This will either be in Single Request mode or Batch Request mode. Single Request will send each event as separately to the endpoint specified by the Rule. Batch Request will roll up multiple events in the same request. You can read more about the difference between single and batched events <a href="https://ably.com/documentation/general/events#batching">here</a>.
         target:
           type: object
           additionalProperties: false
           properties:
             awsCredentials:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
+              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             streamName:
               type: string
+              description: The stream name you chose for your AWS Kinesis Stream.
           required:
           - streamName
           - awsRegion
@@ -1641,15 +1658,18 @@ components:
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
         routingKey:
           type: string
+          description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
         type:
           type: string
           enum:
           - aws.kinesis
+          description: The type of the rule being created.
         request_mode:
           type: string
           enum:
           - single
           - batch
+          description: This will either be in Single Request mode or Batch Request mode. Single Request will send each event as separately to the endpoint specified by the Rule. Batch Request will roll up multiple events in the same request. You can read more about the difference between single and batched events <a href="https://ably.com/documentation/general/events#batching">here</a>.        
         target:
           type: object
           additionalProperties: false
@@ -1659,10 +1679,13 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             streamName:
               type: string
+              description: The stream name you chose for your AWS Kinesis Stream.
           description: The endpoint that is invoked when events occur on Ably.
     aws_kinesis_rule_response:
       type: object
@@ -1708,22 +1731,25 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             streamName:
               type: string
+              description: The stream name you chose for your AWS Kinesis Stream.
           required:
           - streamName
           - awsRegion
           description: The endpoint that is invoked when events occur on Ably.        
         id:
           type: string
-        appId:
-          type: string
         version:
           type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
           type: integer
+          description: The status of the rule. Rules can be enabled or disabled.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1780,8 +1806,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             url:
               type: string
               description: The URL of the endpoint that is invoked when events occur on Ably.
@@ -1834,8 +1862,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             url:
               type: string
               description: The URL of the endpoint that is invoked when events occur on Ably.
@@ -1880,8 +1910,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             url:
               type: string
               description: The URL of the endpoint that is invoked when events occur on Ably.
@@ -1891,12 +1923,16 @@ components:
           description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
+          description: The Rule ID.
         appId:
           type: string
+          description: The application ID that this rule applies to.
         version:
           type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
           type: integer
+          description: The status of the rule. Rules can be enabled or disabled.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1953,8 +1989,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             functionName:
               type: string
             qualifier:
@@ -2009,8 +2047,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             functionName:
               type: string
             qualifier:
@@ -2057,8 +2097,10 @@ components:
               description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
             assumeRoleArn:
               type: string
+              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
             awsRegion:
               type: string
+              description: The region you chose for your AWS Kinesis Stream.
             functionName:
               type: string
             qualifier:
@@ -2071,10 +2113,13 @@ components:
           type: string
         appId:
           type: string
+          description: The application ID that this rule applies to.
         version:
           type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
           type: integer
+          description: The status of the rule. Rules can be enabled or disabled.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
