@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.8
+  version: 1.0.9
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -205,7 +205,7 @@ paths:
                 "$ref": "#/components/schemas/error"
   "/apps/{id}/pkcs12":
     post:
-      summary: Updates app's APNs info from a .p12 file
+      summary: Updates app's APNs info from a `.p12` file
       description: Updates the application's Apple Push Notification service (APNs) information.
       tags:
       - apps
@@ -2355,31 +2355,46 @@ components:
       properties:
         name:
           type: string
+          description: The name of the application for your reference only.
+          example: My App
         status:
           type: string
+          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
+          example: enabled
           enum:
           - enabled
           - disabled
         tlsOnly:
           type: boolean
           nullable: true
+          description: Enforce TLS for all connections.
+          example: true
         enablePusherCompatibility:
           type: boolean
           nullable: true
+          description: Enables Pusher protocol support.
+          example: false
         fcmKey:
           type: string
           nullable: true
+          description: TODO
+          example: false
         setupPusherNamespaces:
           type: boolean
+          description: TODO
+          example: false
         apnsCertificate:
           type: string
           nullable: true
+          description: The Apple Push Notification service certificate.
         apnsPrivateKey:
           type: string
           nullable: true
+          description: The Apple Push Notification service private key.
         apnsUseSandboxEndpoint:
           type: boolean
           nullable: true
+          description: The Apple Push Notification service sandbox endpoint.
       required:
       - name
     app_patch:
@@ -2388,31 +2403,46 @@ components:
       properties:
         name:
           type: string
+          description: The name of the application for your reference only.
+          example: My App
         status:
           type: string
+          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
+          example: enabled
           enum:
           - enabled
           - disabled
         tlsOnly:
           type: boolean
           nullable: true
+          description: Enforce TLS for all connections.
+          example: true
         enablePusherCompatibility:
           type: boolean
           nullable: true
+          description: Enables Pusher protocol support.
+          example: false
         fcmKey:
           type: string
           nullable: true
+          description: TODO
+          example: false
         setupPusherNamespaces:
           type: boolean
+          description: TODO
+          example: false
         apnsCertificate:
           type: string
           nullable: true
+          description: The Apple Push Notification service certificate.
         apnsPrivateKey:
           type: string
           nullable: true
+          description: The Apple Push Notification service private key.
         apnsUseSandboxEndpoint:
           type: boolean
           nullable: true
+          description: The Apple Push Notification service sandbox endpoint.
     app_pkcs12:
       type: object
       additionalProperties: false
@@ -2420,8 +2450,10 @@ components:
         p12File:
           type: string
           format: binary
+          description: The `.p12` file containing the app's APNs information. 
         p12Pass:
           type: string
+          description: The password for the corresponding `.p12` file. 
       required:
       - p12File
       - p12Pass
@@ -2565,10 +2597,16 @@ components:
           properties:
             id:
               type: integer
+              description: The token ID.
+              example: 118
             name:
               type: string
+              description: The friendly name for the token.
+              example: My Token
             capabilities:
               type: array
+              description: An array containing the access capabilities associated with the access token.
+              example: [write:namespace, read:namespace, write:queue, read:queue, write:rule, read:rule, write:key, read:key, write:app, read:app]
               items:
                 type: string
           required:
@@ -2581,8 +2619,11 @@ components:
           properties:
             id:
               type: integer
+              description: The user ID associated with the account.
+              example: 12150
             email:
               type: string
+              description: Email address of the user associated with the account.
           required:
           - id
           - email
@@ -2592,8 +2633,12 @@ components:
           properties:
             id:
               type: string
+              description: The account ID.
+              example: VpWaOA
             name:
               type: string
+              description: The name of the account.
+              example: Free account
           required:
           - id
           - name
