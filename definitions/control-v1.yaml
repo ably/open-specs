@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.7
+  version: 1.0.8
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -2252,18 +2252,33 @@ components:
       properties:
         id:
           type: string
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          example: namespace
         authenticated:
           type: boolean
           default: false
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          example: false
         persisted:
           type: boolean
           default: false
+          description: If `true`, all messages on a channel will be stored for 24 hours. You can access stored messages via the History API. Please note that for each message stored, an additional message is deducted from your monthly allocation.
+          example: false
+        persistLast:
+          type: boolean
+          default: false
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          example: false
         pushEnabled:
           type: boolean
           default: false
+          description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
+          example: false
         tlsOnly:
           type: boolean
           default: false
+          description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
+          example: false
       required:
       - id
     namespace_patch:
@@ -2272,32 +2287,68 @@ components:
       properties:
         authenticated:
           type: boolean
+          default: false
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          example: false
         persisted:
           type: boolean
+          default: false
+          description: If `true`, all messages on a channel will be stored for 24 hours. You can access stored messages via the History API. Please note that for each message stored, an additional message is deducted from your monthly allocation.
+          example: false
+        persistLast:
+          type: boolean
+          default: false
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          example: false
         pushEnabled:
           type: boolean
+          default: false
+          description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
+          example: false
         tlsOnly:
           type: boolean
+          default: false
+          description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
+          example: false
     namespace_response:
       type: object
       additionalProperties: false
       properties:
         authenticated:
           type: boolean
+          default: false
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          example: false
         created:
           type: integer
-          description: Unix timestamp representing the date and time of creation of the rule.
+          description: Unix timestamp representing the date and time of creation of the namespace.
         modified:
           type: integer
-          description: Unix timestamp representing the date and time of last modification of the rule.
+          description: Unix timestamp representing the date and time of last modification of the namespace.
         id:
           type: string
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          example: namespace
         persisted:
           type: boolean
+          default: false
+          description: If `true`, all messages on a channel will be stored for 24 hours. You can access stored messages via the History API. Please note that for each message stored, an additional message is deducted from your monthly allocation.
+          example: false
+        persistLast:
+          type: boolean
+          default: false
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          example: false
         pushEnabled:
           type: boolean
+          default: false
+          description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
+          example: false
         tlsOnly:
           type: boolean
+          default: false
+          description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
+          example: false
     app_post:
       type: object
       additionalProperties: false
