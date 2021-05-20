@@ -2482,7 +2482,7 @@ components:
           type: boolean
           nullable: true
         fcmKey:
-          description: 
+          description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
         apnsCertificate:
@@ -2648,15 +2648,20 @@ components:
       properties:
         message:
           type: string
+          description: The error message.
         code:
           type: integer
+          description: The HTTP status code returned.
         statusCode:
           type: integer
+          description: The Ably error code.
         href:
           type: string
+          description: The URL to documentation about the error code.
         details:
           type: object
           nullable: true
+          description: Any additional details about the error message.
       required:
       - message
       - code
