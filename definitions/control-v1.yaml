@@ -1231,12 +1231,14 @@ components:
           type: boolean
           nullable: true
           description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+          example: true
         format:
           type: string
           enum:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1248,6 +1250,7 @@ components:
           - channel.presence
           - channel.lifecycle
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1291,6 +1294,7 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1302,6 +1306,7 @@ components:
           - channel.presence
           - channel.lifecycle
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
           type: string
@@ -1338,6 +1343,7 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1349,6 +1355,7 @@ components:
           - channel.presence
           - channel.lifecycle
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1384,13 +1391,16 @@ components:
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
         modified:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
         _links:
           type: object
           nullable: true
           description: A link self-referencing the rule that has been created.
+          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
       - target
       - type
@@ -1414,6 +1424,7 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1424,6 +1435,7 @@ components:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1466,6 +1478,7 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1476,6 +1489,7 @@ components:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1512,6 +1526,7 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         keyId:
           type: string
           nullable: true
@@ -1522,6 +1537,7 @@ components:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1556,13 +1572,16 @@ components:
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
         modified:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
         _links:
           type: object
           nullable: true
           description: A link self-referencing the rule that has been created.
+          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
       - target
       - type
@@ -1586,12 +1605,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         routingKey:
           type: string
           description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
@@ -1650,12 +1671,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         routingKey:
           type: string
           description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
@@ -1705,12 +1728,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         routingKey:
           type: string
         type:
@@ -1753,13 +1778,16 @@ components:
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
         modified:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
         _links:
           type: object
           nullable: true
           description: A link self-referencing the rule that has been created.
+          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
       - target
       - routingKey
@@ -1783,12 +1811,14 @@ components:
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1839,12 +1869,14 @@ components:
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1887,12 +1919,14 @@ components:
           enum:
           - json
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -1936,13 +1970,16 @@ components:
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
         modified:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
         _links:
           type: object
           nullable: true
           description: A link self-referencing the rule that has been created.
+          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
       - target
       - type
@@ -1966,12 +2003,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -2024,12 +2063,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -2074,12 +2115,14 @@ components:
           - json
           - msgpack
           description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+          example: json
         source:
           type: string
           enum:
           - channel.message
           - channel.presence
           description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          example: channel.message
         type:
           type: string
           enum:
@@ -2123,13 +2166,16 @@ components:
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
         modified:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
         _links:
           type: object
           nullable: true
           description: A link self-referencing the rule that has been created.
+          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
       - target
       - type
@@ -2198,7 +2244,7 @@ components:
         name:
           type: string
           description: The friendly name of the queue.
-          example: 28GY6w:My queue
+          example: 28AB6w:My queue
         vhost:
           type: string
           description: The virtual host.
@@ -2237,11 +2283,11 @@ components:
         app_api_id:
           type: string
           description: The application ID.
-          example: 28GY6w
+          example: 28AB6w
         friendly_name:
           type: string
           description: The friendly name for the queue.
-          example: Default (28GY6w) - My queue
+          example: Default (28AB6w) - My queue
         deadletter:
           type: boolean
           description: A boolean that indicates whether this is a dead letter queue or not.
@@ -2322,9 +2368,11 @@ components:
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the namespace.
+          example: 1602844091815
         modified:
           type: integer
           description: Unix timestamp representing the date and time of last modification of the namespace.
+          example: 1614679682091
         id:
           type: string
           description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
@@ -2375,13 +2423,13 @@ components:
           description: Enables Pusher protocol support.
           example: false
         fcmKey:
+          description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          description: TODO
           example: false
         setupPusherNamespaces:
           type: boolean
-          description: TODO
+          description: Map Pusher namespaces to Ably namespaces. See more <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
           example: false
         apnsCertificate:
           type: string
@@ -2423,13 +2471,13 @@ components:
           description: Enables Pusher protocol support.
           example: false
         fcmKey:
+          description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          description: TODO
           example: false
         setupPusherNamespaces:
           type: boolean
-          description: TODO
+          description: Map Pusher namespaces to Ably namespaces. See more <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
           example: false
         apnsCertificate:
           type: string
@@ -2485,6 +2533,7 @@ components:
           description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
+          example: false
         apnsCertificate:
           description: Apple Push Notification service certificate.
           type: string
@@ -2584,9 +2633,11 @@ components:
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the key.
+          example: 1602844091815
         modified:
           type: integer
           description: Unix timestamp representing the date and time of the last modification of the key.
+          example: 1614679682091
     me:
       type: object
       additionalProperties: false
