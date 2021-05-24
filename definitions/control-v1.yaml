@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.9
+  version: 1.0.10
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -2648,8 +2648,8 @@ components:
           properties:
             id:
               type: integer
-              description: The token ID.
-              example: 118
+              description: The token ID. This is a UUID.
+              example: C95837C9-184B-4CC2-8779-B769F960FADB
             name:
               type: string
               description: The friendly name for the token.
