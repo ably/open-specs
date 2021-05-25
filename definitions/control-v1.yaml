@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.10
+  version: 1.0.11
   description: |
     Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -801,7 +801,7 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/queue"
-  "/apps/{app_id}/queues/{queue_name}":
+  "/apps/{app_id}/queues/{queue_id}":
     delete:
       summary: Deletes a queue
       description: Delete the queue with the specified queue name, from the application with the specified application ID.
@@ -814,8 +814,8 @@ paths:
         required: true
         schema:
           type: string
-      - name: queue_name
-        description: The queue name.
+      - name: queue_id
+        description: The queue ID.
         in: path
         required: true
         schema:
@@ -856,12 +856,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error"
-      requestBody:
-        description: The queue endpoint.
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/queue_endpoint"
   "/apps/{app_id}/rules":
     get:
       summary: Lists Reactor rules
@@ -2206,68 +2200,94 @@ components:
       - ttl
       - maxLength
       - region
-    queue_endpoint:
-      type: object
-      additionalProperties: false
-      properties:
-        endpointServer:
-          type: string
-          description: The queue endpoint server.
-          example: eu-west-1-a-queue.ably.io:15671
-        endpointVhost:
-          type: string
-          description: The queue endpoint virtual host.
-          example: shared
-      required:
-      - endpointServer
-      - endpointVhost
     queue_response:
       type: object
       additionalProperties: false
       properties:
-        endpoint_friendly_name:
+        id: 
           type: string
-          description: The friendly name of the queue endpoint.
-          example: EU West (Ireland)
-        endpoint_server:
+          description: The ID of the queue
+          example: 28AB6w:us-east-1-a:My queue
+        appId:
           type: string
-          description: The queue server endpoint.
-          example: eu-west-1-a-queue.ably.io:15671
-        endpoint_host:
+          description: The application ID.
+          example: 28AB6w
+        name:
           type: string
-          description: The queue endpoint host.
-          example: eu-west-1-a-queue.ably.io
+          description: The friendly name of the queue.
+          example: My queue
         region:
           type: string
           description: The data center region for the queue.
           example: eu-west-1-a
-        name:
-          type: string
-          description: The friendly name of the queue.
-          example: 28AB6w:My queue
-        vhost:
-          type: string
-          description: The virtual host.
-          example: shared
+        amqp:
+          type: object
+          additionalProperties: false
+          properties:
+            uri:
+              type: string
+              description: URI for the AMQP queue interface.
+              example: amqps://us-east-1-a-queue.ably.io:5671/shared
+            queueName:
+              type: string        
+              description: Name of the queue.
+              example: 28AB6w:My queue
+        stomp:
+          type: object
+          additionalProperties: false
+          properties:
+            uri:
+              type: string
+              description: URI for the STOMP queue interface.
+              example: stomp://us-east-1-a-queue.ably.io:61614
+            host:
+              type: string
+              description: The host type for the queue.
+              example: shared
+            destination:
+              type: string
+              description: Destination queue.
+              example: /amqp/queue/28AB6w:My queue
         state:
           type: string
           description: The current state of the queue.
           example: Running
-        messages_ready:
-          type: integer
-          nullable: true
-          description: The number of ready messages in the queue.
-          example: 0
-        messages_unacknowledged:
-          type: integer
-          nullable: true
-          description: The number of unacknowledged messages in the queue.
-          example: 0
         messages:
-          type: integer
-          nullable: true
-          description: The number of messages in the queue
-          example: 0
+          type: object
+          additionalProperties: false
+          description: Details of messages in the queue.
+          properties:
+            ready:
+              type: integer
+              nullable: true
+              description: The number of ready messages in the queue.
+              example: 0
+            unacknowledged:
+              type: integer
+              nullable: true
+              description: The number of unacknowledged messages in the queue.
+              example: 0
+            total:
+              type: integer
+              nullable: true
+              description: The total number of messages in the queue.
+              example: 0
+        stats:
+          type: object
+          additionalProperties: false
+          properties:
+            publishRate:
+              type: number
+              nullable: true
+              description: The rate at which messages are published to the queue. Rate is messages per minute.
+            deliveryRate:
+              type: number
+              nullable: true
+              description: The rate at which messages are delivered from the queue. Rate is messages per minute.
+            acknowledgementRate:
+              type: number
+              nullable: true
+              description: The rate at which messages are acknowledged. Rate is messages per minute.
         ttl:
           type: integer
           description: TTL in minutes.
@@ -2276,22 +2296,15 @@ components:
           type: integer
           description: Message limit in number of messages.
           example: 10000
-        app_name:
-          type: string
-          description: The application name.
-          example: Default
-        app_api_id:
-          type: string
-          description: The application ID.
-          example: 28AB6w
-        friendly_name:
-          type: string
-          description: The friendly name for the queue.
-          example: Default (28AB6w) - My queue
         deadletter:
           type: boolean
           description: A boolean that indicates whether this is a dead letter queue or not.
           example: false
+        deadletterId:
+          type: string
+          description: 
+          nullable: true
+          example: 28AB6w:us-east-1-a:deadletter
     namespace_post:
       type: object
       additionalProperties: false
