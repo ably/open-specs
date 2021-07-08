@@ -2,18 +2,16 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.11
+  version: 1.0.12
   description: |
-    Ably allows you to manage your account using the Control API. Use Control API to manage your applications, namespaces, keys, queues, rules, and more.
+    Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
-    Detailed documentation on using this API can be found <a href="https://ably.com/documentation/control-api">here</a>.
-
+    Detailed information on using this API can be found in the Ably <a href="https://ably.com/documentation/control-api">developer documentation</a>.
 servers:
 - url: https://control.ably.net/v1
 paths:
   "/accounts/{account_id}/apps":
     get:
-      operationId: listApps
       summary: Lists apps
       description: List all applications for the specified account ID.
       tags:
@@ -29,7 +27,7 @@ paths:
       - bearer_auth: []
       responses:
         '200':
-          description: List of apps returned
+          description: List of apps for the specified account are returned
           content:
             application/json:
               schema:
@@ -1166,222 +1164,48 @@ components:
     bearer_auth:
       type: http
       scheme: bearer
-      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found <a href="https://ably.com/documentation/control-api/#authentication">here</a>.
+      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found in the <a href="https://ably.com/documentation/control-api/#authentication">Ably documentation</a>.
   schemas:
-    rule_post:
-      oneOf:
-      - "$ref": "#/components/schemas/webhook_rule_post"
-      - "$ref": "#/components/schemas/generic_http_rule_post"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_post"
-      - "$ref": "#/components/schemas/aws_sqs_rule_post"
-      - "$ref": "#/components/schemas/aws_lambda_rule_post"
-      discriminator:
-        propertyName: type
-        mapping:
-          webhook: "#/components/schemas/webhook_rule_post"
-          generic.http: "#/components/schemas/generic_http_rule_post"
-          aws.kinesis: "#/components/schemas/aws_kinesis_rule_post"
-          aws.sqs: "#/components/schemas/aws_sqs_rule_post"
-          aws.lambda: "#/components/schemas/aws_lambda_rule_post"
-    rule_patch:
-      oneOf:
-      - "$ref": "#/components/schemas/webhook_rule_patch"
-      - "$ref": "#/components/schemas/generic_http_rule_patch"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_patch"
-      - "$ref": "#/components/schemas/aws_sqs_rule_patch"
-      - "$ref": "#/components/schemas/aws_lambda_rule_patch"
-      discriminator:
-        propertyName: type
-        mapping:
-          webhook: "#/components/schemas/webhook_rule_patch"
-          generic.http: "#/components/schemas/generic_http_rule_patch"
-          aws.kinesis: "#/components/schemas/aws_kinesis_rule_patch"
-          aws.sqs: "#/components/schemas/aws_sqs_rule_patch"
-          aws.lambda: "#/components/schemas/aws_lambda_rule_patch"
-    rule_response:
-      oneOf:
-      - "$ref": "#/components/schemas/webhook_rule_response"
-      - "$ref": "#/components/schemas/generic_http_rule_response"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_response"
-      - "$ref": "#/components/schemas/aws_sqs_rule_response"
-      - "$ref": "#/components/schemas/aws_lambda_rule_response"
-      discriminator:
-        propertyName: type
-        mapping:
-          webhook: "#/components/schemas/webhook_rule_response"
-          generic.http: "#/components/schemas/generic_http_rule_response"
-          aws.kinesis: "#/components/schemas/aws_kinesis_rule_response"
-          aws.sqs: "#/components/schemas/aws_sqs_rule_response"
-          aws.lambda: "#/components/schemas/aws_lambda_rule_response"
-    webhook_rule_post:
+    rule_source:
       type: object
       additionalProperties: false
       properties:
         channelFilter:
           type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-          example: true
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
-          type: string
-          nullable: true
-          description: API key ID.
-        source:
+          description: This field allows you to filter your rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the rule to apply to all channels.
+        type:
           type: string
           enum:
           - channel.message
           - channel.presence
           - channel.lifecycle
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
           example: channel.message
-        type:
-          type: string
-          enum:
-          - webhook
-          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably. 
-          required:
-          - url
-          description: The endpoint that is invoked when events occur on Ably.
       required:
-      - target
+      - channelFilter
       - type
-      - format
-      - source
-    webhook_rule_patch:
+    rule_attributes:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
-          type: string
-          nullable: true
-          description: API key ID.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          - channel.lifecycle
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
-          type: string
-          enum:
-          - webhook
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The endpoint that is invoked when events occur on Ably.
-    webhook_rule_response:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
-          type: string
-          nullable: true
-          description: API key ID.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          - channel.lifecycle
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - webhook
-          description: The webhook rule type. Triggers an HTTP callback to an endpoint of your choosing when events occur on your Ably channels.
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          required:
-          - url
-          description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
           description: The rule ID.
+          example: 83IzAB
         appId:
           type: string
           description: The application ID.
+          example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
-          type: integer
+          type: string
+          enum:
+          - enabled
+          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1390,55 +1214,112 @@ components:
           type: number
           description: Unix timestamp representing the date and time of last modification of the rule.
           example: 1614679682091
-        _links:
-          type: object
-          nullable: true
-          description: A link self-referencing the rule that has been created.
-          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
-      required:
-      - target
-      - type
-      - format
-      - source
-    generic_http_rule_post:
+    rule_post:
+      oneOf:
+      - "$ref": "#/components/schemas/http_rule_post"
+      - "$ref": "#/components/schemas/ifttt_rule_post"
+      - "$ref": "#/components/schemas/zapier_rule_post"
+      - "$ref": "#/components/schemas/cloudflare_worker_rule_post"
+      - "$ref": "#/components/schemas/azure_function_rule_post"
+      - "$ref": "#/components/schemas/google_cloud_function_rule_post"
+      - "$ref": "#/components/schemas/aws_lambda_rule_post"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_post"
+      - "$ref": "#/components/schemas/aws_sqs_rule_post"
+      - "$ref": "#/components/schemas/amqp_rule_post"
+      - "$ref": "#/components/schemas/amqp_external_rule_post"
+      discriminator:
+        propertyName: ruleType
+        mapping:
+          http: "#/components/schemas/http_rule_post"
+          http/ifttt: "#/components/schemas/ifttt_rule_post"
+          http/zapier: "#/components/schemas/zapier_rule_post"
+          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_post"
+          http/azure-function: "#/components/schemas/azure_function_rule_post"
+          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_post"
+          aws/lambda: "#/components/schemas/aws_lambda_rule_post"
+          aws/kinesis: "#/components/schemas/aws_kinesis_rule_post"
+          aws/sqs: "#/components/schemas/aws_sqs_rule_post"
+          amqp: "#/components/schemas/amqp_rule_post"
+          amqp/external: "#/components/schemas/amqp_external_rule_post"
+    rule_patch:
+      oneOf:
+      - "$ref": "#/components/schemas/http_rule_patch"
+      - "$ref": "#/components/schemas/ifttt_rule_patch"
+      - "$ref": "#/components/schemas/zapier_rule_patch"
+      - "$ref": "#/components/schemas/cloudflare_worker_rule_patch"
+      - "$ref": "#/components/schemas/azure_function_rule_patch"
+      - "$ref": "#/components/schemas/google_cloud_function_rule_patch"
+      - "$ref": "#/components/schemas/aws_lambda_rule_patch"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_patch"
+      - "$ref": "#/components/schemas/aws_sqs_rule_patch"
+      - "$ref": "#/components/schemas/amqp_rule_patch"
+      - "$ref": "#/components/schemas/amqp_external_rule_patch"
+      discriminator:
+        propertyName: ruleType
+        mapping:
+          http: "#/components/schemas/http_rule_patch"
+          http/ifttt: "#/components/schemas/ifttt_rule_patch"
+          http/zapier: "#/components/schemas/zapier_rule_patch"
+          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_patch"
+          http/azure-function: "#/components/schemas/azure_function_rule_patch"
+          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_patch"
+          aws/lambda: "#/components/schemas/aws_lambda_rule_patch"
+          aws/kinesis: "#/components/schemas/aws_kinesis_rule_patch"
+          aws/sqs: "#/components/schemas/aws_sqs_rule_patch"
+          amqp: "#/components/schemas/amqp_rule_patch"
+          amqp/external: "#/components/schemas/amqp_external_rule_patch"
+    rule_response:
+      oneOf:
+      - "$ref": "#/components/schemas/http_rule_response"
+      - "$ref": "#/components/schemas/ifttt_rule_response"
+      - "$ref": "#/components/schemas/zapier_rule_response"
+      - "$ref": "#/components/schemas/cloudflare_worker_rule_response"
+      - "$ref": "#/components/schemas/azure_function_rule_response"
+      - "$ref": "#/components/schemas/google_cloud_function_rule_response"
+      - "$ref": "#/components/schemas/aws_lambda_rule_response"
+      - "$ref": "#/components/schemas/aws_kinesis_rule_response"
+      - "$ref": "#/components/schemas/aws_sqs_rule_response"
+      - "$ref": "#/components/schemas/amqp_rule_response"
+      - "$ref": "#/components/schemas/amqp_external_rule_response"
+      discriminator:
+        propertyName: ruleType
+        mapping:
+          http: "#/components/schemas/http_rule_response"
+          http/ifttt: "#/components/schemas/ifttt_rule_response"
+          http/zapier: "#/components/schemas/zapier_rule_response"
+          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_response"
+          http/azure-function: "#/components/schemas/azure_function_rule_response"
+          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_response"
+          aws/lambda: "#/components/schemas/aws_lambda_rule_response"
+          aws/kinesis: "#/components/schemas/aws_kinesis_rule_response"
+          aws/sqs: "#/components/schemas/aws_sqs_rule_response"
+          amqp: "#/components/schemas/amqp_rule_response"
+          amqp/external: "#/components/schemas/amqp_external_rule_response"
+    http_rule_post:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        status:
           type: string
           enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
           type: string
-          nullable: true
-          description: API key ID.
+          enum:
+          - http
+          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
         source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - generic.http
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
@@ -1446,123 +1327,119 @@ components:
             url:
               type: string
               description: The URL of the endpoint that is invoked when events occur on Ably.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              - msgpack
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
           required:
           - url
-          description: The endpoint that is invoked when events occur on Ably.
+          - format
       required:
-      - target
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
-    generic_http_rule_patch:
+      - target
+    http_rule_patch:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        status:
           type: string
           enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
           type: string
-          nullable: true
-          description: API key ID.
+          enum:
+          - http
+          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
         source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - generic.http
-          description: The rule type.
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
             url:
               type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The endpoint that is invoked when events occur on Ably.
-    generic_http_rule_response:
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              - msgpack
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
+    http_rule_response:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        keyId:
-          type: string
-          nullable: true
-          description: API key ID.
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - generic.http
-        headers:
-          type: array
-          items:
-            type: string
-          description: If you have additional information to send, you'll need to include the relevant headers.
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          required:
-          - url
-          description: The endpoint that is invoked when events occur on Ably.        
         id:
           type: string
-          description: The Reactor rule ID.
+          description: The rule ID.
+          example: 83IzAB
         appId:
           type: string
-          description: The application ID that this rule applies to.
+          description: The application ID.
+          example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
-          type: integer
+          type: string
+          enum:
+          - enabled
+          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1574,393 +1451,168 @@ components:
         _links:
           type: object
           nullable: true
-          description: A link self-referencing the rule that has been created.
-          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
-      required:
-      - target
-      - type
-      - format
-      - source
-    aws_kinesis_rule_post:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        ruleType:
           type: string
           enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        routingKey:
-          type: string
-          description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
-        type:
-          type: string
-          enum:
-          - aws.kinesis
-          description: The type of the rule being created.
-        request_mode:
+          - http
+          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
           type: string
           enum:
           - single
           - batch
-          description: This will either be in Single Request mode or Batch Request mode. Single Request will send each event as separately to the endpoint specified by the Rule. Batch Request will roll up multiple events in the same request. You can read more about the difference between single and batched events <a href="https://ably.com/documentation/general/events#batching">here</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
-            awsCredentials:
+            url:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            assumeRoleArn:
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
               type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
               type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            streamName:
-              type: string
-              description: The stream name you chose for your AWS Kinesis Stream.
+              enum:
+              - json
+              - msgpack
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
           required:
-          - streamName
-          - awsRegion
-          description: The endpoint that is invoked when events occur on Ably.
+          - url
+          - format
       required:
-      - target
-      - routingKey
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
-    aws_kinesis_rule_patch:
+      - target
+    ifttt_rule_post:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        routingKey:
-          type: string
-          description: The partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">article</a> for details.
-        type:
-          type: string
-          enum:
-          - aws.kinesis
-          description: The type of the rule being created.
-        request_mode:
-          type: string
-          enum:
-          - single
-          - batch
-          description: This will either be in Single Request mode or Batch Request mode. Single Request will send each event as separately to the endpoint specified by the Rule. Batch Request will roll up multiple events in the same request. You can read more about the difference between single and batched events <a href="https://ably.com/documentation/general/events#batching">here</a>.        
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            awsCredentials:
-              type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            streamName:
-              type: string
-              description: The stream name you chose for your AWS Kinesis Stream.
-          description: The endpoint that is invoked when events occur on Ably.
-    aws_kinesis_rule_response:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        routingKey:
-          type: string
-        type:
-          type: string
-          enum:
-          - aws.kinesis
-        request_mode:
-          type: string
-          enum:
-          - single
-          - batch
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            awsCredentials:
-              type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            streamName:
-              type: string
-              description: The stream name you chose for your AWS Kinesis Stream.
-          required:
-          - streamName
-          - awsRegion
-          description: The endpoint that is invoked when events occur on Ably.        
-        id:
-          type: string
-        version:
-          type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
         status:
-          type: integer
+          type: string
+          enum:
+          - enabled
+          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
-        created:
-          type: number
-          description: Unix timestamp representing the date and time of creation of the rule.
-          example: 1602844091815
-        modified:
-          type: number
-          description: Unix timestamp representing the date and time of last modification of the rule.
-          example: 1614679682091
-        _links:
-          type: object
-          nullable: true
-          description: A link self-referencing the rule that has been created.
-          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
-      required:
-      - target
-      - routingKey
-      - type
-      - format
-      - source
-    aws_sqs_rule_post:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+          example: enabled
+        ruleType:
           type: string
           enum:
-          - json
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.sqs
-        request_mode:
+          - http/ifttt
+          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
           type: string
           enum:
           - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
-            awsCredentials:
+            webhookKey:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
+            eventName:
               type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
-          - url
-          - awsRegion
-          description: The endpoint that is invoked when events occur on Ably.
+          - webhookKey
+          - eventName
       required:
-      - target
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
-    aws_sqs_rule_patch:
+      - target
+    ifttt_rule_patch:
+      ruleType:
+        type: string
+        enum:
+        - http/ifttt
+        description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+      requestMode:
+        type: string
+        enum:
+        - single
+        description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+        example: single
+      source:
+        "$ref": "#/components/schemas/rule_source"
+      target:
+        type: object
+        additionalProperties: false
+        properties:
+          webhookKey:
+            type: string
+          eventName:
+            type: string
+    ifttt_rule_response:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        status:
           type: string
           enum:
-          - json
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
           type: string
           enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.sqs
-        request_mode:
+          - http/ifttt
+          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
           type: string
           enum:
           - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
-            awsCredentials:
+            webhookKey:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
+            eventName:
               type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
-          description: The endpoint that is invoked when events occur on Ably.
-    aws_sqs_rule_response:
-      type: object
-      additionalProperties: false
-      properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.sqs
-        request_mode:
-          type: string
-          enum:
-          - single
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            awsCredentials:
-              type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            url:
-              type: string
-              description: The URL of the endpoint that is invoked when events occur on Ably.
           required:
-          - url
-          - awsRegion
-          description: The endpoint that is invoked when events occur on Ably.
+          - webhookKey
+          - eventName
         id:
           type: string
-          description: The Rule ID.
+          description: The rule ID.
+          example: 83IzAB
         appId:
           type: string
-          description: The application ID that this rule applies to.
+          description: The application ID.
+          example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
-        status:
-          type: integer
-          description: The status of the rule. Rules can be enabled or disabled.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -1972,191 +1624,978 @@ components:
         _links:
           type: object
           nullable: true
-          description: A link self-referencing the rule that has been created.
-          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
       required:
-      - target
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
+      - target
+    zapier_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/zapier
+          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+          required:
+          - url
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    zapier_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/zapier
+          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+    zapier_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - http/zapier
+          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+          required:
+          - url
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    cloudflare_worker_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/cloudflare-worker
+          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+          required:
+          - url
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    cloudflare_worker_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/cloudflare-worker
+          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+    cloudflare_worker_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - http/cloudflare-worker
+          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+          required:
+          - url
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    azure_function_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/azure-function
+          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            azureAppId:
+              type: string
+            azureFunctionName:
+              type: string
+              description: The name of your Microsoft Azure Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - azureAppId
+          - azureFunctionName
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    azure_function_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/azure-function
+          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            azureAppId:
+              type: string
+            azureFunctionName:
+              type: string
+              description: The name of your Microsoft Azure Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+    azure_function_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - http/azure-function
+          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            azureAppId:
+              type: string
+            azureFunctionName:
+              type: string
+              description: The name of your Microsoft Azure Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - azureAppId
+          - azureFunctionName
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    google_cloud_function_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        ruleType:
+          type: string
+          enum:
+          - http/google-cloud-function
+          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region in which your Google Cloud Function is hosted. See the <a href="https://cloud.google.com/compute/docs/regions-zones/">Google documentation</a> for more details.
+              example: us-west1
+            projectId:
+              type: string
+              description: The project ID for your Google Cloud Project that was generated when you created your project.
+            functionName:
+              type: string
+              description: The name of your Google Cloud Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - region
+          - projectId
+          - functionName
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    google_cloud_function_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - http/google-cloud-function
+          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region in which your Google Cloud Function is hosted. See the <a href="https://cloud.google.com/compute/docs/regions-zones/">Google documentation</a> for more details.
+              example: us-west1
+            projectId:
+              type: string
+              description: The project ID for your Google Cloud Project that was generated when you created your project.
+            functionName:
+              type: string
+              description: The name of your Google Cloud Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+    google_cloud_function_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - http/google-cloud-function
+          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region in which your Google Cloud Function is hosted. See the <a href="https://cloud.google.com/compute/docs/regions-zones/">Google documentation</a> for more details.
+              example: us-west1
+            projectId:
+              type: string
+              description: The project ID for your Google Cloud Project that was generated when you created your project.
+            functionName:
+              type: string
+              description: The name of your Google Cloud Function.
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            signingKeyId:
+              type: string
+              nullable: true
+              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - region
+          - projectId
+          - functionName
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    aws_access_keys:
+      type: object
+      additionalProperties: false
+      properties:
+        authenticationMode:
+          type: string
+          enum:
+          - credentials
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+      required:
+      - accessKeyId
+      - secretAccessKey
+    aws_access_keys_response:
+      type: object
+      additionalProperties: false
+      properties:
+        authenticationMode:
+          type: string
+          enum:
+          - credentials
+        accessKeyId:
+          type: string
+    aws_assume_role:
+      type: object
+      additionalProperties: false
+      properties:
+        authenticationMode:
+          type: string
+          enum:
+          - assumeRole
+        assumeRoleArn:
+          type: string
+      required:
+      - assumeRoleArn
     aws_lambda_rule_post:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        status:
           type: string
           enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
           type: string
           enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.lambda
-        request_mode:
+          - aws/lambda
+          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
           type: string
           enum:
           - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
-            awsCredentials:
+            region:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
+              description: The region is which your AWS Lambda Function is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
             functionName:
               type: string
-            qualifier:
-              type: string
+              description: The name of your AWS Lambda Function.
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
           required:
-          - awsRegion
+          - region
           - functionName
-          description: The endpoint that is invoked when events occur on Ably.
+          - authentication
       required:
-      - target
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
+      - target
     aws_lambda_rule_patch:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
+        status:
           type: string
           enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
           type: string
           enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.lambda
-        request_mode:
+          - aws/lambda
+          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">Ably documentation</a> for further information.
+        requestMode:
           type: string
           enum:
           - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
         target:
           type: object
           additionalProperties: false
           properties:
-            awsCredentials:
+            region:
               type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
+              description: The region is which your AWS Lambda Function is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
             functionName:
               type: string
-            qualifier:
-              type: string
-          description: The endpoint that is invoked when events occur on Ably.
+              description: The name of your AWS Lambda Function.
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+          required:
+          - region
+          - functionName
+          - authentication
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
     aws_lambda_rule_response:
       type: object
       additionalProperties: false
       properties:
-        channelFilter:
-          type: string
-          nullable: true
-          description: This field allows you to filter your Rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the Rule to apply to all channels.
-        enveloped:
-          type: boolean
-          nullable: true
-          description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
-        format:
-          type: string
-          enum:
-          - json
-          - msgpack
-          description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
-          example: json
-        source:
-          type: string
-          enum:
-          - channel.message
-          - channel.presence
-          description: Message Reactor delivers all messages published on a channel. Presence Reactor delivers all enter, update and leave events for members present on a channel. Channel Lifecycle events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
-          example: channel.message
-        type:
-          type: string
-          enum:
-          - aws.lambda
-        request_mode:
-          type: string
-          enum:
-          - single
-        target:
-          type: object
-          additionalProperties: false
-          properties:
-            awsCredentials:
-              type: string
-              description: The AWS key ID and secret key for the AWS IAM user. The key ID and secret key is colon separated. For example, if your key ID is 'foo' and your secret key is 'bar', 'foo:bar' would be in this field.
-            assumeRoleArn:
-              type: string
-              description: If you chose the "ARN of an assumable role" credential option, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">article</a> for details.
-            awsRegion:
-              type: string
-              description: The region you chose for your AWS Kinesis Stream.
-            functionName:
-              type: string
-            qualifier:
-              type: string
-          required:
-          - awsRegion
-          - functionName
-          description: The endpoint that is invoked when events occur on Ably.
         id:
           type: string
+          description: The rule ID.
+          example: 83IzAB
         appId:
           type: string
-          description: The application ID that this rule applies to.
+          description: The application ID.
+          example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Reactor Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
-          type: integer
+          type: string
+          enum:
+          - enabled
+          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
         created:
           type: number
           description: Unix timestamp representing the date and time of creation of the rule.
@@ -2168,13 +2607,838 @@ components:
         _links:
           type: object
           nullable: true
-          description: A link self-referencing the rule that has been created.
-          example: { "self": "https://control.ably.net/v1/apps/28AB6w/rules/iAB2sA" }
+        ruleType:
+          type: string
+          enum:
+          - aws/lambda
+          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which your AWS Lambda Function is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            functionName:
+              type: string
+              description: The name of your AWS Lambda Function.
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys_response"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys_response"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - region
+          - functionName
+          - authentication
       required:
-      - target
-      - type
-      - format
+      - ruleType
+      - requestMode
       - source
+      - target
+    aws_kinesis_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - aws/kinesis
+          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS Kinesis is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            streamName:
+              type: string
+            partitionKey:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - region
+          - streamName
+          - partitionKey
+          - authentication
+          - format
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    aws_kinesis_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - aws/kinesis
+          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS Kinesis is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            streamName:
+              type: string
+            partitionKey:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+    aws_kinesis_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - aws/kinesis
+          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS Kinesis is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            streamName:
+              type: string
+            partitionKey:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys_response"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys_response"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+              enum:
+              - json
+              description: JSON provides a text-based encoding.
+          required:
+          - region
+          - streamName
+          - partitionKey
+          - authentication
+          - format
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    aws_sqs_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - aws/sqs
+          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS SQS is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            awsAccountId:
+              type: string
+            queueName:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - region
+          - awsAccountId
+          - queueName
+          - authentication
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    aws_sqs_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - aws/sqs
+          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS SQS is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            awsAccountId:
+              type: string
+            queueName:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+    aws_sqs_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - aws/sqs
+          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            region:
+              type: string
+              description: The region is which AWS SQS is hosted. See the <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#lambda_region">AWS documentation</a> for more detail.
+              example: us-west-1
+            awsAccountId:
+              type: string
+            queueName:
+              type: string
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/aws_access_keys_response"
+              - "$ref": "#/components/schemas/aws_assume_role"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  credentials: "#/components/schemas/aws_access_keys_response"
+                  assumeRole: "#/components/schemas/aws_assume_role"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - region
+          - awsAccountId
+          - queueName
+          - authentication
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    amqp_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enem:
+          - amqp
+          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            queueId:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - queueId
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    amqp_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enem:
+          - amqp
+          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            queueId:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+    amqp_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enem:
+          - amqp
+          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            queueId:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - queueId
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    amqp_external_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        ruleType:
+          type: string
+          enum:
+          - amqp/external
+          description: The type of rule. In this case AMQP external. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            routingKey:
+              type: string
+            mandatoryRoute:
+              type: boolean
+            persistentMessages:
+              type: boolean
+            messageTtl:
+              type: integer
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - url
+          - routingKey
+          - mandatoryRoute
+          - persistentMessages
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    amqp_external_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          enum:
+          - amqp/external
+          description: The type of rule. In this case AMQP external. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            routingKey:
+              type: string
+            mandatoryRoute:
+              type: boolean
+            persistentMessages:
+              type: boolean
+            messageTtl:
+              type: integer
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+    amqp_external_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          enum:
+          - amqp/external
+          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          enum:
+          - single
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+            routingKey:
+              type: string
+            mandatoryRoute:
+              type: boolean
+            persistentMessages:
+              type: boolean
+            messageTtl:
+              type: integer
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the header.
+                  value:
+                    type: string
+                    description: The value of the header.
+              description: If you have additional information to send, you'll need to include the relevant headers.
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+            format:
+              type: string
+          required:
+          - url
+          - routingKey
+          - mandatoryRoute
+          - persistentMessages
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
     queue:
       type: object
       additionalProperties: false
@@ -2316,7 +3580,7 @@ components:
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably Knowledge base</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -2347,7 +3611,7 @@ components:
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base/a> for more details.
           example: false
         persisted:
           type: boolean
@@ -2376,7 +3640,7 @@ components:
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See <a href="https://knowledge.ably.com/authenticated-and-identified-clients">here</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base</a> for more details.
           example: false
         created:
           type: integer
@@ -2420,29 +3684,20 @@ components:
           example: My App
         status:
           type: string
-          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
-          example: enabled
           enum:
           - enabled
           - disabled
+          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
+          example: enabled
         tlsOnly:
           type: boolean
           nullable: true
           description: Enforce TLS for all connections.
           example: true
-        enablePusherCompatibility:
-          type: boolean
-          nullable: true
-          description: Enables Pusher protocol support.
-          example: false
         fcmKey:
           description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          example: false
-        setupPusherNamespaces:
-          type: boolean
-          description: Map Pusher namespaces to Ably namespaces. See more <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
           example: false
         apnsCertificate:
           type: string
@@ -2468,29 +3723,20 @@ components:
           example: My App
         status:
           type: string
-          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
-          example: enabled
           enum:
           - enabled
           - disabled
+          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
+          example: enabled
         tlsOnly:
           type: boolean
           nullable: true
           description: Enforce TLS for all connections.
           example: true
-        enablePusherCompatibility:
-          type: boolean
-          nullable: true
-          description: Enables Pusher protocol support.
-          example: false
         fcmKey:
           description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          example: false
-        setupPusherNamespaces:
-          type: boolean
-          description: Map Pusher namespaces to Ably namespaces. See more <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
           example: false
         apnsCertificate:
           type: string
@@ -2522,39 +3768,35 @@ components:
       type: object
       additionalProperties: false
       properties:
+        accountId:
+          type: string
+          description: The ID of your Ably account.
+          example: WgRpOB
         id:
+          type: string
           description: The application ID.
-          type: string
+          example: 28AB6x
         name:
-          description: The application name.
           type: string
+          description: The application name.
+          example: Default
         status:
-          description: The application status. Disabled applications will not accept new connections and will return an error to all clients.
           type: string
           enum:
           - enabled
           - disabled
+          description: The application status. Disabled applications will not accept new connections and will return an error to all clients.
+          example: enabled
         tlsOnly:
+          type: boolean
+          nullable: true
           description: Enforce TLS for all connections. This setting overrides any channel setting.
-          type: boolean
-          nullable: true
-        enablePusherCompatibility:
-          description: Enables Pusher protocol adapter. Disabled by default. More information is available <a href="https://knowledge.ably.com/using-the-ably-pusher-protocol-adapter">here</a>.
-          type: boolean
-          nullable: true
-        fcmKey:
-          description: The Firebase Cloud Messaging key.
-          type: string
-          nullable: true
-          example: false
-        apnsCertificate:
-          description: Apple Push Notification service certificate.
-          type: string
-          nullable: true
+          example: true
         apnsUseSandboxEndpoint:
-          description: Apple Push Notification service endpoint.
           type: boolean
           nullable: true
+          description: Apple Push Notification service endpoint.
+          example: false
         _links:
           type: object
           nullable: true
@@ -2570,7 +3812,7 @@ components:
           description: Specify the channels and queues that this key can be used with.
           type: string
         capabilities:
-          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
+          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
           type: array
           items:
             type: string
@@ -2598,7 +3840,7 @@ components:
           description: Specify the channels and queues that this key can be used with.
           type: string
         capabilities:
-          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
+          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
           type: array
           items:
             type: string
@@ -2618,6 +3860,7 @@ components:
         appId:
           description: The application ID which this key is associated with.
           type: string
+          example: 28GY6a
         id:
           description: The key ID.
           type: string
@@ -2628,7 +3871,7 @@ components:
           description: The complete API key including API secret.
           type: string
         capability:
-          description: The capabilities that this key has. More information on capabilities can be found <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">here</a>.
+          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
           type: object
           additionalProperties:
             type: array
