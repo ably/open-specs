@@ -1,6 +1,6 @@
-# Ably OpenAPI specifications
+# Ably OpenAPI documents
 
-This repository contains Ably OAS3 specifications for the following REST APIs:
+This repository contains Ably OAS3 documents for the following REST APIs:
 
 * Platform API
 * Control API
@@ -27,9 +27,9 @@ npm start
 
 Point your browser at http://localhost:8080. You can then select the API reference of your choice, rendered by [Redoc](https://github.com/Redocly/redoc).
 
-## Validating the specifications with Spectral
+## Validating the OAS3 documents with Spectral
 
-You can validate the OAS3 specifications with Spectral. 
+You can validate the OAS3 documents with Spectral. 
 
 To install Spectral:
 
