@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.12
+  version: 1.0.13
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1194,7 +1194,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -1342,7 +1342,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -1407,7 +1407,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -1428,7 +1428,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -1486,7 +1486,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -1608,7 +1608,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -1675,7 +1675,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
           required:
           - url
       required:
@@ -1729,7 +1729,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
     zapier_rule_response:
       type: object
       additionalProperties: false
@@ -1740,7 +1740,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -1798,7 +1798,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
           required:
           - url
       required:
@@ -1852,7 +1852,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
           required:
           - url
       required:
@@ -1906,7 +1906,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
     cloudflare_worker_rule_response:
       type: object
       additionalProperties: false
@@ -1917,7 +1917,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -1945,6 +1945,7 @@ components:
           enum:
           - http/cloudflare-worker
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          example: http/cloudflare-worker
         requestMode:
           type: string
           enum:
@@ -1975,7 +1976,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
           required:
           - url
       required:
@@ -2014,6 +2015,8 @@ components:
           properties:
             azureAppId:
               type: string
+              description: The Microsoft Azure Application ID. You can find your Microsoft Azure Application ID as shown in this <a href="https://dev.applicationinsights.io/documentation/Authorization/API-key-and-App-ID">article</a>.
+              example: d1e9f419-c438-6032b32df979
             azureFunctionName:
               type: string
               description: The name of your Microsoft Azure Function.
@@ -2032,7 +2035,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2081,6 +2084,8 @@ components:
           properties:
             azureAppId:
               type: string
+              description: The Microsoft Azure Application ID. You can find your Microsoft Azure Application ID as shown in this <a href="https://dev.applicationinsights.io/documentation/Authorization/API-key-and-App-ID">article</a>.
+              example: d1e9f419-c438-6032b32df979
             azureFunctionName:
               type: string
               description: The name of your Microsoft Azure Function.
@@ -2099,7 +2104,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2119,7 +2124,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -2162,6 +2167,8 @@ components:
           properties:
             azureAppId:
               type: string
+              description: The Microsoft Azure Application ID. You can find your Microsoft Azure Application ID as shown in this <a href="https://dev.applicationinsights.io/documentation/Authorization/API-key-and-App-ID">article</a>.
+              example: d1e9f419-c438-6032b32df979
             azureFunctionName:
               type: string
               description: The name of your Microsoft Azure Function.
@@ -2180,7 +2187,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2245,7 +2252,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2318,7 +2325,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2338,7 +2345,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -2404,7 +2411,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
             enveloped:
               type: boolean
               nullable: true
@@ -2431,10 +2438,13 @@ components:
           type: string
           enum:
           - credentials
+          description: Authentication method is using AWS credentials (AWS key ID and secret key).
         accessKeyId:
           type: string
+          description: The AWS key ID for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
         secretAccessKey:
           type: string
+          description: The AWS secret key for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
       required:
       - accessKeyId
       - secretAccessKey
@@ -2446,8 +2456,10 @@ components:
           type: string
           enum:
           - credentials
+          description: Authentication method is using AWS credentials (AWS key ID and secret key).
         accessKeyId:
           type: string
+          description: The AWS key ID for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
     aws_assume_role:
       type: object
       additionalProperties: false
@@ -2456,8 +2468,10 @@ components:
           type: string
           enum:
           - assumeRole
+          description: Authentication method is using the ARN of an assumable role. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
         assumeRoleArn:
           type: string
+          description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
       required:
       - assumeRoleArn
     aws_lambda_rule_post:
@@ -2584,7 +2598,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -2689,8 +2703,10 @@ components:
               example: us-west-1
             streamName:
               type: string
+              description: The name of your AWS Kinesis Stream.
             partitionKey:
               type: string
+              description: The AWS Kinesis partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys"
@@ -2754,8 +2770,10 @@ components:
               example: us-west-1
             streamName:
               type: string
+              description: The name of your AWS Kinesis Stream.
             partitionKey:
               type: string
+              description: The AWS Kinesis partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys"
@@ -2784,7 +2802,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -2830,8 +2848,10 @@ components:
               example: us-west-1
             streamName:
               type: string
+              description: The name of your AWS Kinesis Stream.
             partitionKey:
               type: string
+              description: The AWS Kinesis partition key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys_response"
@@ -2895,8 +2915,10 @@ components:
               example: us-west-1
             awsAccountId:
               type: string
+              description: Your AWS account ID.
             queueName:
               type: string
+              description: The AWS SQS queue name.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys"
@@ -2956,8 +2978,10 @@ components:
               example: us-west-1
             awsAccountId:
               type: string
+              description: Your AWS account ID.
             queueName:
               type: string
+              description: The AWS SQS queue name.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys"
@@ -2983,7 +3007,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -3029,8 +3053,10 @@ components:
               example: us-west-1
             awsAccountId:
               type: string
+              description: Your AWS account ID.
             queueName:
               type: string
+              description: The AWS SQS queue name.
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/aws_access_keys_response"
@@ -3169,7 +3195,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -3244,7 +3270,7 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP external. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">documentation</a> for further information.
         requestMode:
           type: string
           enum:
@@ -3261,12 +3287,16 @@ components:
               type: string
             routingKey:
               type: string
+              description: The AMQP routing key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             mandatoryRoute:
               type: boolean
+              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
             persistentMessages:
               type: boolean
+              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
             messageTtl:
               type: integer
+              description: You can optionally override the default TTL on a queue and specify a TTL in minutes for messages to be persisted. It is unusual to change the default TTL, so if this field is left empty, the default TTL for the queue will be used.
             headers:
               type: array
               items:
@@ -3310,7 +3340,7 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP external. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
         requestMode:
           type: string
           enum:
@@ -3327,12 +3357,16 @@ components:
               type: string
             routingKey:
               type: string
+              description: The AMQP routing key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             mandatoryRoute:
               type: boolean
+              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
             persistentMessages:
               type: boolean
+              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
             messageTtl:
               type: integer
+              description: You can optionally override the default TTL on a queue and specify a TTL in minutes for messages to be persisted. It is unusual to change the default TTL, so if this field is left empty, the default TTL for the queue will be used.
             headers:
               type: array
               items:
@@ -3361,7 +3395,7 @@ components:
           example: 83IzAB
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28GY6a
         version:
           type: string
@@ -3388,7 +3422,7 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
         requestMode:
           type: string
           enum:
@@ -3405,12 +3439,16 @@ components:
               type: string
             routingKey:
               type: string
+              description: The AMQP routing key. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
             mandatoryRoute:
               type: boolean
+              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
             persistentMessages:
               type: boolean
+              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
             messageTtl:
               type: integer
+              description: You can optionally override the default TTL on a queue and specify a TTL in minutes for messages to be persisted. It is unusual to change the default TTL, so if this field is left empty, the default TTL for the queue will be used.
             headers:
               type: array
               items:
@@ -3470,11 +3508,11 @@ components:
       properties:
         id: 
           type: string
-          description: The ID of the queue
+          description: The ID of the Ably queue
           example: 28AB6w:us-east-1-a:My queue
         appId:
           type: string
-          description: The application ID.
+          description: The Ably application ID.
           example: 28AB6w
         name:
           type: string
@@ -3494,7 +3532,7 @@ components:
               example: amqps://us-east-1-a-queue.ably.io:5671/shared
             queueName:
               type: string        
-              description: Name of the queue.
+              description: Name of the Ably queue.
               example: 28AB6w:My queue
         stomp:
           type: object
@@ -3858,7 +3896,7 @@ components:
       additionalProperties: false
       properties:
         appId:
-          description: The application ID which this key is associated with.
+          description: The Ably application ID which this key is associated with.
           type: string
           example: 28GY6a
         id:
@@ -3926,8 +3964,8 @@ components:
           properties:
             id:
               type: integer
-              description: The user ID associated with the account.
-              example: 12150
+              description: The user ID associated with the account. This is a UUID.
+              example: C95837C9-184B-4CC2-8779-B769F960FADB
             email:
               type: string
               description: Email address of the user associated with the account.
