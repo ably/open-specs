@@ -1,13 +1,23 @@
 {
-  "name": "ably-open-specs",
-  "version": "1.1.0",
+  "name": "open-specs",
+  "version": "1.0.0",
+  "description": "This repository contains Ably OAS3 specifications.",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+      "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -c-1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ably/open-specs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ably/open-specs/issues"
+  },
+  "homepage": "https://github.com/ably/open-specs#readme",
   "dependencies": {
-    "express": "4.x.x",
-    "body-parser": "1.x.x",
-    "swagger-ui-express": "4.x.x",
-    "yamljs": "0.3.x"
+    "http-server": "^0.12.3"
   }
 }
