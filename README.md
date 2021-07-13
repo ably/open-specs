@@ -77,9 +77,9 @@ You are now ready to test out the API.
 
 Now that you have imported the specification into Postman, you are ready to try out the API. For Control API you need to configure your token. This token is used to authenticate your requests.
 
-See the [documentation](ADD-LINK) on how to obtain your token.
+See the [documentation](https://ably.com/documentation/control-api#authentication) on how to obtain your token.
 
-For many Control API requests you will also need to specify your Account ID or Application ID. You can see the [documentation](ADD-LINK) for details on how to obtain these.
+For many Control API requests you will also need to specify your Account ID or Application ID. You can see the [documentation](https://ably.com/documentation/control-api#ids) for details on how to obtain these.
 
 Now that you understand where to obtain these items, you will see how to configure and run a request in postman. 
 
