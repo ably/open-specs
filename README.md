@@ -13,7 +13,7 @@ Each specification contains a version number. If a change is made that is breaki
 
 The following command installs the requirements (currently, only `http-server`):
 
-```sh
+```
 npm install
 ```
 
@@ -54,6 +54,19 @@ This will then indicate any issues with the specification.
 ## Quickstart
 
 You can see the [quickstart guide](quickstart.md) in this repository, or refer to the [main documentation](https://ably.com/documentation).
+
+A quick example request using Curl is shown here:
+
+```
+curl "https://control.ably.net/v1/accounts/<ACCOUNT_ID>/apps" \
+     --header "Authorization: Bearer <ACCESS_TOKEN>" \
+     --header "Accept: application/json"
+```
+
+1. Copy and paste your [account ID](https://ably.com/documentation/control-api#account-id) to `<ACCOUNT_ID>`.
+2. Copy and paste your [access token](https://ably.com/documentation/control-api#authentication) to `<ACCESS_TOKEN>`.
+
+Run the Curl command in your shell. You will receive back a list of your Ably applications.
 
 ## About Ably
 
