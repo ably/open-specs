@@ -1,25 +1,25 @@
 # Ably OpenAPI documents
 
-This repository contains Ably OAS3 documents for the following REST APIs:
+This repository contains [OpenAPI Specification v3](https://swagger.io/specification/) documents for the following Ably REST APIs:
 
-* Platform API
-* Control API
+- Platform API
+- Control API
 
 ## Versions
 
-Each specification contains a version number. If a change is made that is breaking (that is, not backwards comptible) Ably will create a new specification file. For example, Control API version one is in `control-v1.yaml`, but version two would be in `control-v2.yaml`. When viewing locally in this repository, the latest specification is displayed by default. To view older versions of the specification, modify the files in the `openapi` folder to point to the version of the specification you'd like to view.
+Each OpenAPI document file name contains a version number. If a change is made that is breaking (that is, not backwards-compatible) Ably will create a new OpenAPI document. For example, Control API version one is in `control-v1.yaml`, but version two would be in `control-v2.yaml`. When you are viewing the contents of this repository locally, the latest version is displayed by default. To view older versions of the API reference, modify the files in the `openapi` folder to point to the version of the document that you would like to view.
 
 ## Installation
 
 The following command installs the requirements (currently, only `http-server`):
 
-```sh
+```
 npm install
 ```
 
-## Viewing the specification locally
+## Viewing the API reference locally
 
-To View the specification locally, run: 
+To View the API reference locally, run:
 
 ```
 npm start
@@ -27,9 +27,9 @@ npm start
 
 Point your browser at http://localhost:8080. You can then select the API reference of your choice, rendered by [Redoc](https://github.com/Redocly/redoc).
 
-## Validating the OAS3 documents with Spectral
+## Validating the OpenAPI documents with Spectral
 
-You can validate the OAS3 documents with Spectral. 
+You can validate the OpenAPI documents with [Spectral](https://github.com/stoplightio/spectral).
 
 To install Spectral:
 
@@ -43,67 +43,30 @@ Or using Yarn:
 yarn global add @stoplight/spectral
 ```
 
-You can then validate your specification as required. For example, on the command-line enter:
+You can then validate your OpenAPI document as required. For example, on the command-line enter:
 
 ```
 spectral lint control-v1.yaml
 ```
 
-This will then indicate any issues with the specification.
+Spectral then lists any issues with the document.
 
-## Try out the REST APIs
+## Quickstart
 
-There are several ways you can try out the API. You can use a command line tool such as Curl or HTTPie to test out various requests. Another way is to use a graphical tool such as Postman or Paw.
+You can see the [quickstart guide](quickstart.md) in this repository, or refer to the [main documentation](https://ably.com/documentation).
 
-A convenient way to try out the REST APIs is by importing the OAS3 specification into [Postman](https://www.postman.com/). To do this, carry out the following steps. 
+A quick example request using Curl is shown here:
 
-1. Make sure you have [Postman](https://www.postman.com/) installed.
+```
+curl "https://control.ably.net/v1/accounts/<ACCOUNT_ID>/apps" \
+     --header "Authorization: Bearer <ACCESS_TOKEN>" \
+     --header "Accept: application/json"
+```
 
-2. Start Postman and select "File > Import" from the main menu. The import dialog is displayed:
+1. Copy and paste your [account ID](https://ably.com/documentation/control-api#account-id) to `<ACCOUNT_ID>`.
+2. Copy and paste your [access token](https://ably.com/documentation/control-api#authentication) to `<ACCESS_TOKEN>`.
 
-![Postman import dialog](./images/postman-import.png "Postman import dialog")
-
-3. Drag and drop the OAS3 specification you want to test, or use the "Upload file" button to select and import a specification.
-
-4. On the Import dialog simply leave the default settings, and click "Import".
-
-5. The imported specification will now appear in your Postman collections:
-
-![Postman imported collection](./images/imported-collection.png "Postman imported collection")
-
-You are now ready to test out the API.
-
-## Testing the Control API
-
-Now that you have imported the specification into Postman, you are ready to try out the API. For Control API you need to configure your token. This token is used to authenticate your requests.
-
-See the [documentation](https://ably.com/documentation/control-api#authentication) on how to obtain your token.
-
-For many Control API requests you will also need to specify your Account ID or Application ID. You can see the [documentation](https://ably.com/documentation/control-api#ids) for details on how to obtain these.
-
-Now that you understand where to obtain these items, you will see how to configure and run a request in postman. 
-
-The following screenshot shows the information for the "List account apps" request:
-
-![App list request](./images/app-list-request.png "App list request")
-
-You need to configure your account ID in this case.
-
-You also need to configure your token:
-
-![Bearer token](./images/bearer-token.png "Bearer token")
-
-Without the token set, your request will fail to authenticate.
-
-Now that everything is configured, you can send the request:
-
-![Send request](./images/send-request.png "Send request")
-
-You receive back a response from the server:
-
-![Response](./images/response.png "Response")
-
-You are now ready to try out other requests.
+Run the Curl command in your shell. You will receive back a list of your Ably applications.
 
 ## About Ably
 
