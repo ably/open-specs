@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.13
+  version: 1.0.14
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1181,11 +1181,27 @@ components:
           - channel.message
           - channel.presence
           - channel.lifecycle
-          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature.
+          - channel.occupancy
+          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
           example: channel.message
       required:
       - channelFilter
       - type
+    rule_source_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        channelFilter:
+          type: string
+          description: This field allows you to filter your rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the rule to apply to all channels.
+        type:
+          type: string
+          enum:
+          - channel.message
+          - channel.presence
+          - channel.lifecycle
+          - channel.occupancy
+          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
     rule_attributes:
       type: object
       additionalProperties: false
