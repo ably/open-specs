@@ -1245,6 +1245,7 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_post"
       - "$ref": "#/components/schemas/amqp_rule_post"
       - "$ref": "#/components/schemas/amqp_external_rule_post"
+      - "$ref": "#/components/schemas/unsupported_rule_response"      
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1259,6 +1260,7 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_post"
           amqp: "#/components/schemas/amqp_rule_post"
           amqp/external: "#/components/schemas/amqp_external_rule_post"
+          unsupported: "#/components/schemas/unsupported_rule_response"
     rule_patch:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_patch"
@@ -3113,7 +3115,7 @@ components:
           example: enabled
         ruleType:
           type: string
-          enem:
+          enum:
           - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
@@ -3168,7 +3170,7 @@ components:
           example: enabled
         ruleType:
           type: string
-          enem:
+          enum:
           - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
@@ -3238,7 +3240,7 @@ components:
           nullable: true
         ruleType:
           type: string
-          enem:
+          enum:
           - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
@@ -3490,6 +3492,66 @@ components:
           - routingKey
           - mandatoryRoute
           - persistentMessages
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    unsupported_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The Ably application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          description: This rule type is currently unsupported.
+          enum:
+          - unsupported
+        requestMode:
+          type: string
+          enum:
+          - single
+          - batch
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+          required:
+          - url
       required:
       - ruleType
       - requestMode
