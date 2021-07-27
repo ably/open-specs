@@ -150,6 +150,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error"
+        '422':
+          description: Invalid resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
         '500':
           description: Internal server error
           content:
@@ -1177,11 +1183,6 @@ components:
           description: This field allows you to filter your rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the rule to apply to all channels.
         type:
           type: string
-          enum:
-          - channel.message
-          - channel.presence
-          - channel.lifecycle
-          - channel.occupancy
           description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
           example: channel.message
       required:
@@ -1196,11 +1197,6 @@ components:
           description: This field allows you to filter your rule based on a regular expression that is matched against the complete channel name. Leave this empty if you want the rule to apply to all channels.
         type:
           type: string
-          enum:
-          - channel.message
-          - channel.presence
-          - channel.lifecycle
-          - channel.occupancy
           description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
     rule_attributes:
       type: object
@@ -1219,9 +1215,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -1321,9 +1314,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1333,9 +1323,6 @@ components:
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1369,9 +1356,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
-              - msgpack
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
           required:
           - url
@@ -1387,9 +1371,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1399,9 +1380,6 @@ components:
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1434,9 +1412,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
-              - msgpack
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
     http_rule_response:
       type: object
@@ -1455,9 +1430,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -1478,9 +1450,6 @@ components:
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1513,9 +1482,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
-              - msgpack
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
           required:
           - url
@@ -1531,9 +1497,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1543,8 +1506,6 @@ components:
           description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -1573,8 +1534,6 @@ components:
         description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
       requestMode:
         type: string
-        enum:
-        - single
         description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
         example: single
       source:
@@ -1593,9 +1552,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1605,8 +1561,6 @@ components:
           description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -1655,9 +1609,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1667,9 +1618,6 @@ components:
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1709,9 +1657,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1721,9 +1666,6 @@ components:
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1767,9 +1709,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -1790,9 +1729,6 @@ components:
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1832,9 +1768,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1844,9 +1777,6 @@ components:
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1886,9 +1816,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -1898,9 +1825,6 @@ components:
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -1944,9 +1868,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -1968,9 +1889,6 @@ components:
           example: http/cloudflare-worker
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2010,9 +1928,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2022,9 +1937,6 @@ components:
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2062,8 +1974,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - azureAppId
@@ -2079,9 +1989,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2091,9 +1998,6 @@ components:
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2131,8 +2035,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
     azure_function_rule_response:
       type: object
@@ -2151,9 +2053,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -2174,9 +2073,6 @@ components:
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2214,8 +2110,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - azureAppId
@@ -2236,9 +2130,6 @@ components:
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2279,8 +2170,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - region
@@ -2297,9 +2186,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2309,9 +2195,6 @@ components:
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2352,8 +2235,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
     google_cloud_function_rule_response:
       type: object
@@ -2372,9 +2253,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -2395,9 +2273,6 @@ components:
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -2438,8 +2313,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - region
@@ -2500,9 +2373,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2512,8 +2382,6 @@ components:
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2557,9 +2425,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2569,8 +2434,6 @@ components:
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">Ably documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2625,9 +2488,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -2648,8 +2508,6 @@ components:
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2695,9 +2553,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2707,8 +2562,6 @@ components:
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2742,8 +2595,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - region
@@ -2762,9 +2613,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2774,8 +2622,6 @@ components:
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2809,8 +2655,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
     aws_kinesis_rule_response:
       type: object
@@ -2829,9 +2673,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -2852,8 +2693,6 @@ components:
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2887,8 +2726,6 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
-              enum:
-              - json
               description: JSON provides a text-based encoding.
           required:
           - region
@@ -2907,9 +2744,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2919,8 +2753,6 @@ components:
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -2970,9 +2802,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -2982,8 +2811,6 @@ components:
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3034,9 +2861,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -3057,8 +2881,6 @@ components:
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3108,9 +2930,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -3120,8 +2939,6 @@ components:
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3163,9 +2980,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -3175,8 +2989,6 @@ components:
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3222,9 +3034,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -3245,8 +3054,6 @@ components:
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3293,8 +3100,6 @@ components:
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3351,9 +3156,6 @@ components:
       properties:
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         ruleType:
@@ -3363,8 +3165,6 @@ components:
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3422,9 +3222,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -3445,8 +3242,6 @@ components:
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
         requestMode:
           type: string
-          enum:
-          - single
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
@@ -3514,9 +3309,6 @@ components:
           description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the rule. Rules can be enabled or disabled.
           example: enabled
         created:
@@ -3537,9 +3329,6 @@ components:
           - unsupported
         requestMode:
           type: string
-          enum:
-          - single
-          - batch
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
@@ -3802,9 +3591,6 @@ components:
           example: My App
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
           example: enabled
         tlsOnly:
@@ -3841,9 +3627,6 @@ components:
           example: My App
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
           example: enabled
         tlsOnly:
@@ -3900,9 +3683,6 @@ components:
           example: Default
         status:
           type: string
-          enum:
-          - enabled
-          - disabled
           description: The application status. Disabled applications will not accept new connections and will return an error to all clients.
           example: enabled
         tlsOnly:
@@ -3934,15 +3714,6 @@ components:
           type: array
           items:
             type: string
-            enum:
-            - publish
-            - subscribe
-            - history
-            - presence
-            - channel-metadata
-            - push-admin
-            - push-subscribe
-            - statistics
       required:
       - name
       - channels
@@ -3962,15 +3733,6 @@ components:
           type: array
           items:
             type: string
-            enum:
-            - publish
-            - subscribe
-            - history
-            - presence
-            - channel-metadata
-            - push-admin
-            - push-subscribe
-            - statistics
     key_response:
       type: object
       additionalProperties: false
@@ -3995,15 +3757,6 @@ components:
             type: array
             items:
               type: string
-              enum:
-              - publish
-              - subscribe
-              - history
-              - presence
-              - channel-metadata
-              - push-admin
-              - push-subscribe
-              - statistics        
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the key.
