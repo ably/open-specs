@@ -1241,7 +1241,6 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_post"
       - "$ref": "#/components/schemas/amqp_rule_post"
       - "$ref": "#/components/schemas/amqp_external_rule_post"
-      - "$ref": "#/components/schemas/unsupported_rule_response"      
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1256,7 +1255,6 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_post"
           amqp: "#/components/schemas/amqp_rule_post"
           amqp/external: "#/components/schemas/amqp_external_rule_post"
-          unsupported: "#/components/schemas/unsupported_rule_response"
     rule_patch:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_patch"
@@ -1297,6 +1295,7 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_response"
       - "$ref": "#/components/schemas/amqp_rule_response"
       - "$ref": "#/components/schemas/amqp_external_rule_response"
+      - "$ref": "#/components/schemas/unsupported_rule_response"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1311,6 +1310,7 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_response"
           amqp: "#/components/schemas/amqp_rule_response"
           amqp/external: "#/components/schemas/amqp_external_rule_response"
+          unsupported: "#/components/schemas/unsupported_rule_response"
     http_rule_post:
       type: object
       additionalProperties: false
