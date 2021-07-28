@@ -1383,7 +1383,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -1413,6 +1413,8 @@ components:
             format:
               type: string
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
+      required:
+      - ruleType
     http_rule_response:
       type: object
       additionalProperties: false
@@ -1527,25 +1529,32 @@ components:
       - source
       - target
     ifttt_rule_patch:
-      ruleType:
-        type: string
-        enum:
-        - http/ifttt
-        description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
-      requestMode:
-        type: string
-        description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
-        example: single
-      source:
-        "$ref": "#/components/schemas/rule_source"
-      target:
-        type: object
-        additionalProperties: false
-        properties:
-          webhookKey:
-            type: string
-          eventName:
-            type: string
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+        ruleType:
+          type: string
+          enum:
+          - http/ifttt
+          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+        requestMode:
+          type: string
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source_patch"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            webhookKey:
+              type: string
+            eventName:
+              type: string
+      required:
+      - ruleType
     ifttt_rule_response:
       type: object
       additionalProperties: false
@@ -1669,7 +1678,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -1692,6 +1701,8 @@ components:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+      required:
+      - ruleType
     zapier_rule_response:
       type: object
       additionalProperties: false
@@ -1828,7 +1839,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -1851,6 +1862,8 @@ components:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+      required:
+      - ruleType
     cloudflare_worker_rule_response:
       type: object
       additionalProperties: false
@@ -2001,7 +2014,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -2036,6 +2049,8 @@ components:
             format:
               type: string
               description: JSON provides a text-based encoding.
+      required:
+      - ruleType
     azure_function_rule_response:
       type: object
       additionalProperties: false
@@ -2198,7 +2213,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -2236,6 +2251,8 @@ components:
             format:
               type: string
               description: JSON provides a text-based encoding.
+      required:
+      - ruleType
     google_cloud_function_rule_response:
       type: object
       additionalProperties: false
@@ -2437,7 +2454,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -2468,9 +2485,6 @@ components:
           - authentication
       required:
       - ruleType
-      - requestMode
-      - source
-      - target
     aws_lambda_rule_response:
       type: object
       additionalProperties: false
@@ -2625,7 +2639,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -2656,6 +2670,8 @@ components:
             format:
               type: string
               description: JSON provides a text-based encoding.
+      required:
+      - ruleType
     aws_kinesis_rule_response:
       type: object
       additionalProperties: false
@@ -2814,7 +2830,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -2844,6 +2860,8 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
+      required:
+      - ruleType
     aws_sqs_rule_response:
       type: object
       additionalProperties: false
@@ -2992,7 +3010,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -3017,6 +3035,8 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
+      required:
+      - ruleType
     amqp_rule_response:
       type: object
       additionalProperties: false
@@ -3168,7 +3188,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          "$ref": "#/components/schemas/rule_source_patch"
         target:
           type: object
           additionalProperties: false
@@ -3205,6 +3225,8 @@ components:
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
             format:
               type: string
+      required:
+      - ruleType
     amqp_external_rule_response:
       type: object
       additionalProperties: false
@@ -3473,7 +3495,7 @@ components:
           example: false
         deadletterId:
           type: string
-          description: 
+          description: The ID of the dead letter queue.
           nullable: true
           example: 28AB6w:us-east-1-a:deadletter
     namespace_post:
@@ -3602,7 +3624,6 @@ components:
           description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          example: false
         apnsCertificate:
           type: string
           nullable: true
@@ -3638,7 +3659,6 @@ components:
           description: The Firebase Cloud Messaging key.
           type: string
           nullable: true
-          example: false
         apnsCertificate:
           type: string
           nullable: true
@@ -3775,8 +3795,8 @@ components:
           properties:
             id:
               type: integer
-              description: The token ID. This is a UUID.
-              example: C95837C9-184B-4CC2-8779-B769F960FADB
+              description: The token ID.
+              example: 12345
             name:
               type: string
               description: The friendly name for the token.
@@ -3784,7 +3804,7 @@ components:
             capabilities:
               type: array
               description: An array containing the access capabilities associated with the access token.
-              example: [write:namespace, read:namespace, write:queue, read:queue, write:rule, read:rule, write:key, read:key, write:app, read:app]
+              example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
               items:
                 type: string
           required:
@@ -3797,8 +3817,8 @@ components:
           properties:
             id:
               type: integer
-              description: The user ID associated with the account. This is a UUID.
-              example: C95837C9-184B-4CC2-8779-B769F960FADB
+              description: The user ID associated with the account.
+              example: 12345
             email:
               type: string
               description: Email address of the user associated with the account.
