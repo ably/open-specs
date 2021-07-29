@@ -1200,6 +1200,7 @@ components:
         type:
           type: string
           description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
+          example: channel.message
     rule_attributes:
       type: object
       additionalProperties: false
