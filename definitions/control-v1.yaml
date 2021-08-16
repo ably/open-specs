@@ -6,7 +6,7 @@ info:
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
-    Detailed information on using this API can be found in the Ably <a href="https://ably.com/documentation/control-api">developer documentation</a>.
+    Detailed information on using this API can be found in the Ably <a href="https://ably.com/documentation/control-api">Control API documentation</a>.
 
     Control API is currently in Beta.
 servers:
