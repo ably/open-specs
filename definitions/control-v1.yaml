@@ -700,7 +700,7 @@ paths:
   '/apps/{app_id}/queues':
     get:
       summary: Lists queues
-      description: Lists the queues associated with the specified application ID.
+      description: Lists the <a href="https://ably.com/documentation/general/queues">queues</a> associated with the specified application ID.
       tags:
         - queues
       parameters:
@@ -753,7 +753,7 @@ paths:
                 '$ref': '#/components/schemas/error'
     post:
       summary: Creates a queue
-      description: Creates a queue for the application specified by application ID. The properties for the queue to be created are specified in the request body.
+      description: Creates a <a href="https://ably.com/documentation/general/queues">queue</a> for the application specified by application ID. The properties for the queue to be created are specified in the request body.
       tags:
         - queues
       parameters:
@@ -810,7 +810,7 @@ paths:
   '/apps/{app_id}/queues/{queue_id}':
     delete:
       summary: Deletes a queue
-      description: Delete the queue with the specified queue name, from the application with the specified application ID.
+      description: Delete the <a href="https://ably.com/documentation/general/queues">queue</a> with the specified queue name, from the application with the specified application ID.
       tags:
         - queues
       parameters:
@@ -865,7 +865,7 @@ paths:
   '/apps/{app_id}/rules':
     get:
       summary: Lists Reactor rules
-      description: Lists the rules for the application specified by the application ID.
+      description: Lists the <a href="https://ably.com/documentation/general/queues#setup">rules</a> for the application specified by the application ID.
       tags:
         - rules
       parameters:
@@ -912,7 +912,7 @@ paths:
                 '$ref': '#/components/schemas/error'
     post:
       summary: Creates a Reactor rule
-      description: Creates a rule for the application with the specified application ID.
+      description: Creates a <a href="https://ably.com/documentation/general/queues#setup">rule</a> for the application with the specified application ID.
       tags:
         - rules
       parameters:
@@ -976,7 +976,7 @@ paths:
   '/apps/{app_id}/rules/{rule_id}':
     get:
       summary: Gets a reactor rule by rule ID
-      description: Returns the rule specified by the rule ID, for the application specified by application ID.
+      description: Returns the <a href="https://ably.com/documentation/general/queues#setup">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
         - rules
       parameters:
@@ -1027,6 +1027,7 @@ paths:
                 '$ref': '#/components/schemas/error'
     patch:
       summary: Updates a Reactor rule
+      description: Updates the <a href="https://ably.com/documentation/general/queues#setup">rule</a> with the specified rule ID, for the application specified by application ID.
       tags:
         - rules
       parameters:
@@ -1095,6 +1096,7 @@ paths:
               '$ref': '#/components/schemas/rule_patch'
     delete:
       summary: Deletes a Reactor rule
+      description: Deletes the <a href="https://ably.com/documentation/general/queues#setup">rule</a> with the specified rule ID, for the application specified by application ID.
       tags:
         - rules
       parameters:
