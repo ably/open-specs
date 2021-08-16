@@ -10,23 +10,23 @@ info:
 
     Control API is currently in Beta.
 servers:
-- url: https://control.ably.net/v1
+  - url: https://control.ably.net/v1
 paths:
-  "/accounts/{account_id}/apps":
+  '/accounts/{account_id}/apps':
     get:
       summary: Lists account apps
       description: List all Ably applications for the specified account ID.
       tags:
-      - apps
+        - apps
       parameters:
-      - name: account_id
-        in: path
-        required: true
-        description: The account ID for which to retrieve the associated applications.
-        schema:
-          type: string
+        - name: account_id
+          in: path
+          required: true
+          description: The account ID for which to retrieve the associated applications.
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: List of apps for the specified account are returned
@@ -35,152 +35,152 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/app_response"
+                  '$ref': '#/components/schemas/app_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Account not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     post:
       summary: Creates an app
       description: Creates an application with the specified properties.
       tags:
-      - apps
+        - apps
       parameters:
-      - name: account_id
-        description: The account ID of the account in which to create the application.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: account_id
+          description: The account ID of the account in which to create the application.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '201':
           description: App created
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/app_response"
+                '$ref': '#/components/schemas/app_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Account not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/app_post"
-  "/apps/{id}":
+              '$ref': '#/components/schemas/app_post'
+  '/apps/{id}':
     patch:
       summary: Updates an app
       description: Updates the application with the specified application ID.
       tags:
-      - apps
+        - apps
       parameters:
-      - name: id
-        description: The ID of application to be updated.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          description: The ID of application to be updated.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: App updated
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/app_response"
+                '$ref': '#/components/schemas/app_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid resource
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/app_patch"
+              '$ref': '#/components/schemas/app_patch'
     delete:
       summary: Deletes an app
       description: Deletes the application with the specified application ID.
       tags:
-      - apps
+        - apps
       parameters:
-      - name: id
-        description: The ID of the application to be deleted.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          description: The ID of the application to be deleted.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '204':
           description: App deleted
@@ -190,91 +190,91 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
-  "/apps/{id}/pkcs12":
+                '$ref': '#/components/schemas/error'
+  '/apps/{id}/pkcs12':
     post:
       summary: Updates app's APNs info from a `.p12` file
       description: Updates the application's Apple Push Notification service (APNs) information.
       tags:
-      - apps
+        - apps
       parameters:
-      - name: id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: App updated
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/app_response"
+                '$ref': '#/components/schemas/app_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           multipart/form-data:
             schema:
-              "$ref": "#/components/schemas/app_pkcs12"
-  "/apps/{app_id}/keys":
+              '$ref': '#/components/schemas/app_pkcs12'
+  '/apps/{app_id}/keys':
     get:
       summary: Lists app keys
       description: Lists the API keys associated with the application ID.
       tags:
-      - keys
+        - keys
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Key list
@@ -283,177 +283,177 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/key_response"
+                  '$ref': '#/components/schemas/key_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     post:
       summary: Creates a key
       description: Creates an API key for the application specified.
       tags:
-      - keys
+        - keys
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '201':
           description: Key created
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/key_response"
+                '$ref': '#/components/schemas/key_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/key_post"
-  "/apps/{app_id}/keys/{key_id}":
+              '$ref': '#/components/schemas/key_post'
+  '/apps/{app_id}/keys/{key_id}':
     patch:
       summary: Updates a key
       description: Update the API key with the specified key ID, for the application with the specified application ID.
       tags:
-      - keys
+        - keys
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: key_id
-        description: The API key ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key_id
+          description: The API key ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Key updated
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/key_response"
+                '$ref': '#/components/schemas/key_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/key_patch"
-  "/apps/{app_id}/keys/{key_id}/revoke":
+              '$ref': '#/components/schemas/key_patch'
+  '/apps/{app_id}/keys/{key_id}/revoke':
     post:
       summary: Revokes a key
       description: Revokes the API key with the specified ID, with the Application ID. This deletes the key.
       tags:
-      - keys
+        - keys
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: key_id
-        description: The key ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key_id
+          description: The key ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Key revoked
@@ -463,40 +463,40 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
-  "/apps/{app_id}/namespaces":
+                '$ref': '#/components/schemas/error'
+  '/apps/{app_id}/namespaces':
     get:
       summary: Lists namespaces
-      description: List the namespaces for the specified application ID.
+      description: List the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespaces</a> for the specified application ID.
       tags:
-      - namespaces
+        - namespaces
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Namespace list
@@ -505,170 +505,170 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/namespace_response"
+                  '$ref': '#/components/schemas/namespace_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     post:
       summary: Creates a namespace
-      description: Creates a namespace for the specified application ID.
+      description: Creates a <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> for the specified application ID.
       tags:
-      - namespaces
+        - namespaces
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '201':
           description: Namespace created
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/namespace_response"
+                '$ref': '#/components/schemas/namespace_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/namespace_post"
-  "/apps/{app_id}/namespaces/{namespace_id}":
+              '$ref': '#/components/schemas/namespace_post'
+  '/apps/{app_id}/namespaces/{namespace_id}':
     patch:
       summary: Updates a namespace
-      description: Updates the namespace with the specified ID, for the application with the specified application ID.
+      description: Updates the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
       tags:
-      - namespaces
+        - namespaces
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: namespace_id
-        description: The namespace ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: namespace_id
+          description: The namespace ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Namespace updated
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/namespace_response"
+                '$ref': '#/components/schemas/namespace_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/namespace_patch"
+              '$ref': '#/components/schemas/namespace_patch'
     delete:
       summary: Deletes a namespace
-      description: Deletes the namespace with the specified ID, for the specified application ID.
+      description: Deletes the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the specified application ID.
       tags:
-      - namespaces
+        - namespaces
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: namespace_id
-        description: The namespace ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: namespace_id
+          description: The namespace ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '204':
           description: Namespace deleted
@@ -678,40 +678,40 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
-  "/apps/{app_id}/queues":
+                '$ref': '#/components/schemas/error'
+  '/apps/{app_id}/queues':
     get:
       summary: Lists queues
       description: Lists the queues associated with the specified application ID.
       tags:
-      - queues
+        - queues
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Queue list
@@ -720,114 +720,114 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/queue_response"
+                  '$ref': '#/components/schemas/queue_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '503':
           description: 503 Service unavailable
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     post:
       summary: Creates a queue
       description: Creates a queue for the application specified by application ID. The properties for the queue to be created are specified in the request body.
       tags:
-      - queues
+        - queues
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '201':
           description: Queue created
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/queue_response"
+                '$ref': '#/components/schemas/queue_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/queue"
-  "/apps/{app_id}/queues/{queue_id}":
+              '$ref': '#/components/schemas/queue'
+  '/apps/{app_id}/queues/{queue_id}':
     delete:
       summary: Deletes a queue
       description: Delete the queue with the specified queue name, from the application with the specified application ID.
       tags:
-      - queues
+        - queues
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: queue_id
-        description: The queue ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: queue_id
+          description: The queue ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '204':
           description: Queue deleted
@@ -837,46 +837,46 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '503':
           description: 503 Service unavailable
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
-  "/apps/{app_id}/rules":
+                '$ref': '#/components/schemas/error'
+  '/apps/{app_id}/rules':
     get:
       summary: Lists Reactor rules
       description: Lists the rules for the application specified by the application ID.
       tags:
-      - rules
+        - rules
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Reactor rule list
@@ -885,233 +885,233 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/rule_response"
+                  '$ref': '#/components/schemas/rule_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     post:
       summary: Creates a Reactor rule
-      description: Creates a rule for the application with the specified application ID. 
+      description: Creates a rule for the application with the specified application ID.
       tags:
-      - rules
+        - rules
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '201':
           description: Reactor rule created
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/rule_response"
+                '$ref': '#/components/schemas/rule_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         description: The rule properties.
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/rule_post"
-  "/apps/{app_id}/rules/{rule_id}":
+              '$ref': '#/components/schemas/rule_post'
+  '/apps/{app_id}/rules/{rule_id}':
     get:
       summary: Gets a reactor rule by rule ID
       description: Returns the rule specified by the rule ID, for the application specified by application ID.
       tags:
-      - rules
+        - rules
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: rule_id
-        description: The rule ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rule_id
+          description: The rule ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Reactor rule
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/rule_response"
+                '$ref': '#/components/schemas/rule_response'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: Not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
     patch:
       summary: Updates a Reactor rule
       tags:
-      - rules
+        - rules
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: rule_id
-        description: The rule ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rule_id
+          description: The rule ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Reactor rule updated
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/rule_response"
+                '$ref': '#/components/schemas/rule_response'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '422':
           description: Invalid request
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
       requestBody:
         description: Properties for the rule.
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/rule_patch"
+              '$ref': '#/components/schemas/rule_patch'
     delete:
       summary: Deletes a Reactor rule
       tags:
-      - rules
+        - rules
       parameters:
-      - name: app_id
-        description: The application ID.
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: rule_id
-        description: The rule ID.
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: app_id
+          description: The application ID.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rule_id
+          description: The rule ID.
+          in: path
+          required: true
+          schema:
+            type: string
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '204':
           description: Reactor rule deleted
@@ -1121,51 +1121,51 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '404':
           description: App not found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '504':
           description: Gateway timeout
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
-  "/me":
+                '$ref': '#/components/schemas/error'
+  '/me':
     get:
       summary: Get token details
       tags:
-      - tokens
+        - tokens
       security:
-      - bearer_auth: []
+        - bearer_auth: []
       responses:
         '200':
           description: Token details
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/me"
+                '$ref': '#/components/schemas/me'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                '$ref': '#/components/schemas/error'
 
 components:
   securitySchemes:
@@ -1187,8 +1187,8 @@ components:
           description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
           example: channel.message
       required:
-      - channelFilter
-      - type
+        - channelFilter
+        - type
     rule_source_patch:
       type: object
       additionalProperties: false
@@ -1231,87 +1231,87 @@ components:
           example: 1614679682091
     rule_post:
       oneOf:
-      - "$ref": "#/components/schemas/http_rule_post"
-      - "$ref": "#/components/schemas/ifttt_rule_post"
-      - "$ref": "#/components/schemas/zapier_rule_post"
-      - "$ref": "#/components/schemas/cloudflare_worker_rule_post"
-      - "$ref": "#/components/schemas/azure_function_rule_post"
-      - "$ref": "#/components/schemas/google_cloud_function_rule_post"
-      - "$ref": "#/components/schemas/aws_lambda_rule_post"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_post"
-      - "$ref": "#/components/schemas/aws_sqs_rule_post"
-      - "$ref": "#/components/schemas/amqp_rule_post"
-      - "$ref": "#/components/schemas/amqp_external_rule_post"
+        - '$ref': '#/components/schemas/http_rule_post'
+        - '$ref': '#/components/schemas/ifttt_rule_post'
+        - '$ref': '#/components/schemas/zapier_rule_post'
+        - '$ref': '#/components/schemas/cloudflare_worker_rule_post'
+        - '$ref': '#/components/schemas/azure_function_rule_post'
+        - '$ref': '#/components/schemas/google_cloud_function_rule_post'
+        - '$ref': '#/components/schemas/aws_lambda_rule_post'
+        - '$ref': '#/components/schemas/aws_kinesis_rule_post'
+        - '$ref': '#/components/schemas/aws_sqs_rule_post'
+        - '$ref': '#/components/schemas/amqp_rule_post'
+        - '$ref': '#/components/schemas/amqp_external_rule_post'
       discriminator:
         propertyName: ruleType
         mapping:
-          http: "#/components/schemas/http_rule_post"
-          http/ifttt: "#/components/schemas/ifttt_rule_post"
-          http/zapier: "#/components/schemas/zapier_rule_post"
-          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_post"
-          http/azure-function: "#/components/schemas/azure_function_rule_post"
-          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_post"
-          aws/lambda: "#/components/schemas/aws_lambda_rule_post"
-          aws/kinesis: "#/components/schemas/aws_kinesis_rule_post"
-          aws/sqs: "#/components/schemas/aws_sqs_rule_post"
-          amqp: "#/components/schemas/amqp_rule_post"
-          amqp/external: "#/components/schemas/amqp_external_rule_post"
+          http: '#/components/schemas/http_rule_post'
+          http/ifttt: '#/components/schemas/ifttt_rule_post'
+          http/zapier: '#/components/schemas/zapier_rule_post'
+          http/cloudflare-worker: '#/components/schemas/cloudflare_worker_rule_post'
+          http/azure-function: '#/components/schemas/azure_function_rule_post'
+          http/google-cloud-function: '#/components/schemas/google_cloud_function_rule_post'
+          aws/lambda: '#/components/schemas/aws_lambda_rule_post'
+          aws/kinesis: '#/components/schemas/aws_kinesis_rule_post'
+          aws/sqs: '#/components/schemas/aws_sqs_rule_post'
+          amqp: '#/components/schemas/amqp_rule_post'
+          amqp/external: '#/components/schemas/amqp_external_rule_post'
     rule_patch:
       oneOf:
-      - "$ref": "#/components/schemas/http_rule_patch"
-      - "$ref": "#/components/schemas/ifttt_rule_patch"
-      - "$ref": "#/components/schemas/zapier_rule_patch"
-      - "$ref": "#/components/schemas/cloudflare_worker_rule_patch"
-      - "$ref": "#/components/schemas/azure_function_rule_patch"
-      - "$ref": "#/components/schemas/google_cloud_function_rule_patch"
-      - "$ref": "#/components/schemas/aws_lambda_rule_patch"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_patch"
-      - "$ref": "#/components/schemas/aws_sqs_rule_patch"
-      - "$ref": "#/components/schemas/amqp_rule_patch"
-      - "$ref": "#/components/schemas/amqp_external_rule_patch"
+        - '$ref': '#/components/schemas/http_rule_patch'
+        - '$ref': '#/components/schemas/ifttt_rule_patch'
+        - '$ref': '#/components/schemas/zapier_rule_patch'
+        - '$ref': '#/components/schemas/cloudflare_worker_rule_patch'
+        - '$ref': '#/components/schemas/azure_function_rule_patch'
+        - '$ref': '#/components/schemas/google_cloud_function_rule_patch'
+        - '$ref': '#/components/schemas/aws_lambda_rule_patch'
+        - '$ref': '#/components/schemas/aws_kinesis_rule_patch'
+        - '$ref': '#/components/schemas/aws_sqs_rule_patch'
+        - '$ref': '#/components/schemas/amqp_rule_patch'
+        - '$ref': '#/components/schemas/amqp_external_rule_patch'
       discriminator:
         propertyName: ruleType
         mapping:
-          http: "#/components/schemas/http_rule_patch"
-          http/ifttt: "#/components/schemas/ifttt_rule_patch"
-          http/zapier: "#/components/schemas/zapier_rule_patch"
-          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_patch"
-          http/azure-function: "#/components/schemas/azure_function_rule_patch"
-          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_patch"
-          aws/lambda: "#/components/schemas/aws_lambda_rule_patch"
-          aws/kinesis: "#/components/schemas/aws_kinesis_rule_patch"
-          aws/sqs: "#/components/schemas/aws_sqs_rule_patch"
-          amqp: "#/components/schemas/amqp_rule_patch"
-          amqp/external: "#/components/schemas/amqp_external_rule_patch"
+          http: '#/components/schemas/http_rule_patch'
+          http/ifttt: '#/components/schemas/ifttt_rule_patch'
+          http/zapier: '#/components/schemas/zapier_rule_patch'
+          http/cloudflare-worker: '#/components/schemas/cloudflare_worker_rule_patch'
+          http/azure-function: '#/components/schemas/azure_function_rule_patch'
+          http/google-cloud-function: '#/components/schemas/google_cloud_function_rule_patch'
+          aws/lambda: '#/components/schemas/aws_lambda_rule_patch'
+          aws/kinesis: '#/components/schemas/aws_kinesis_rule_patch'
+          aws/sqs: '#/components/schemas/aws_sqs_rule_patch'
+          amqp: '#/components/schemas/amqp_rule_patch'
+          amqp/external: '#/components/schemas/amqp_external_rule_patch'
     rule_response:
       oneOf:
-      - "$ref": "#/components/schemas/http_rule_response"
-      - "$ref": "#/components/schemas/ifttt_rule_response"
-      - "$ref": "#/components/schemas/zapier_rule_response"
-      - "$ref": "#/components/schemas/cloudflare_worker_rule_response"
-      - "$ref": "#/components/schemas/azure_function_rule_response"
-      - "$ref": "#/components/schemas/google_cloud_function_rule_response"
-      - "$ref": "#/components/schemas/aws_lambda_rule_response"
-      - "$ref": "#/components/schemas/aws_kinesis_rule_response"
-      - "$ref": "#/components/schemas/aws_sqs_rule_response"
-      - "$ref": "#/components/schemas/amqp_rule_response"
-      - "$ref": "#/components/schemas/amqp_external_rule_response"
-      - "$ref": "#/components/schemas/unsupported_rule_response"
+        - '$ref': '#/components/schemas/http_rule_response'
+        - '$ref': '#/components/schemas/ifttt_rule_response'
+        - '$ref': '#/components/schemas/zapier_rule_response'
+        - '$ref': '#/components/schemas/cloudflare_worker_rule_response'
+        - '$ref': '#/components/schemas/azure_function_rule_response'
+        - '$ref': '#/components/schemas/google_cloud_function_rule_response'
+        - '$ref': '#/components/schemas/aws_lambda_rule_response'
+        - '$ref': '#/components/schemas/aws_kinesis_rule_response'
+        - '$ref': '#/components/schemas/aws_sqs_rule_response'
+        - '$ref': '#/components/schemas/amqp_rule_response'
+        - '$ref': '#/components/schemas/amqp_external_rule_response'
+        - '$ref': '#/components/schemas/unsupported_rule_response'
       discriminator:
         propertyName: ruleType
         mapping:
-          http: "#/components/schemas/http_rule_response"
-          http/ifttt: "#/components/schemas/ifttt_rule_response"
-          http/zapier: "#/components/schemas/zapier_rule_response"
-          http/cloudflare-worker: "#/components/schemas/cloudflare_worker_rule_response"
-          http/azure-function: "#/components/schemas/azure_function_rule_response"
-          http/google-cloud-function: "#/components/schemas/google_cloud_function_rule_response"
-          aws/lambda: "#/components/schemas/aws_lambda_rule_response"
-          aws/kinesis: "#/components/schemas/aws_kinesis_rule_response"
-          aws/sqs: "#/components/schemas/aws_sqs_rule_response"
-          amqp: "#/components/schemas/amqp_rule_response"
-          amqp/external: "#/components/schemas/amqp_external_rule_response"
-          unsupported: "#/components/schemas/unsupported_rule_response"
+          http: '#/components/schemas/http_rule_response'
+          http/ifttt: '#/components/schemas/ifttt_rule_response'
+          http/zapier: '#/components/schemas/zapier_rule_response'
+          http/cloudflare-worker: '#/components/schemas/cloudflare_worker_rule_response'
+          http/azure-function: '#/components/schemas/azure_function_rule_response'
+          http/google-cloud-function: '#/components/schemas/google_cloud_function_rule_response'
+          aws/lambda: '#/components/schemas/aws_lambda_rule_response'
+          aws/kinesis: '#/components/schemas/aws_kinesis_rule_response'
+          aws/sqs: '#/components/schemas/aws_sqs_rule_response'
+          amqp: '#/components/schemas/amqp_rule_response'
+          amqp/external: '#/components/schemas/amqp_external_rule_response'
+          unsupported: '#/components/schemas/unsupported_rule_response'
     http_rule_post:
       type: object
       additionalProperties: false
@@ -1323,7 +1323,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http
+            - http
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http
         requestMode:
@@ -1331,7 +1331,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1354,7 +1354,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -1370,13 +1374,13 @@ components:
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - url
-          - format
+            - url
+            - format
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     http_rule_patch:
       type: object
       additionalProperties: false
@@ -1388,7 +1392,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http
+            - http
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http
         requestMode:
@@ -1396,7 +1400,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -1419,7 +1423,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -1435,7 +1443,7 @@ components:
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     http_rule_response:
       type: object
       additionalProperties: false
@@ -1470,7 +1478,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http
+            - http
           description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http
         requestMode:
@@ -1478,7 +1486,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1501,7 +1509,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -1517,13 +1529,13 @@ components:
               description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - url
-          - format
+            - url
+            - format
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     ifttt_rule_post:
       type: object
       additionalProperties: false
@@ -1535,7 +1547,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/ifttt
+            - http/ifttt
           description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/ifttt
         requestMode:
@@ -1543,7 +1555,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1557,13 +1569,13 @@ components:
               description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
           required:
-          - webhookKey
-          - eventName
+            - webhookKey
+            - eventName
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     ifttt_rule_patch:
       type: object
       additionalProperties: false
@@ -1575,7 +1587,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/ifttt
+            - http/ifttt
           description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/ifttt
         requestMode:
@@ -1583,7 +1595,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -1597,7 +1609,7 @@ components:
               description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
       required:
-      - ruleType
+        - ruleType
     ifttt_rule_response:
       type: object
       additionalProperties: false
@@ -1609,7 +1621,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/ifttt
+            - http/ifttt
           description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/ifttt
         requestMode:
@@ -1617,7 +1629,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1631,8 +1643,8 @@ components:
               description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
           required:
-          - webhookKey
-          - eventName
+            - webhookKey
+            - eventName
         id:
           type: string
           description: The rule ID.
@@ -1657,10 +1669,10 @@ components:
           type: object
           nullable: true
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     zapier_rule_post:
       type: object
       additionalProperties: false
@@ -1672,7 +1684,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/zapier
+            - http/zapier
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/zapier
         requestMode:
@@ -1680,7 +1692,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1703,19 +1715,23 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
           required:
-          - url
+            - url
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     zapier_rule_patch:
       type: object
       additionalProperties: false
@@ -1727,7 +1743,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/zapier
+            - http/zapier
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/zapier
         requestMode:
@@ -1735,7 +1751,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -1758,14 +1774,18 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
       required:
-      - ruleType
+        - ruleType
     zapier_rule_response:
       type: object
       additionalProperties: false
@@ -1800,7 +1820,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/zapier
+            - http/zapier
           description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/zapier
         requestMode:
@@ -1808,7 +1828,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1831,19 +1851,23 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
           required:
-          - url
+            - url
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     cloudflare_worker_rule_post:
       type: object
       additionalProperties: false
@@ -1855,7 +1879,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/cloudflare-worker
+            - http/cloudflare-worker
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/cloudflare-worker
         requestMode:
@@ -1863,7 +1887,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -1886,19 +1910,23 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
           required:
-          - url
+            - url
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     cloudflare_worker_rule_patch:
       type: object
       additionalProperties: false
@@ -1910,7 +1938,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/cloudflare-worker
+            - http/cloudflare-worker
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/cloudflare-worker
         requestMode:
@@ -1918,7 +1946,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -1941,14 +1969,18 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
       required:
-      - ruleType
+        - ruleType
     cloudflare_worker_rule_response:
       type: object
       additionalProperties: false
@@ -1983,7 +2015,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/cloudflare-worker
+            - http/cloudflare-worker
           description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/cloudflare-worker
         requestMode:
@@ -1991,7 +2023,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2014,19 +2046,23 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
               description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
               example: bw66AB
           required:
-          - url
+            - url
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     azure_function_rule_post:
       type: object
       additionalProperties: false
@@ -2038,7 +2074,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/azure-function
+            - http/azure-function
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/azure-function
         requestMode:
@@ -2046,7 +2082,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2073,7 +2109,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2089,13 +2129,13 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - azureAppId
-          - azureFunctionName
+            - azureAppId
+            - azureFunctionName
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     azure_function_rule_patch:
       type: object
       additionalProperties: false
@@ -2107,7 +2147,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/azure-function
+            - http/azure-function
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/azure-function
         requestMode:
@@ -2115,7 +2155,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -2142,7 +2182,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2158,7 +2202,7 @@ components:
               description: JSON provides a text-based encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     azure_function_rule_response:
       type: object
       additionalProperties: false
@@ -2193,7 +2237,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/azure-function
+            - http/azure-function
           description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/azure-function
         requestMode:
@@ -2201,7 +2245,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2228,7 +2272,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2244,13 +2292,13 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - azureAppId
-          - azureFunctionName
+            - azureAppId
+            - azureFunctionName
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     google_cloud_function_rule_post:
       type: object
       additionalProperties: false
@@ -2258,7 +2306,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/google-cloud-function
+            - http/google-cloud-function
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/google-cloud-function
         requestMode:
@@ -2266,7 +2314,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2297,7 +2345,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2313,14 +2365,14 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - projectId
-          - functionName
+            - region
+            - projectId
+            - functionName
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     google_cloud_function_rule_patch:
       type: object
       additionalProperties: false
@@ -2332,7 +2384,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/google-cloud-function
+            - http/google-cloud-function
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/google-cloud-function
         requestMode:
@@ -2340,7 +2392,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -2371,7 +2423,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2387,7 +2443,7 @@ components:
               description: JSON provides a text-based encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     google_cloud_function_rule_response:
       type: object
       additionalProperties: false
@@ -2422,7 +2478,7 @@ components:
         ruleType:
           type: string
           enum:
-          - http/google-cloud-function
+            - http/google-cloud-function
           description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: http/google-cloud-function
         requestMode:
@@ -2430,7 +2486,7 @@ components:
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2461,7 +2517,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             signingKeyId:
               type: string
               nullable: true
@@ -2477,14 +2537,14 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - projectId
-          - functionName
+            - region
+            - projectId
+            - functionName
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_access_keys:
       type: object
       additionalProperties: false
@@ -2492,7 +2552,7 @@ components:
         authenticationMode:
           type: string
           enum:
-          - credentials
+            - credentials
           description: Authentication method is using AWS credentials (AWS key ID and secret key).
           example: credentials
         accessKeyId:
@@ -2504,8 +2564,8 @@ components:
           description: The AWS secret key for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
           example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
       required:
-      - accessKeyId
-      - secretAccessKey
+        - accessKeyId
+        - secretAccessKey
     aws_access_keys_response:
       type: object
       additionalProperties: false
@@ -2513,7 +2573,7 @@ components:
         authenticationMode:
           type: string
           enum:
-          - credentials
+            - credentials
           description: Authentication method is using AWS credentials (AWS key ID and secret key).
           example: credentials
         accessKeyId:
@@ -2527,7 +2587,7 @@ components:
         authenticationMode:
           type: string
           enum:
-          - assumeRole
+            - assumeRole
           description: Authentication method is using the ARN of an assumable role. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
           example: assumeRole
         assumeRoleArn:
@@ -2535,7 +2595,7 @@ components:
           description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
           example: 'arn:aws:iam::123456789012:user/Development/product_1234/*'
       required:
-      - assumeRoleArn
+        - assumeRoleArn
     aws_lambda_rule_post:
       type: object
       additionalProperties: false
@@ -2547,7 +2607,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/lambda
+            - aws/lambda
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/lambda
         requestMode:
@@ -2555,7 +2615,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2570,27 +2630,27 @@ components:
               example: myFunctionName
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
           required:
-          - region
-          - functionName
-          - authentication
+            - region
+            - functionName
+            - authentication
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_lambda_rule_patch:
       type: object
       additionalProperties: false
@@ -2602,7 +2662,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/lambda
+            - aws/lambda
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">Ably documentation</a> for further information.
           example: aws/lambda
         requestMode:
@@ -2610,7 +2670,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -2625,24 +2685,24 @@ components:
               example: myFunctionName
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
               description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
           required:
-          - region
-          - functionName
-          - authentication
+            - region
+            - functionName
+            - authentication
       required:
-      - ruleType
+        - ruleType
     aws_lambda_rule_response:
       type: object
       additionalProperties: false
@@ -2677,7 +2737,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/lambda
+            - aws/lambda
           description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/lambda
         requestMode:
@@ -2685,7 +2745,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2700,13 +2760,13 @@ components:
               example: myFunctionName
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys_response"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys_response'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys_response"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys_response'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -2717,14 +2777,14 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - functionName
-          - authentication
+            - region
+            - functionName
+            - authentication
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_kinesis_rule_post:
       type: object
       additionalProperties: false
@@ -2736,7 +2796,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/kinesis
+            - aws/kinesis
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/kinesis
         requestMode:
@@ -2744,7 +2804,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2763,13 +2823,13 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -2780,16 +2840,16 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - streamName
-          - partitionKey
-          - authentication
-          - format
+            - region
+            - streamName
+            - partitionKey
+            - authentication
+            - format
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_kinesis_rule_patch:
       type: object
       additionalProperties: false
@@ -2801,7 +2861,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/kinesis
+            - aws/kinesis
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/kinesis
         requestMode:
@@ -2809,7 +2869,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -2828,13 +2888,13 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -2845,7 +2905,7 @@ components:
               description: JSON provides a text-based encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     aws_kinesis_rule_response:
       type: object
       additionalProperties: false
@@ -2880,7 +2940,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/kinesis
+            - aws/kinesis
           description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/kinesis
         requestMode:
@@ -2888,7 +2948,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2907,13 +2967,13 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys_response"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys_response'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys_response"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys_response'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -2924,16 +2984,16 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - streamName
-          - partitionKey
-          - authentication
-          - format
+            - region
+            - streamName
+            - partitionKey
+            - authentication
+            - format
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_sqs_rule_post:
       type: object
       additionalProperties: false
@@ -2945,7 +3005,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/sqs
+            - aws/sqs
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/sqs
         requestMode:
@@ -2953,7 +3013,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -2972,13 +3032,13 @@ components:
               example: MyQueue
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -2989,15 +3049,15 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - awsAccountId
-          - queueName
-          - authentication
+            - region
+            - awsAccountId
+            - queueName
+            - authentication
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     aws_sqs_rule_patch:
       type: object
       additionalProperties: false
@@ -3009,7 +3069,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/sqs
+            - aws/sqs
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/sqs
         requestMode:
@@ -3017,7 +3077,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -3036,13 +3096,13 @@ components:
               example: MyQueue
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -3053,7 +3113,7 @@ components:
               description: JSON provides a text-based encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     aws_sqs_rule_response:
       type: object
       additionalProperties: false
@@ -3088,7 +3148,7 @@ components:
         ruleType:
           type: string
           enum:
-          - aws/sqs
+            - aws/sqs
           description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: aws/sqs
         requestMode:
@@ -3096,7 +3156,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3115,13 +3175,13 @@ components:
               example: MyQueue
             authentication:
               oneOf:
-              - "$ref": "#/components/schemas/aws_access_keys_response"
-              - "$ref": "#/components/schemas/aws_assume_role"
+                - '$ref': '#/components/schemas/aws_access_keys_response'
+                - '$ref': '#/components/schemas/aws_assume_role'
               discriminator:
                 propertyName: authenticationMode
                 mapping:
-                  credentials: "#/components/schemas/aws_access_keys_response"
-                  assumeRole: "#/components/schemas/aws_assume_role"
+                  credentials: '#/components/schemas/aws_access_keys_response'
+                  assumeRole: '#/components/schemas/aws_assume_role'
             enveloped:
               type: boolean
               nullable: true
@@ -3132,15 +3192,15 @@ components:
               description: JSON provides a text-based encoding.
               example: json
           required:
-          - region
-          - awsAccountId
-          - queueName
-          - authentication
+            - region
+            - awsAccountId
+            - queueName
+            - authentication
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     amqp_rule_post:
       type: object
       additionalProperties: false
@@ -3152,7 +3212,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp
+            - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: amqp
         requestMode:
@@ -3160,7 +3220,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3181,7 +3241,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3192,12 +3256,12 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - queueId
+            - queueId
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     amqp_rule_patch:
       type: object
       additionalProperties: false
@@ -3209,7 +3273,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp
+            - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: amqp
         requestMode:
@@ -3217,7 +3281,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -3238,7 +3302,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3249,7 +3317,7 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     amqp_rule_response:
       type: object
       additionalProperties: false
@@ -3284,7 +3352,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp
+            - amqp
           description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
           example: amqp
         requestMode:
@@ -3292,7 +3360,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3313,7 +3381,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3324,12 +3396,12 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - queueId
+            - queueId
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     amqp_external_rule_post:
       type: object
       additionalProperties: false
@@ -3337,7 +3409,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp/external
+            - amqp/external
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">documentation</a> for further information.
           example: amqp/external
         requestMode:
@@ -3345,7 +3417,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3360,11 +3432,11 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
-              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
+              description: Reject delivery of the message if the route does not exist, otherwise fail silently.
               example: true
             persistentMessages:
               type: boolean
-              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
+              description: Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
               example: true
             messageTtl:
               type: integer
@@ -3383,7 +3455,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3394,15 +3470,15 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - url
-          - routingKey
-          - mandatoryRoute
-          - persistentMessages
+            - url
+            - routingKey
+            - mandatoryRoute
+            - persistentMessages
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     amqp_external_rule_patch:
       type: object
       additionalProperties: false
@@ -3414,7 +3490,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp/external
+            - amqp/external
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
           example: amqp/external
         requestMode:
@@ -3422,7 +3498,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source_patch"
+          '$ref': '#/components/schemas/rule_source_patch'
         target:
           type: object
           additionalProperties: false
@@ -3437,11 +3513,11 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
-              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
+              description: Reject delivery of the message if the route does not exist, otherwise fail silently.
               example: true
             persistentMessages:
               type: boolean
-              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
+              description: Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
               example: true
             messageTtl:
               type: integer
@@ -3460,7 +3536,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3471,7 +3551,7 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
-      - ruleType
+        - ruleType
     amqp_external_rule_response:
       type: object
       additionalProperties: false
@@ -3506,7 +3586,7 @@ components:
         ruleType:
           type: string
           enum:
-          - amqp/external
+            - amqp/external
           description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
           example: amqp/external
         requestMode:
@@ -3514,7 +3594,7 @@ components:
           description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3529,11 +3609,11 @@ components:
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
-              description:  Reject delivery of the message if the route does not exist, otherwise fail silently.
+              description: Reject delivery of the message if the route does not exist, otherwise fail silently.
               example: true
             persistentMessages:
               type: boolean
-              description:  Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
+              description: Marks the message as persistent, instructing the broker to write it to disk if it is in a durable queue.
               example: true
             messageTtl:
               type: integer
@@ -3553,7 +3633,11 @@ components:
                     description: The value of the header.
                     example: user-agent-string
               description: If you have additional information to send, you'll need to include the relevant headers.
-              example: [{"name": "User-Agent", "value": "user-agent-string"}, {"name": "headerName", "value": "headerValue"}]
+              example:
+                [
+                  { 'name': 'User-Agent', 'value': 'user-agent-string' },
+                  { 'name': 'headerName', 'value': 'headerValue' },
+                ]
             enveloped:
               type: boolean
               nullable: true
@@ -3564,15 +3648,15 @@ components:
               description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
-          - url
-          - routingKey
-          - mandatoryRoute
-          - persistentMessages
+            - url
+            - routingKey
+            - mandatoryRoute
+            - persistentMessages
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     unsupported_rule_response:
       type: object
       additionalProperties: false
@@ -3608,14 +3692,14 @@ components:
           type: string
           description: This rule type is currently unsupported.
           enum:
-          - unsupported
+            - unsupported
           example: unsupported
         requestMode:
           type: string
           description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
           example: single
         source:
-          "$ref": "#/components/schemas/rule_source"
+          '$ref': '#/components/schemas/rule_source'
         target:
           type: object
           additionalProperties: false
@@ -3625,12 +3709,12 @@ components:
               description: The webhook URL that Ably will POST events to.
               example: https://example.com/webhooks
           required:
-          - url
+            - url
       required:
-      - ruleType
-      - requestMode
-      - source
-      - target
+        - ruleType
+        - requestMode
+        - source
+        - target
     queue:
       type: object
       additionalProperties: false
@@ -3652,15 +3736,15 @@ components:
           description: The data center region. US East (Virginia) or EU West (Ireland). Values are `us-east-1-a` or `eu-west-1-a`.
           example: us-east-1-a
       required:
-      - name
-      - ttl
-      - maxLength
-      - region
+        - name
+        - ttl
+        - maxLength
+        - region
     queue_response:
       type: object
       additionalProperties: false
       properties:
-        id: 
+        id:
           type: string
           description: The ID of the Ably queue
           example: 28AB6w:us-east-1-a:My queue
@@ -3685,7 +3769,7 @@ components:
               description: URI for the AMQP queue interface.
               example: amqps://us-east-1-a-queue.ably.io:5671/shared
             queueName:
-              type: string        
+              type: string
               description: Name of the Ably queue.
               example: 28AB6w:My queue
         stomp:
@@ -3767,7 +3851,7 @@ components:
       properties:
         id:
           type: string
-          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`.
           example: namespace
         authenticated:
           type: boolean
@@ -3782,7 +3866,7 @@ components:
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -3795,7 +3879,7 @@ components:
           description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
           example: false
       required:
-      - id
+        - id
     namespace_patch:
       type: object
       additionalProperties: false
@@ -3813,7 +3897,7 @@ components:
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -3844,7 +3928,7 @@ components:
           example: 1614679682091
         id:
           type: string
-          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`.
           example: namespace
         persisted:
           type: boolean
@@ -3854,7 +3938,7 @@ components:
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -3904,7 +3988,7 @@ components:
           description: The Apple Push Notification service sandbox endpoint.
           example: false
       required:
-      - name
+        - name
     app_patch:
       type: object
       additionalProperties: false
@@ -3950,14 +4034,14 @@ components:
           type: string
           format: binary
           description: The `.p12` file containing the app's APNs information.
-          example: example.p12 
+          example: example.p12
         p12Pass:
           type: string
           description: The password for the corresponding `.p12` file.
-          example: secret 
+          example: secret
       required:
-      - p12File
-      - p12Pass
+        - p12File
+        - p12Pass
     app_response:
       type: object
       additionalProperties: false
@@ -4006,14 +4090,26 @@ components:
           example: 'channel-name:*,[queue]queue-name*'
         capabilities:
           description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
-          example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
+          example:
+            [
+              'write:namespace',
+              'read:namespace',
+              'write:queue',
+              'read:queue',
+              'write:rule',
+              'read:rule',
+              'write:key',
+              'read:key',
+              'write:app',
+              'read:app',
+            ]
           type: array
           items:
             type: string
       required:
-      - name
-      - channels
-      - capabilities
+        - name
+        - channels
+        - capabilities
     key_patch:
       type: object
       additionalProperties: false
@@ -4028,7 +4124,19 @@ components:
           example: 'channel-name:*,[queue]queue-name*'
         capabilities:
           description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
-          example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
+          example:
+            [
+              'write:namespace',
+              'read:namespace',
+              'write:queue',
+              'read:queue',
+              'write:rule',
+              'read:rule',
+              'write:key',
+              'read:key',
+              'write:app',
+              'read:app',
+            ]
           type: array
           items:
             type: string
@@ -4085,13 +4193,25 @@ components:
             capabilities:
               type: array
               description: An array containing the access capabilities associated with the access token.
-              example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
+              example:
+                [
+                  'write:namespace',
+                  'read:namespace',
+                  'write:queue',
+                  'read:queue',
+                  'write:rule',
+                  'read:rule',
+                  'write:key',
+                  'read:key',
+                  'write:app',
+                  'read:app',
+                ]
               items:
                 type: string
           required:
-          - id
-          - name
-          - capabilities
+            - id
+            - name
+            - capabilities
         user:
           type: object
           additionalProperties: false
@@ -4105,8 +4225,8 @@ components:
               description: Email address of the user associated with the account.
               example: user@example.com
           required:
-          - id
-          - email
+            - id
+            - email
         account:
           type: object
           additionalProperties: false
@@ -4120,8 +4240,8 @@ components:
               description: The name of the account.
               example: Free account
           required:
-          - id
-          - name
+            - id
+            - name
     error:
       type: object
       additionalProperties: false
@@ -4143,7 +4263,7 @@ components:
           nullable: true
           description: Any additional details about the error message.
       required:
-      - message
-      - code
-      - statusCode
-      - href
+        - message
+        - code
+        - statusCode
+        - href
