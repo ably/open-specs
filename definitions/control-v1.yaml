@@ -1145,6 +1145,7 @@ paths:
   '/me':
     get:
       summary: Get token details
+      description: Retrieve information about the <a href="https://ably.com/documentation/core-features/authentication#token-authentication">token</a> the current user authenticates with.
       tags:
         - tokens
       security:
