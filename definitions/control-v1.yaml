@@ -485,7 +485,7 @@ paths:
   "/apps/{app_id}/namespaces":
     get:
       summary: Lists namespaces
-      description: List the namespaces for the specified application ID.
+      description: List the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespaces</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -532,7 +532,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a namespace
-      description: Creates a namespace for the specified application ID.
+      description: Creates a <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -589,7 +589,7 @@ paths:
   "/apps/{app_id}/namespaces/{namespace_id}":
     patch:
       summary: Updates a namespace
-      description: Updates the namespace with the specified ID, for the application with the specified application ID.
+      description: Updates the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -651,7 +651,7 @@ paths:
               "$ref": "#/components/schemas/namespace_patch"
     delete:
       summary: Deletes a namespace
-      description: Deletes the namespace with the specified ID, for the specified application ID.
+      description: Deletes the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the specified application ID.
       tags:
       - namespaces
       parameters:
