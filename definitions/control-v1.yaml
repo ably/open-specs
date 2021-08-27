@@ -4008,10 +4008,11 @@ components:
           type: object
           additionalProperties:
             type: array
+            description: An array of strings setting the capability operations for the resource.
             items:
               type: string
       example:
-        name: string
+        name: My key name
         capability:
           channel1:
           - publish
@@ -4034,10 +4035,11 @@ components:
           type: object
           additionalProperties:
             type: array
+            description: An array of strings setting the capability operations for the resource.
             items:
               type: string
       example:
-        name: string
+        name: My key name
         capability:
           channel1:
           - publish
@@ -4068,6 +4070,7 @@ components:
           type: object
           additionalProperties:
             type: array
+            description: An array of strings setting the capability operations for the resource.
             items:
               type: string
           example:
