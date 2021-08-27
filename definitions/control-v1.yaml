@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.17
+  version: 1.0.18
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -4003,20 +4003,24 @@ components:
           description: The name for your API key. This is a friendly name for your reference.
           type: string
           example: 'My key name'
-        channels:
-          description: Specify the channels and queues that this key can be used with.
-          type: string
-          example: 'channel-name:*,[queue]queue-name*'
-        capabilities:
-          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
-          example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
-          type: array
-          items:
-            type: string
+        capability:
+          description: These are the capability operations described in the <a href="https://ably.com/documentation/core-features/authentication#capability-operations">Ably documentation</a>.
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      example:
+        name: string
+        capability:
+          channel1:
+          - publish
+          - subscribe
+          channel2:
+          - history
       required:
       - name
-      - channels
-      - capabilities
+      - capability
     key_patch:
       type: object
       additionalProperties: false
@@ -4025,16 +4029,21 @@ components:
           description: The name for your API key. This is a friendly name for your reference.
           type: string
           example: 'My key name'
-        channels:
-          description: Specify the channels and queues that this key can be used with.
-          type: string
-          example: 'channel-name:*,[queue]queue-name*'
-        capabilities:
-          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
-          example: ["write:namespace", "read:namespace", "write:queue", "read:queue", "write:rule", "read:rule", "write:key", "read:key", "write:app", "read:app"]
-          type: array
-          items:
-            type: string
+        capability:
+          description: These are the capability operations described in the <a href="https://ably.com/documentation/core-features/authentication#capability-operations">Ably documentation</a>.
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      example:
+        name: string
+        capability:
+          channel1:
+          - publish
+          - subscribe
+          channel2:
+          - history
     key_response:
       type: object
       additionalProperties: false
@@ -4061,6 +4070,12 @@ components:
             type: array
             items:
               type: string
+          example:
+            channel1:
+            - publish
+            - subscribe
+            channel2:
+            - history
         created:
           type: integer
           description: Unix timestamp representing the date and time of creation of the key.
