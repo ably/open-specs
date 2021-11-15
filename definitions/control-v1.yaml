@@ -1204,34 +1204,6 @@ components:
           type: string
           description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
           example: channel.message
-    rule_attributes:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The rule ID.
-          example: 83IzAB
-        appId:
-          type: string
-          description: The Ably application ID.
-          example: 28GY6a
-        version:
-          type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
-          example: '1.2'
-        status:
-          type: string
-          description: The status of the rule. Rules can be enabled or disabled.
-          example: enabled
-        created:
-          type: number
-          description: Unix timestamp representing the date and time of creation of the rule.
-          example: 1602844091815
-        modified:
-          type: number
-          description: Unix timestamp representing the date and time of last modification of the rule.
-          example: 1614679682091
     rule_post:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_post"
