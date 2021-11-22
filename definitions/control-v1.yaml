@@ -3607,11 +3607,11 @@ components:
                       - 'scram-sha-512'
                     username:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'username'
                     password:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'password'
             enveloped:
               type: boolean
@@ -3684,11 +3684,11 @@ components:
                       - 'scram-sha-512'
                     username:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'username'
                     password:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'password'
             enveloped:
               type: boolean
@@ -3777,11 +3777,11 @@ components:
                       - 'scram-sha-512'
                     username:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'username'
                     password:
                       type: string
-                      description: Kafka credential.
+                      description: Kafka login credential.
                       example: 'password'
             enveloped:
               type: boolean
