@@ -1187,7 +1187,7 @@ components:
           example: ^my-channel.*
         type:
           type: string
-          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
+          description: "Ably currently supports the following sources for all rule types, in both single and batch mode: `channel.message`, `channel.presence`, `channel.lifecycle`, `channel.occupancy`. If the source `channel.message` is selected, messages trigger function calls as soon as they are published on a channel. If the source `channel.presence` is selected, presence events trigger function calls when clients enter, update their data, or leave channels. If the source `channel.lifecycle` is selected, you receive notifications for channel lifecycle events, such as when a channel is created (following the first client attaching to this channel) or discarded (when there are no more clients attached to the channel). If the source `channel.occupancy` is selected, you receive notifications for occupancy events, which relate to the number and type of occupants in the channel."
           example: channel.message
       required:
       - channelFilter
@@ -1202,7 +1202,7 @@ components:
           example: ^my-channel.*
         type:
           type: string
-          description: The type `channel.message` delivers all messages published on a channel. The type `channel.presence` delivers all enter, update and leave events for members present on a channel. The type `channel.lifecycle` events for this rule type are currently not supported. Get in touch (https://ably.com/contact) if you need this feature. The type `channel.occupancy` delivers all occupancy events for the channel.
+          description: "Ably currently supports the following sources for all rule types, in both single and batch mode: `channel.message`, `channel.presence`, `channel.lifecycle`, `channel.occupancy`. If the source `channel.message` is selected, messages trigger function calls as soon as they are published on a channel. If the source `channel.presence` is selected, presence events trigger function calls when clients enter, update their data, or leave channels. If the source `channel.lifecycle` is selected, you receive notifications for channel lifecycle events, such as when a channel is created (following the first client attaching to this channel) or discarded (when there are no more clients attached to the channel). If the source `channel.occupancy` is selected, you receive notifications for occupancy events, which relate to the number and type of occupants in the channel."
           example: channel.message
     rule_post:
       oneOf:
