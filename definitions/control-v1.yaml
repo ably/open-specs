@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.19
+  version: 1.0.20
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1217,6 +1217,7 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_post"
       - "$ref": "#/components/schemas/amqp_rule_post"
       - "$ref": "#/components/schemas/amqp_external_rule_post"
+      - "$ref": "#/components/schemas/kafka_rule_post"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1231,6 +1232,7 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_post"
           amqp: "#/components/schemas/amqp_rule_post"
           amqp/external: "#/components/schemas/amqp_external_rule_post"
+          kafka: "#/components/schemas/kafka_rule_post"
     rule_patch:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_patch"
@@ -1244,6 +1246,7 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_patch"
       - "$ref": "#/components/schemas/amqp_rule_patch"
       - "$ref": "#/components/schemas/amqp_external_rule_patch"
+      - "$ref": "#/components/schemas/kafka_rule_patch"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1258,6 +1261,7 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_patch"
           amqp: "#/components/schemas/amqp_rule_patch"
           amqp/external: "#/components/schemas/amqp_external_rule_patch"
+          kafka: "#/components/schemas/kafka_rule_patch"
     rule_response:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_response"
@@ -1271,6 +1275,7 @@ components:
       - "$ref": "#/components/schemas/aws_sqs_rule_response"
       - "$ref": "#/components/schemas/amqp_rule_response"
       - "$ref": "#/components/schemas/amqp_external_rule_response"
+      - "$ref": "#/components/schemas/kafka_rule_response"
       - "$ref": "#/components/schemas/unsupported_rule_response"
       discriminator:
         propertyName: ruleType
@@ -1286,6 +1291,7 @@ components:
           aws/sqs: "#/components/schemas/aws_sqs_rule_response"
           amqp: "#/components/schemas/amqp_rule_response"
           amqp/external: "#/components/schemas/amqp_external_rule_response"
+          kafka: "#/components/schemas/kafka_rule_response"
           unsupported: "#/components/schemas/unsupported_rule_response"
     http_rule_post:
       type: object
@@ -3548,6 +3554,253 @@ components:
       - requestMode
       - source
       - target
+    kafka_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - kafka
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              example: 'partitionKey'
+            brokers:
+              type: array
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
+              example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
+              items:
+                type: string
+                example: 'kafka.ci.ably.io:19092'
+            auth:
+              type: object
+              description: The Kafka <a href="https://docs.confluent.io/platform/current/kafka/overview-authentication-methods.html">authentication mechanism</a>.
+              additionalProperties: false
+              properties:
+                sasl:
+                  type: object
+                  description: SASL(Simple Authentication Security Layer) / SCRAM (Salted Challenge Response Authentication Mechanism) uses usernames and passwords stored in ZooKeeper. Credentials are created during installation. See documentation on <a href="https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_scram.html#kafka-sasl-auth-scram">configuring SCRAM</a>.
+                  additionalProperties: false
+                  properties:
+                    mechanism:
+                      type: string
+                      description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
+                      example: 'scram-sha-256'
+                      enum:
+                      - 'scram-sha-256'
+                      - 'scram-sha-512'
+                    username:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'username'
+                    password:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'password'
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
+            format:
+              type: string
+              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
+          required:
+          - routingKey
+          - brokers
+          - auth
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    kafka_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - kafka
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source_patch"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              example: 'partitionKey'
+            brokers:
+              type: array
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
+              example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
+              items:
+                type: string
+                example: 'kafka.ci.ably.io:19092'
+            auth:
+              type: object
+              description: The Kafka <a href="https://docs.confluent.io/platform/current/kafka/overview-authentication-methods.html">authentication mechanism</a>.
+              additionalProperties: false
+              properties:
+                sasl:
+                  type: object
+                  description: SASL(Simple Authentication Security Layer) / SCRAM (Salted Challenge Response Authentication Mechanism) uses usernames and passwords stored in ZooKeeper. Credentials are created during installation. See documentation on <a href="https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_scram.html#kafka-sasl-auth-scram">configuring SCRAM</a>.
+                  additionalProperties: false
+                  properties:
+                    mechanism:
+                      type: string
+                      description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
+                      example: 'scram-sha-256'
+                      enum:
+                      - 'scram-sha-256'
+                      - 'scram-sha-512'
+                    username:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'username'
+                    password:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'password'
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
+            format:
+              type: string
+              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
+      required:
+      - ruleType
+    kafka_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The Ably application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          example: '1.2'
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - kafka
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              example: 'partitionKey'
+            brokers:
+              type: array
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
+              example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
+              items:
+                type: string
+                example: 'kafka.ci.ably.io:19092'
+            auth:
+              type: object
+              description: The Kafka <a href="https://docs.confluent.io/platform/current/kafka/overview-authentication-methods.html">authentication mechanism</a>.
+              additionalProperties: false
+              properties:
+                sasl:
+                  type: object
+                  description: SASL(Simple Authentication Security Layer) / SCRAM (Salted Challenge Response Authentication Mechanism) uses usernames and passwords stored in ZooKeeper. Credentials are created during installation. See documentation on <a href="https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_scram.html#kafka-sasl-auth-scram">configuring SCRAM</a>.
+                  additionalProperties: false
+                  properties:
+                    mechanism:
+                      type: string
+                      description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
+                      example: 'scram-sha-256'
+                      enum:
+                      - 'scram-sha-256'
+                      - 'scram-sha-512'
+                    username:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'username'
+                    password:
+                      type: string
+                      description: Kafka login credential.
+                      example: 'password'
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
+            format:
+              type: string
+              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
+          required:
+          - routingKey
+          - brokers
+          - auth
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target    
     unsupported_rule_response:
       type: object
       additionalProperties: false
