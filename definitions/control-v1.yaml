@@ -3583,7 +3583,7 @@ components:
               example: 'partitionKey'
             brokers:
               type: array
-              description: Brokers host Kafka partitions. You can provide a list of brokers, using the format `host`, `host:port` or `ip:port`.
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
               example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
               items:
                 type: string
@@ -3660,7 +3660,7 @@ components:
               example: 'partitionKey'
             brokers:
               type: array
-              description: Brokers host Kafka partitions. You can provide a list of brokers, using the format `host`, `host:port` or `ip:port`.
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
               example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
               items:
                 type: string
@@ -3753,7 +3753,7 @@ components:
               example: 'partitionKey'
             brokers:
               type: array
-              description: Brokers host Kafka partitions. You can provide a list of brokers, using the format `host`, `host:port` or `ip:port`.
+              description: This is an array of brokers that host your Kafka partitions. Each broker is specified using the format `host`, `host:port` or `ip:port`.
               example: ['kafka.ci.ably.io:19092', 'kafka.ci.ably.io:19093']
               items:
                 type: string
