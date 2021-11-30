@@ -3864,6 +3864,13 @@ components:
               description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
               items:
                 type: string
+                example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
               nullable: true
             authentication:
               oneOf:
@@ -3930,6 +3937,13 @@ components:
               description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
               items:
                 type: string
+                example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
               nullable: true
               example: 
             authentication:
@@ -4009,6 +4023,13 @@ components:
               description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
               items:
                 type: string
+                example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
               nullable: true
             authentication:
               oneOf:
