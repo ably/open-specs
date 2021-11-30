@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.21
+  version: 1.0.22
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1218,6 +1218,7 @@ components:
       - "$ref": "#/components/schemas/amqp_rule_post"
       - "$ref": "#/components/schemas/amqp_external_rule_post"
       - "$ref": "#/components/schemas/kafka_rule_post"
+      - "$ref": "#/components/schemas/pulsar_rule_post"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1233,6 +1234,7 @@ components:
           amqp: "#/components/schemas/amqp_rule_post"
           amqp/external: "#/components/schemas/amqp_external_rule_post"
           kafka: "#/components/schemas/kafka_rule_post"
+          pulsar: "#/components/schemas/pulsar_rule_post"
     rule_patch:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_patch"
@@ -1247,6 +1249,7 @@ components:
       - "$ref": "#/components/schemas/amqp_rule_patch"
       - "$ref": "#/components/schemas/amqp_external_rule_patch"
       - "$ref": "#/components/schemas/kafka_rule_patch"
+      - "$ref": "#/components/schemas/pulsar_rule_patch"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1262,6 +1265,7 @@ components:
           amqp: "#/components/schemas/amqp_rule_patch"
           amqp/external: "#/components/schemas/amqp_external_rule_patch"
           kafka: "#/components/schemas/kafka_rule_patch"
+          pulsar: "#/components/schemas/pulsar_rule_patch"
     rule_response:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_response"
@@ -1276,6 +1280,7 @@ components:
       - "$ref": "#/components/schemas/amqp_rule_response"
       - "$ref": "#/components/schemas/amqp_external_rule_response"
       - "$ref": "#/components/schemas/kafka_rule_response"
+      - "$ref": "#/components/schemas/pulsar_rule_response"
       - "$ref": "#/components/schemas/unsupported_rule_response"
       discriminator:
         propertyName: ruleType
@@ -1292,6 +1297,7 @@ components:
           amqp: "#/components/schemas/amqp_rule_response"
           amqp/external: "#/components/schemas/amqp_external_rule_response"
           kafka: "#/components/schemas/kafka_rule_response"
+          pulsar: "#/components/schemas/pulsar_rule_response"
           unsupported: "#/components/schemas/unsupported_rule_response"
     http_rule_post:
       type: object
@@ -3170,7 +3176,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - queueId
@@ -3227,7 +3233,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
       - ruleType
@@ -3302,7 +3308,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - queueId
@@ -3372,7 +3378,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - url
@@ -3449,7 +3455,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
       - ruleType
@@ -3542,7 +3548,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - url
@@ -3620,7 +3626,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - routingKey
@@ -3697,7 +3703,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
       required:
       - ruleType
@@ -3765,7 +3771,7 @@ components:
               properties:
                 sasl:
                   type: object
-                  description: SASL(Simple Authentication Security Layer) / SCRAM (Salted Challenge Response Authentication Mechanism) uses usernames and passwords stored in ZooKeeper. Credentials are created during installation. See documentation on <a href="https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_scram.html#kafka-sasl-auth-scram">configuring SCRAM</a>.
+                  description: SASL (Simple Authentication Security Layer) / SCRAM (Salted Challenge Response Authentication Mechanism) uses usernames and passwords stored in ZooKeeper. Credentials are created during installation. See documentation on <a href="https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_scram.html#kafka-sasl-auth-scram">configuring SCRAM</a>.
                   additionalProperties: false
                   properties:
                     mechanism:
@@ -3790,7 +3796,7 @@ components:
               example: true
             format:
               type: string
-              description: JSON provides a simpler text based encoding, whereas MsgPack provides a more efficient binary encoding.
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
               example: json
           required:
           - routingKey
@@ -3801,6 +3807,230 @@ components:
       - requestMode
       - source
       - target    
+    pulsar_token_auth:
+      type: object
+      description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
+      additionalProperties: false
+      properties:
+        authenticationMode:
+          type: string
+          description: Authentication mode, in this case JSON Web Token (JWT).
+          enum:
+          - token
+        token:
+          type: string
+          description: The JWT string.
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+      required:
+      - token
+      - authenticationMode
+    pulsar_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - pulsar
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The optional routing key (partition key) used to publish messages. Supports interpolation as described in the <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a>.
+              example: 'test-key'
+            topic:
+              type: string
+              description: 'A Pulsar topic. This is a named channel for transmission of messages between producers and consumers. The topic has the form: `{persistent|non-persistent}://tenant/namespace/topic`'
+              example: 'persistent://my-tenant/my-namespace/my-topic'
+            serviceUrl:
+              type: string
+              description: The URL of the Pulsar cluster.
+              example: 'pulsar://pulsar.us-west.example.com:6650/'
+            tlsTrustCerts:
+              type: array
+              description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
+              items:
+                type: string
+              nullable: true
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/pulsar_token_auth"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  token: "#/components/schemas/pulsar_token_auth"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
+            format:
+              type: string
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
+          required:
+          - topic
+          - authentication
+          - serviceUrl
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
+    pulsar_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - pulsar
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source_patch"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The optional routing key (partition key) used to publish messages. Supports interpolation as described in the <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a>.
+              example: 'test-key'
+            topic:
+              type: string
+              description: 'A Pulsar topic. This is a named channel for transmission of messages between producers and consumers. The topic has the form: `{persistent|non-persistent}://tenant/namespace/topic`'
+              example: 'persistent://my-tenant/my-namespace/my-topic'
+            serviceUrl:
+              type: string
+              description: The URL of the Pulsar cluster.
+              example: 'pulsar://pulsar.us-west.example.com:6650/'
+            tlsTrustCerts:
+              type: array
+              description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
+              items:
+                type: string
+              nullable: true
+              example: 
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/pulsar_token_auth"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  token: "#/components/schemas/pulsar_token_auth"
+            enveloped:
+              type: boolean
+              nullable: true
+            format:
+              type: string
+      required:
+      - ruleType
+    pulsar_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The Ably application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          example: '1.2'
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1614679682091
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          enum:
+          - pulsar
+        requestMode:
+          type: string
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          example: single
+        source:
+          "$ref": "#/components/schemas/rule_source"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            routingKey:
+              type: string
+              description: The optional routing key (partition key) used to publish messages. Supports interpolation as described in the <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a>.
+              example: 'test-key'
+            topic:
+              type: string
+              description: 'A Pulsar topic. This is a named channel for transmission of messages between producers and consumers. The topic has the form: `{persistent|non-persistent}://tenant/namespace/topic`'
+              example: 'persistent://my-tenant/my-namespace/my-topic'
+            serviceUrl:
+              type: string
+              description: The URL of the Pulsar cluster.
+              example: 'pulsar://pulsar.us-west.example.com:6650/'
+            tlsTrustCerts:
+              type: array
+              description: All connections to a Pulsar endpoint require TLS. The `tlsTrustCerts` option allows you to configure different or additional trust anchors for those TLS connections. This enables server verification. You can specify an optional list of trusted CA certificates to use to verify the TLS certificate presented by the Pulsar cluster. Each certificate should be encoded in PEM format.
+              items:
+                type: string
+              nullable: true
+            authentication:
+              oneOf:
+              - "$ref": "#/components/schemas/pulsar_token_auth"
+              discriminator:
+                propertyName: authenticationMode
+                mapping:
+                  token: "#/components/schemas/pulsar_token_auth"
+            enveloped:
+              type: boolean
+              nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
+            format:
+              type: string
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
+      required:
+      - ruleType
+      - requestMode
+      - source
+      - target
     unsupported_rule_response:
       type: object
       additionalProperties: false
