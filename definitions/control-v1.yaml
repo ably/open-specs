@@ -3809,7 +3809,6 @@ components:
       - target    
     pulsar_token_auth:
       type: object
-      description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
       additionalProperties: false
       properties:
         authenticationMode:
@@ -3817,6 +3816,7 @@ components:
           description: Authentication mode, in this case JSON Web Token (JWT).
           enum:
           - token
+          example: token
         token:
           type: string
           description: The JWT string.
@@ -3873,6 +3873,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
 -----END CERTIFICATE-----"
               nullable: true
             authentication:
+              description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
               oneOf:
               - "$ref": "#/components/schemas/pulsar_token_auth"
               discriminator:
@@ -3945,7 +3946,6 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
 7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
 -----END CERTIFICATE-----"
               nullable: true
-              example: 
             authentication:
               oneOf:
               - "$ref": "#/components/schemas/pulsar_token_auth"
@@ -3956,8 +3956,12 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
             enveloped:
               type: boolean
               nullable: true
+              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              example: true
             format:
               type: string
+              description: JSON provides a simpler text-based encoding, whereas MsgPack provides a more efficient binary encoding.
+              example: json
       required:
       - ruleType
     pulsar_rule_response:
