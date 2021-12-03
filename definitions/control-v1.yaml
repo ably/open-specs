@@ -3873,6 +3873,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
 -----END CERTIFICATE-----"
               nullable: true
             authentication:
+              type: object
               description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
               oneOf:
               - "$ref": "#/components/schemas/pulsar_token_auth"
@@ -3947,6 +3948,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
 -----END CERTIFICATE-----"
               nullable: true
             authentication:
+              type: object
               description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
               oneOf:
               - "$ref": "#/components/schemas/pulsar_token_auth"
@@ -4037,6 +4039,8 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
 -----END CERTIFICATE-----"
               nullable: true
             authentication:
+              type: object
+              description: Pulsar supports authenticating clients using security tokens that are based on JSON Web Tokens.
               oneOf:
               - "$ref": "#/components/schemas/pulsar_token_auth"
               discriminator:
