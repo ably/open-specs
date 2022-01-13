@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.23
+  version: 1.0.24
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
