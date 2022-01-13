@@ -3585,7 +3585,7 @@ components:
           properties:
             routingKey:
               type: string
-              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned. `routingKey` should be in the format `topic:key` where `topic` is the topic to publish to, and `key` is the value to use as the message key.
               example: 'partitionKey'
             brokers:
               type: array
@@ -3662,7 +3662,7 @@ components:
           properties:
             routingKey:
               type: string
-              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned. `routingKey` should be in the format `topic:key` where `topic` is the topic to publish to, and `key` is the value to use as the message key.
               example: 'partitionKey'
             brokers:
               type: array
@@ -3755,7 +3755,7 @@ components:
           properties:
             routingKey:
               type: string
-              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned.
+              description: The Kafka partition key. This is used to determine which partition a message should be routed to, where a topic has been partitioned. `routingKey` should be in the format `topic:key` where `topic` is the topic to publish to, and `key` is the value to use as the message key.
               example: 'partitionKey'
             brokers:
               type: array
@@ -3857,7 +3857,7 @@ components:
               example: 'persistent://my-tenant/my-namespace/my-topic'
             serviceUrl:
               type: string
-              description: The URL of the Pulsar cluster.
+              description: The URL of the Pulsar cluster in the form `pulsar://host:port` or `pulsar+ssl://host:port`.
               example: 'pulsar://pulsar.us-west.example.com:6650/'
             tlsTrustCerts:
               type: array
@@ -3932,7 +3932,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
               example: 'persistent://my-tenant/my-namespace/my-topic'
             serviceUrl:
               type: string
-              description: The URL of the Pulsar cluster.
+              description: The URL of the Pulsar cluster in the form `pulsar://host:port` or `pulsar+ssl://host:port`.
               example: 'pulsar://pulsar.us-west.example.com:6650/'
             tlsTrustCerts:
               type: array
@@ -4023,7 +4023,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
               example: 'persistent://my-tenant/my-namespace/my-topic'
             serviceUrl:
               type: string
-              description: The URL of the Pulsar cluster.
+              description: The URL of the Pulsar cluster in the form `pulsar://host:port` or `pulsar+ssl://host:port`.
               example: 'pulsar://pulsar.us-west.example.com:6650/'
             tlsTrustCerts:
               type: array
