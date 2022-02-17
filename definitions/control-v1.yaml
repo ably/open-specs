@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.24
+  version: 1.0.25
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -3609,6 +3609,7 @@ components:
                       description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
                       example: 'scram-sha-256'
                       enum:
+                      - 'plain'
                       - 'scram-sha-256'
                       - 'scram-sha-512'
                     username:
@@ -3686,6 +3687,7 @@ components:
                       description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
                       example: 'scram-sha-256'
                       enum:
+                      - 'plain'
                       - 'scram-sha-256'
                       - 'scram-sha-512'
                     username:
@@ -3779,6 +3781,7 @@ components:
                       description: The hash type to use. SCRAM supports either SHA-256 or SHA-512 hash functions.
                       example: 'scram-sha-256'
                       enum:
+                      - 'plain'
                       - 'scram-sha-256'
                       - 'scram-sha-512'
                     username:
