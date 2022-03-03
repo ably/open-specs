@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.25
+  version: 1.0.26
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -864,7 +864,7 @@ paths:
                 "$ref": "#/components/schemas/error"
   "/apps/{app_id}/rules":
     get:
-      summary: Lists Reactor rules
+      summary: Lists rules
       description: Lists the <a href="https://ably.com/documentation/general/events">rules</a> for the application specified by the application ID.
       tags:
       - rules
@@ -879,7 +879,7 @@ paths:
       - bearer_auth: []
       responses:
         '200':
-          description: Reactor rule list
+          description: Rule list
           content:
             application/json:
               schema:
@@ -911,8 +911,8 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
     post:
-      summary: Creates a Reactor rule
-      description: Creates a <a href="https://ably.com/documentation/general/events">rule</a> for the application with the specified application ID. 
+      summary: Creates a rule
+      description: Creates a <a href="https://ably.com/documentation/general/events">rule</a> for the application with the specified application ID.
       tags:
       - rules
       parameters:
@@ -926,7 +926,7 @@ paths:
       - bearer_auth: []
       responses:
         '201':
-          description: Reactor rule created
+          description: Rule created
           content:
             application/json:
               schema:
@@ -975,7 +975,7 @@ paths:
               "$ref": "#/components/schemas/rule_post"
   "/apps/{app_id}/rules/{rule_id}":
     get:
-      summary: Gets a reactor rule by rule ID
+      summary: Gets a rule using a rule ID
       description: Returns the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
@@ -996,7 +996,7 @@ paths:
       - bearer_auth: []
       responses:
         '200':
-          description: Reactor rule
+          description: Rule
           content:
             application/json:
               schema:
@@ -1026,7 +1026,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error"
     patch:
-      summary: Updates a Reactor rule
+      summary: Updates a Rule
       description: Updates the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
@@ -1047,7 +1047,7 @@ paths:
       - bearer_auth: []
       responses:
         '200':
-          description: Reactor rule updated
+          description: Rule updated
           content:
             application/json:
               schema:
@@ -1095,7 +1095,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/rule_patch"
     delete:
-      summary: Deletes a Reactor rule
+      summary: Deletes a rule
       description: Deletes the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
@@ -1116,7 +1116,7 @@ paths:
       - bearer_auth: []
       responses:
         '204':
-          description: Reactor rule deleted
+          description: Rule deleted
           content: {}
         '401':
           description: Authentication failed
@@ -1350,7 +1350,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -1415,7 +1415,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -1497,7 +1497,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -1541,7 +1541,7 @@ components:
               example: aBcd12Ef98-Z1ab3yTe-EXAMPLE
             eventName:
               type: string
-              description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
+              description: The Event name is used to identify the IFTTT applet that will receive the Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
           required:
           - webhookKey
@@ -1581,7 +1581,7 @@ components:
               example: aBcd12Ef98-Z1ab3yTe-EXAMPLE
             eventName:
               type: string
-              description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
+              description: The Event name is used to identify the IFTTT applet that will receive the Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
       required:
       - ruleType
@@ -1615,7 +1615,7 @@ components:
               example: aBcd12Ef98-Z1ab3yTe-EXAMPLE
             eventName:
               type: string
-              description: The Event name is used to identify the IFTTT applet that will receive the Reactor Event, make sure the name matches the name of the IFTTT applet.
+              description: The Event name is used to identify the IFTTT applet that will receive the Event, make sure the name matches the name of the IFTTT applet.
               example: MyAppletName
           required:
           - webhookKey
@@ -2069,7 +2069,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2138,7 +2138,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2224,7 +2224,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2293,7 +2293,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2367,7 +2367,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered mssages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2457,7 +2457,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2484,11 +2484,11 @@ components:
           example: credentials
         accessKeyId:
           type: string
-          description: The AWS key ID for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
+          description: The AWS key ID for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
           example: AKIAIOSFODNN7EXAMPLE
         secretAccessKey:
           type: string
-          description: The AWS secret key for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
+          description: The AWS secret key for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
           example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
       required:
       - accessKeyId
@@ -2505,7 +2505,7 @@ components:
           example: credentials
         accessKeyId:
           type: string
-          description: The AWS key ID for the AWS IAM user. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
+          description: The AWS key ID for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
           example: AKIAIOSFODNN7EXAMPLE
     aws_assume_role:
       type: object
@@ -2515,11 +2515,11 @@ components:
           type: string
           enum:
           - assumeRole
-          description: Authentication method is using the ARN of an assumable role. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
+          description: Authentication method is using the ARN of an assumable role. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
           example: assumeRole
         assumeRoleArn:
           type: string
-          description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See this <a href="https://knowledge.ably.com/authentication-for-reactor-rules-for-aws-reactor-events-for-lambda-functions-reactor-firehose-for-aws-sqs-and-kinesis">Ably knowledge base article</a> for details.
+          description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
           example: 'arn:aws:iam::123456789012:user/Development/product_1234/*'
       required:
       - assumeRoleArn
@@ -2567,7 +2567,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
           required:
           - region
@@ -2622,7 +2622,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
           required:
           - region
@@ -2697,7 +2697,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2760,7 +2760,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2825,7 +2825,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2904,7 +2904,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -2969,7 +2969,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3033,7 +3033,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3112,7 +3112,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3172,7 +3172,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3229,7 +3229,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3304,7 +3304,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3374,7 +3374,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3451,7 +3451,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3544,7 +3544,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3623,7 +3623,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3701,7 +3701,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3795,7 +3795,7 @@ components:
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3809,7 +3809,7 @@ components:
       - ruleType
       - requestMode
       - source
-      - target    
+      - target
     pulsar_token_auth:
       type: object
       additionalProperties: false
@@ -3887,7 +3887,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -3962,7 +3962,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -4053,7 +4053,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
             enveloped:
               type: boolean
               nullable: true
-              description: Messages delivered through Reactor are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
+              description: Delivered messages are wrapped in an Ably envelope by default that contains metadata about the message and its payload. The form of the envelope depends on whether it is part of a Webhook/Function or a Queue/Firehose rule. For everything besides Webhooks, you can ensure you only get the raw payload by unchecking "Enveloped" when setting up the rule.
               example: true
             format:
               type: string
@@ -4151,7 +4151,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
       type: object
       additionalProperties: false
       properties:
-        id: 
+        id:
           type: string
           description: The ID of the Ably queue
           example: 28AB6w:us-east-1-a:My queue
@@ -4176,7 +4176,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
               description: URI for the AMQP queue interface.
               example: amqps://us-east-1-a-queue.ably.io:5671/shared
             queueName:
-              type: string        
+              type: string
               description: Name of the Ably queue.
               example: 28AB6w:My queue
         stomp:
@@ -4258,7 +4258,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
       properties:
         id:
           type: string
-          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`.
           example: namespace
         authenticated:
           type: boolean
@@ -4273,7 +4273,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -4294,7 +4294,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base/a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -4304,7 +4304,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -4335,7 +4335,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: 1614679682091
         id:
           type: string
-          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`. 
+          description: The namespace or channel name that the channel rule will apply to. For example, if you specify `namespace` the namespace will be set to `namespace` and will match with channels `namespace:*` and `namespace`.
           example: namespace
         persisted:
           type: boolean
@@ -4345,7 +4345,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         persistLast:
           type: boolean
           default: false
-          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation. 
+          description: If `true`, the last message published on a channel will be stored for 365 days. You can access the stored message only by using the channel rewind mechanism and attaching with rewind=1. Please note that for each message stored, an additional message is deducted from your monthly allocation.
           example: false
         pushEnabled:
           type: boolean
@@ -4441,11 +4441,11 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           format: binary
           description: The `.p12` file containing the app's APNs information.
-          example: example.p12 
+          example: example.p12
         p12Pass:
           type: string
           description: The password for the corresponding `.p12` file.
-          example: secret 
+          example: secret
       required:
       - p12File
       - p12Pass
