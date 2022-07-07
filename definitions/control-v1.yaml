@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.26
+  version: 1.0.27
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -4285,6 +4285,10 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           default: false
           description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
           example: false
+        exposeTimeserial:
+          type: boolean
+          default: false
+          description: If `true`, messages received on a channel will contain a unique `timeserial` that can be referenced by later messages for use with message interactions.
       required:
       - id
     namespace_patch:
@@ -4316,6 +4320,9 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           default: false
           description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
           example: false
+        exposeTimeserial:
+          type: boolean
+          description: If `true`, messages received on a channel will contain a unique `timeserial` that can be referenced by later messages for use with message interactions.
     namespace_response:
       type: object
       additionalProperties: false
@@ -4357,6 +4364,9 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           default: false
           description: If `true`, only clients that are connected using TLS will be permitted to subscribe to any channels within this namespace.
           example: false
+        exposeTimeserial:
+          type: boolean
+          description: If `true`, messages received on a channel will contain a unique `timeserial` that can be referenced by later messages for use with message interactions.
     app_post:
       type: object
       additionalProperties: false
@@ -4550,6 +4560,9 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           description: The name for your API key. This is a friendly name for your reference.
           type: string
           example: 'My key name'
+        status:
+          description: The status of the key. `0` is enabled, `1` is revoked.
+          type: integer
         key:
           description: The complete API key including API secret.
           type: string
