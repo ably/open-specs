@@ -4477,7 +4477,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: Default
         status:
           type: string
-          description: The application status. Disabled applications will not accept new connections and will return an error to all clients.
+          description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
           example: enabled
         tlsOnly:
           type: boolean
