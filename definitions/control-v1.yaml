@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.27
+  version: 1.0.28
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -4379,6 +4379,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           description: The status of the application. Can be `enabled` or `disabled`. Enabled means available to accept inbound connections and all services are available.
           example: enabled
+          deprecated: true
         tlsOnly:
           type: boolean
           nullable: true
