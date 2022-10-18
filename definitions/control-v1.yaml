@@ -2,11 +2,11 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.28
+  version: 1.0.29
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
-    Detailed information on using this API can be found in the Ably <a href="https://ably.com/documentation/control-api">Control API documentation</a>.
+    Detailed information on using this API can be found in the Ably <a href="https://ably.com/docs/control-api">Control API docs</a>.
 
     Control API is currently in Preview.
 servers:
@@ -485,7 +485,7 @@ paths:
   "/apps/{app_id}/namespaces":
     get:
       summary: Lists namespaces
-      description: List the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespaces</a> for the specified application ID.
+      description: List the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespaces</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -532,7 +532,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a namespace
-      description: Creates a <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> for the specified application ID.
+      description: Creates a <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -589,7 +589,7 @@ paths:
   "/apps/{app_id}/namespaces/{namespace_id}":
     patch:
       summary: Updates a namespace
-      description: Updates the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
+      description: Updates the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -651,7 +651,7 @@ paths:
               "$ref": "#/components/schemas/namespace_patch"
     delete:
       summary: Deletes a namespace
-      description: Deletes the <a href="https://ably.com/documentation/general/channel-rules-namespaces">namespace</a> with the specified ID, for the specified application ID.
+      description: Deletes the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> with the specified ID, for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -700,7 +700,7 @@ paths:
   "/apps/{app_id}/queues":
     get:
       summary: Lists queues
-      description: Lists the <a href="https://ably.com/documentation/general/queues">queues</a> associated with the specified application ID.
+      description: Lists the <a href="https://ably.com/docs/general/queues">queues</a> associated with the specified application ID.
       tags:
       - queues
       parameters:
@@ -753,7 +753,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a queue
-      description: Creates a <a href="https://ably.com/documentation/general/queues">queue</a> for the application specified by application ID. The properties for the queue to be created are specified in the request body.
+      description: Creates a <a href="https://ably.com/docs/general/queues">queue</a> for the application specified by application ID. The properties for the queue to be created are specified in the request body.
       tags:
       - queues
       parameters:
@@ -810,7 +810,7 @@ paths:
   "/apps/{app_id}/queues/{queue_id}":
     delete:
       summary: Deletes a queue
-      description: Delete the <a href="https://ably.com/documentation/general/queues">queue</a> with the specified queue name, from the application with the specified application ID.
+      description: Delete the <a href="https://ably.com/docs/general/queues">queue</a> with the specified queue name, from the application with the specified application ID.
       tags:
       - queues
       parameters:
@@ -865,7 +865,7 @@ paths:
   "/apps/{app_id}/rules":
     get:
       summary: Lists rules
-      description: Lists the <a href="https://ably.com/documentation/general/events">rules</a> for the application specified by the application ID.
+      description: Lists the <a href="https://ably.com/docs/general/webhooks">rules</a> for the application specified by the application ID.
       tags:
       - rules
       parameters:
@@ -912,7 +912,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a rule
-      description: Creates a <a href="https://ably.com/documentation/general/events">rule</a> for the application with the specified application ID.
+      description: Creates a <a href="https://ably.com/docs/general/webhooks">rule</a> for the application with the specified application ID.
       tags:
       - rules
       parameters:
@@ -976,7 +976,7 @@ paths:
   "/apps/{app_id}/rules/{rule_id}":
     get:
       summary: Gets a rule using a rule ID
-      description: Returns the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
+      description: Returns the <a href="https://ably.com/docs/general/webhooks">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
       parameters:
@@ -1027,7 +1027,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     patch:
       summary: Updates a Rule
-      description: Updates the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
+      description: Updates the <a href="https://ably.com/docs/general/webhooks">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
       parameters:
@@ -1096,7 +1096,7 @@ paths:
               "$ref": "#/components/schemas/rule_patch"
     delete:
       summary: Deletes a rule
-      description: Deletes the <a href="https://ably.com/documentation/general/events">rule</a> specified by the rule ID, for the application specified by application ID.
+      description: Deletes the <a href="https://ably.com/docs/general/webhooks">rule</a> specified by the rule ID, for the application specified by application ID.
       tags:
       - rules
       parameters:
@@ -1145,7 +1145,7 @@ paths:
   "/me":
     get:
       summary: Get token details
-      description: Retrieve information about the <a href="https://ably.com/documentation/control-api#authentication">token</a> the current user authenticates with.
+      description: Retrieve information about the <a href="https://ably.com/docs/control-api#authentication">token</a> the current user authenticates with.
       tags:
       - tokens
       security:
@@ -1175,7 +1175,7 @@ components:
     bearer_auth:
       type: http
       scheme: bearer
-      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found in the <a href="https://ably.com/documentation/control-api/#authentication">Ably documentation</a>.
+      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found in the <a href="https://ably.com/docs/control-api/#authentication">Ably docs</a>.
   schemas:
     rule_source:
       type: object
@@ -1311,11 +1311,11 @@ components:
           type: string
           enum:
           - http
-          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1345,7 +1345,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhook security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -1376,11 +1376,11 @@ components:
           type: string
           enum:
           - http
-          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -1410,7 +1410,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhook security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -1437,7 +1437,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the Ably <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -1458,11 +1458,11 @@ components:
           type: string
           enum:
           - http
-          description: The type of rule. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1492,7 +1492,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -1523,11 +1523,11 @@ components:
           type: string
           enum:
           - http/ifttt
-          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case IFTTT. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/ifttt
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1563,11 +1563,11 @@ components:
           type: string
           enum:
           - http/ifttt
-          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case IFTTT. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/ifttt
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -1597,11 +1597,11 @@ components:
           type: string
           enum:
           - http/ifttt
-          description: The type of rule. In this case IFTTT. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case IFTTT. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/ifttt
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1630,7 +1630,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         created:
           type: number
@@ -1660,11 +1660,11 @@ components:
           type: string
           enum:
           - http/zapier
-          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Zapier. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/zapier
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1694,7 +1694,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
           required:
           - url
@@ -1715,11 +1715,11 @@ components:
           type: string
           enum:
           - http/zapier
-          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Zapier. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/zapier
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -1749,7 +1749,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
       required:
       - ruleType
@@ -1767,7 +1767,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -1788,11 +1788,11 @@ components:
           type: string
           enum:
           - http/zapier
-          description: The type of rule. In this case Zapier. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Zapier. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/zapier
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1822,7 +1822,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
           required:
           - url
@@ -1843,11 +1843,11 @@ components:
           type: string
           enum:
           - http/cloudflare-worker
-          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Cloudflare Worker. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/cloudflare-worker
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -1877,7 +1877,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
           required:
           - url
@@ -1898,11 +1898,11 @@ components:
           type: string
           enum:
           - http/cloudflare-worker
-          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Cloudflare Worker. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/cloudflare-worker
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -1932,7 +1932,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
       required:
       - ruleType
@@ -1950,7 +1950,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -1971,11 +1971,11 @@ components:
           type: string
           enum:
           - http/cloudflare-worker
-          description: The type of rule. In this case Cloudflare Worker. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Cloudflare Worker. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/cloudflare-worker
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2005,7 +2005,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
           required:
           - url
@@ -2026,11 +2026,11 @@ components:
           type: string
           enum:
           - http/azure-function
-          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Microsoft Azure Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/azure-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2064,7 +2064,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2095,11 +2095,11 @@ components:
           type: string
           enum:
           - http/azure-function
-          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Microsoft Azure Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/azure-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -2133,7 +2133,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2160,7 +2160,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -2181,11 +2181,11 @@ components:
           type: string
           enum:
           - http/azure-function
-          description: The type of rule. In this case Microsoft Azure Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Microsoft Azure Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/azure-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2219,7 +2219,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhook security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2246,11 +2246,11 @@ components:
           type: string
           enum:
           - http/google-cloud-function
-          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Google Cloud Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/google-cloud-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2288,7 +2288,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhooks security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2320,11 +2320,11 @@ components:
           type: string
           enum:
           - http/google-cloud-function
-          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Google Cloud Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/google-cloud-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -2362,7 +2362,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the Ably <a href="https://ably.com/docs/general/webhooks#security">webhook security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2389,7 +2389,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the Ably <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -2410,11 +2410,11 @@ components:
           type: string
           enum:
           - http/google-cloud-function
-          description: The type of rule. In this case Google Cloud Function. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case Google Cloud Function. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: http/google-cloud-function
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2452,7 +2452,7 @@ components:
             signingKeyId:
               type: string
               nullable: true
-              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/documentation/general/events#security">webhook security docs</a> for more information.
+              description: The signing key ID for use in `batch` mode. Ably will optionally sign the payload using an API key ensuring your servers can validate the payload using the private API key. See the <a href="https://ably.com/docs/general/webhooks#security">webhook security docs</a> for more information.
               example: bw66AB
             enveloped:
               type: boolean
@@ -2484,11 +2484,11 @@ components:
           example: credentials
         accessKeyId:
           type: string
-          description: The AWS key ID for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
+          description: The AWS key ID for the AWS IAM user. See the Ably <a href="https://ably.com/docs/general/aws-authentication/">AWS authentication docs</a> for details.
           example: AKIAIOSFODNN7EXAMPLE
         secretAccessKey:
           type: string
-          description: The AWS secret key for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
+          description: The AWS secret key for the AWS IAM user. See the Ably <a href="https://ably.com/docs/general/aws-authentication/">AWS authentication docs</a> for details.
           example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
       required:
       - accessKeyId
@@ -2505,7 +2505,7 @@ components:
           example: credentials
         accessKeyId:
           type: string
-          description: The AWS key ID for the AWS IAM user. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
+          description: The AWS key ID for the AWS IAM user. See the Ably <a href="https://ably.com/docs/general/aws-authentication/">AWS authentication docs</a> for details.
           example: AKIAIOSFODNN7EXAMPLE
     aws_assume_role:
       type: object
@@ -2515,11 +2515,11 @@ components:
           type: string
           enum:
           - assumeRole
-          description: Authentication method is using the ARN of an assumable role. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
+          description: Authentication method is using the ARN of an assumable role. See the Ably <a href="https://ably.com/docs/general/aws-authentication/">AWS authentication docs</a> for details.
           example: assumeRole
         assumeRoleArn:
           type: string
-          description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See this <a href="https://ably.com/documentation/general/aws-authentication/">Ably knowledge base article</a> for details.
+          description: If you are using the "ARN of an assumable role" authentication method, this is your Assume Role ARN. See the Ably <a href="https://ably.com/docs/general/aws-authentication/">AWS authentication docs</a> for details.
           example: 'arn:aws:iam::123456789012:user/Development/product_1234/*'
       required:
       - assumeRoleArn
@@ -2535,11 +2535,11 @@ components:
           type: string
           enum:
           - aws/lambda
-          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS Lambda. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/lambda
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2590,11 +2590,11 @@ components:
           type: string
           enum:
           - aws/lambda
-          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">Ably documentation</a> for further information.
+          description: The type of rule. In this case AWS Lambda. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/lambda
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -2644,7 +2644,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -2665,11 +2665,11 @@ components:
           type: string
           enum:
           - aws/lambda
-          description: The type of rule. In this case AWS Lambda. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS Lambda. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/lambda
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2724,11 +2724,11 @@ components:
           type: string
           enum:
           - aws/kinesis
-          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS Kinesis. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/kinesis
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2746,7 +2746,7 @@ components:
               example: myStreamName
             partitionKey:
               type: string
-              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
@@ -2789,11 +2789,11 @@ components:
           type: string
           enum:
           - aws/kinesis
-          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS Kinesis. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/kinesis
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -2811,7 +2811,7 @@ components:
               example: myStreamName
             partitionKey:
               type: string
-              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
@@ -2847,7 +2847,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -2868,11 +2868,11 @@ components:
           type: string
           enum:
           - aws/kinesis
-          description: The type of rule. In this case AWS Kinesis. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS Kinesis. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/kinesis
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2890,7 +2890,7 @@ components:
               example: myStreamName
             partitionKey:
               type: string
-              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AWS Kinesis partition key. The partition key is used by Kinesis to route messages to one of the stream shards. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             authentication:
               oneOf:
@@ -2933,11 +2933,11 @@ components:
           type: string
           enum:
           - aws/sqs
-          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS SQS. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/sqs
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -2997,11 +2997,11 @@ components:
           type: string
           enum:
           - aws/sqs
-          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS SQS. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/sqs
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -3055,7 +3055,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -3076,11 +3076,11 @@ components:
           type: string
           enum:
           - aws/sqs
-          description: The type of rule. In this case AWS SQS. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AWS SQS. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: aws/sqs
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3140,11 +3140,11 @@ components:
           type: string
           enum:
           - amqp
-          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: amqp
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3197,11 +3197,11 @@ components:
           type: string
           enum:
           - amqp
-          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: amqp
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -3251,7 +3251,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -3272,11 +3272,11 @@ components:
           type: string
           enum:
           - amqp
-          description: The type of rule. In this case AMQP. See the <a href="https://ably.com/integrations">documentation</a> for further information.
+          description: The type of rule. In this case AMQP. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
           example: amqp
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3325,11 +3325,11 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           example: amqp/external
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3343,7 +3343,7 @@ components:
               example: https://example.com/webhooks
             routingKey:
               type: string
-              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
@@ -3402,11 +3402,11 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           example: amqp/external
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -3420,7 +3420,7 @@ components:
               example: https://example.com/webhooks
             routingKey:
               type: string
-              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
@@ -3473,7 +3473,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -3494,11 +3494,11 @@ components:
           type: string
           enum:
           - amqp/external
-          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case AMQP external (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           example: amqp/external
         requestMode:
           type: string
-          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/documentation/general/events#batching">Ably documentation</a>.
+          description: Single request mode sends each event separately to the endpoint specified by the rule. You can read more about single request mode events in the <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3512,7 +3512,7 @@ components:
               example: https://example.com/webhooks
             routingKey:
               type: string
-              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://knowledge.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably knowledge base article</a> for details.
+              description: The AMQP routing key. The routing key is used by the AMQP exchange to route messages to a physical queue. See this <a href="https://faqs.ably.com/what-is-the-format-of-the-routingkey-for-an-amqp-or-kinesis-reactor-rule">Ably FAQs</a> for details.
               example: 'message name: #{message.name}, clientId: #{message.clientId}'
             mandatoryRoute:
               type: boolean
@@ -3570,12 +3570,12 @@ components:
           example: enabled
         ruleType:
           type: string
-          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - kafka
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3648,12 +3648,12 @@ components:
           example: enabled
         ruleType:
           type: string
-          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - kafka
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -3723,7 +3723,7 @@ components:
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -3742,12 +3742,12 @@ components:
           nullable: true
         ruleType:
           type: string
-          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Kafka (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - kafka
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3837,12 +3837,12 @@ components:
           example: enabled
         ruleType:
           type: string
-          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - pulsar
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -3912,12 +3912,12 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: enabled
         ruleType:
           type: string
-          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - pulsar
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source_patch"
@@ -3984,7 +3984,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -4003,12 +4003,12 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           nullable: true
         ruleType:
           type: string
-          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/documentation/general/firehose">Ably documentation</a> for further information.
+          description: The type of rule. In this case Pulsar (using Firehose). See the <a href="https://ably.com/docs/general/firehose">Firehose docs</a> for further information.
           enum:
           - pulsar
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -4078,7 +4078,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: 28GY6a
         version:
           type: string
-          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/documentation/general/events">Events documentation</a>.
+          description: API version. Events and the format of their payloads are versioned. Please see the <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
           example: '1.2'
         status:
           type: string
@@ -4103,7 +4103,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           example: unsupported
         requestMode:
           type: string
-          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/documentation/general/events#batching">documentation</a>.
+          description: This is Single Request mode or Batch Request mode. Single Request mode sends each event separately to the endpoint specified by the rule. Batch Request mode rolls up multiple events into the same request. You can read more about the difference between single and batched events in the Ably <a href="https://ably.com/docs/general/webhooks#batching">batching docs</a>.
           example: single
         source:
           "$ref": "#/components/schemas/rule_source"
@@ -4263,7 +4263,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably Knowledge base</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -4298,7 +4298,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -4330,7 +4330,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the <a href="https://knowledge.ably.com/authenticated-and-identified-clients">Ably knowledge base</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
           example: false
         created:
           type: integer
@@ -4503,7 +4503,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           example: 'My key name'
         capability:
-          description: These are the capability operations described in the <a href="https://ably.com/documentation/core-features/authentication#capability-operations">Ably documentation</a>.
+          description: These are the capability operations described in the <a href="https://ably.com/docs/core-features/authentication#capability-operations">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
@@ -4530,7 +4530,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           example: 'My key name'
         capability:
-          description: These are the capability operations described in the <a href="https://ably.com/documentation/core-features/authentication#capability-operations">Ably documentation</a>.
+          description: These are the capability operations described in the Ably <a href="https://ably.com/docs/core-features/authentication#capability-operations">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
@@ -4568,7 +4568,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           description: The complete API key including API secret.
           type: string
         capability:
-          description: The capabilities that this key has. More information on capabilities can be found in the <a href="https://ably.com/documentation/core-features/authentication#capabilities-explained">Ably documentation</a>.
+          description: The capabilities that this key has. More information on capabilities can be found in the Ably <a href="https://ably.com/docs/core-features/authentication#capabilities-explained">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
