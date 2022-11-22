@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.29
+  version: 1.0.30
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -4403,7 +4403,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         apnsUseSandboxEndpoint:
           type: boolean
           nullable: true
-          description: The Apple Push Notification service sandbox endpoint.
+          description: Use the Apple Push Notification service sandbox endpoint.
           example: false
       required:
       - name
@@ -4442,7 +4442,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         apnsUseSandboxEndpoint:
           type: boolean
           nullable: true
-          description: The Apple Push Notification service sandbox endpoint.
+          description: Use the Apple Push Notification service sandbox endpoint.
           example: false
     app_pkcs12:
       type: object
@@ -4488,7 +4488,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         apnsUseSandboxEndpoint:
           type: boolean
           nullable: true
-          description: Apple Push Notification service endpoint.
+          description: Use the Apple Push Notification service sandbox endpoint.
           example: false
         _links:
           type: object
