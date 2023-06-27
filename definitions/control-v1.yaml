@@ -6,7 +6,7 @@ info:
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
-    Detailed information on using this API can be found in the Ably <a href="https://ably.com/docs/control-api">Control API docs</a>.
+    Detailed information on using this API can be found in the Ably <a href="https://ably.com/docs/account/control-api">Control API docs</a>.
 
     Control API is currently in Preview.
 servers:
@@ -485,7 +485,7 @@ paths:
   "/apps/{app_id}/namespaces":
     get:
       summary: Lists namespaces
-      description: List the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespaces</a> for the specified application ID.
+      description: List the <a href="https://ably.com/docs/channels#namespaces">namespaces</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -532,7 +532,7 @@ paths:
                 "$ref": "#/components/schemas/error"
     post:
       summary: Creates a namespace
-      description: Creates a <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> for the specified application ID.
+      description: Creates a <a href="https://ably.com/docs/channels#namespaces">namespace</a> for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -589,7 +589,7 @@ paths:
   "/apps/{app_id}/namespaces/{namespace_id}":
     patch:
       summary: Updates a namespace
-      description: Updates the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
+      description: Updates the <a href="https://ably.com/docs/channels#namespaces">namespace</a> with the specified ID, for the application with the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -651,7 +651,7 @@ paths:
               "$ref": "#/components/schemas/namespace_patch"
     delete:
       summary: Deletes a namespace
-      description: Deletes the <a href="https://ably.com/docs/general/channel-rules-namespaces">namespace</a> with the specified ID, for the specified application ID.
+      description: Deletes the <a href="https://ably.com/docs/channels#namespaces">namespace</a> with the specified ID, for the specified application ID.
       tags:
       - namespaces
       parameters:
@@ -1145,7 +1145,7 @@ paths:
   "/me":
     get:
       summary: Get token details
-      description: Retrieve information about the <a href="https://ably.com/docs/control-api#authentication">token</a> the current user authenticates with.
+      description: Retrieve information about the <a href="https://ably.com/docs/account/control-api#authentication">token</a> the current user authenticates with.
       tags:
       - tokens
       security:
@@ -1175,7 +1175,7 @@ components:
     bearer_auth:
       type: http
       scheme: bearer
-      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found in the <a href="https://ably.com/docs/control-api/#authentication">Ably docs</a>.
+      description: Control API uses bearer authentication. You need to generate an access token for use with this API. More details can be found in the <a href="https://ably.com/docs/account/control-api/#authentication">Ably docs</a>.
   schemas:
     rule_source:
       type: object
@@ -4263,7 +4263,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/auth/identified-clients">identified clients</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -4298,7 +4298,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/auth/identified-clients">identified clients</a> for more details.
           example: false
         persisted:
           type: boolean
@@ -4330,7 +4330,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
         authenticated:
           type: boolean
           default: false
-          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/core-features/authentication#identified-clients">identified clients</a> for more details.
+          description: If `true`, clients will not be permitted to use (including to attach, publish, or subscribe) any channels within this namespace unless they are identified, that is, authenticated using a client ID. See the documentation for <a href="https://ably.com/docs/auth/identified-clients">identified clients</a> for more details.
           example: false
         created:
           type: integer
@@ -4503,7 +4503,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           example: 'My key name'
         capability:
-          description: These are the capability operations described in the <a href="https://ably.com/docs/core-features/authentication#capability-operations">capabilities docs</a>.
+          description: These are the capability operations described in the <a href="https://ably.com/docs/auth/capabilities">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
@@ -4530,7 +4530,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           example: 'My key name'
         capability:
-          description: These are the capability operations described in the Ably <a href="https://ably.com/docs/core-features/authentication#capability-operations">capabilities docs</a>.
+          description: These are the capability operations described in the Ably <a href="https://ably.com/docs/auth/capabilities">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
@@ -4568,7 +4568,7 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           description: The complete API key including API secret.
           type: string
         capability:
-          description: The capabilities that this key has. More information on capabilities can be found in the Ably <a href="https://ably.com/docs/core-features/authentication#capabilities-explained">capabilities docs</a>.
+          description: The capabilities that this key has. More information on capabilities can be found in the Ably <a href="https://ably.com/docs/auth/capabilities">capabilities docs</a>.
           type: object
           additionalProperties:
             type: array
