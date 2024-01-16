@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.30
+  version: 1.0.31
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -4390,6 +4390,16 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           nullable: true
           example: 'AABBQ1KyxCE:APA91bCCYs7r_Q-sqW8HMP_hV4t3vMYx...cJ8344-MhGWODZEuAmg_J4MUJcVQEyDn...I'
+        fcmServiceAccount:
+          type: string
+          nullable: true
+          description: Used to specify the Firebase Cloud Messaging(FCM) service account credentials used for authentication and enabling communication with FCM to send push notifications to devices.
+          example: "service_account"
+        fcmProjectId:
+          type: string
+          nullable: true
+          description: The unique identifier for the Firebase Cloud Messaging(FCM) project. This ID is used to specify the Firebase project when configuring FCM or other Firebase services.
+          example: "notional-armor-405018"
         apnsCertificate:
           type: string
           nullable: true
@@ -4429,6 +4439,16 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: string
           nullable: true
           example: 'AABBQ1KyxCE:APA91bCCYs7r_Q-sqW8HMP_hV4t3vMYx...cJ8344-MhGWODZEuAmg_J4MUJcVQEyDn...I'
+        fcmServiceAccount:
+          type: string
+          nullable: true
+          description: Used to specify the Firebase Cloud Messaging(FCM) service account credentials used for authentication and enabling communication with FCM to send push notifications to devices.
+          example: "service_account"
+        fcmProjectId:
+          type: string
+          nullable: true
+          description: The unique identifier for the Firebase Cloud Messaging(FCM) project. This ID is used to specify the Firebase project when configuring FCM or other Firebase services.
+          example: "notional-armor-405018"
         apnsCertificate:
           type: string
           nullable: true
