@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Control API v1
-  version: 1.0.31
+  version: 1.0.32
   description: |
     Use the Control API to manage your applications, namespaces, keys, queues, rules, and more.
 
@@ -1219,6 +1219,7 @@ components:
       - "$ref": "#/components/schemas/amqp_external_rule_post"
       - "$ref": "#/components/schemas/kafka_rule_post"
       - "$ref": "#/components/schemas/pulsar_rule_post"
+      - "$ref": "#/components/schemas/ingress_postgres_outbox_rule_post"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1235,6 +1236,7 @@ components:
           amqp/external: "#/components/schemas/amqp_external_rule_post"
           kafka: "#/components/schemas/kafka_rule_post"
           pulsar: "#/components/schemas/pulsar_rule_post"
+          ingress-postgres-outbox: "#/components/schemas/ingress_postgres_outbox_rule_post"
     rule_patch:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_patch"
@@ -1250,6 +1252,7 @@ components:
       - "$ref": "#/components/schemas/amqp_external_rule_patch"
       - "$ref": "#/components/schemas/kafka_rule_patch"
       - "$ref": "#/components/schemas/pulsar_rule_patch"
+      - "$ref": "#/components/schemas/ingress_postgres_outbox_rule_patch"
       discriminator:
         propertyName: ruleType
         mapping:
@@ -1266,6 +1269,7 @@ components:
           amqp/external: "#/components/schemas/amqp_external_rule_patch"
           kafka: "#/components/schemas/kafka_rule_patch"
           pulsar: "#/components/schemas/pulsar_rule_patch"
+          ingress-postgres-outbox: "#/components/schemas/ingress_postgres_outbox_rule_patch"
     rule_response:
       oneOf:
       - "$ref": "#/components/schemas/http_rule_response"
@@ -1281,6 +1285,7 @@ components:
       - "$ref": "#/components/schemas/amqp_external_rule_response"
       - "$ref": "#/components/schemas/kafka_rule_response"
       - "$ref": "#/components/schemas/pulsar_rule_response"
+      - "$ref": "#/components/schemas/ingress_postgres_outbox_rule_response"
       - "$ref": "#/components/schemas/unsupported_rule_response"
       discriminator:
         propertyName: ruleType
@@ -1298,6 +1303,7 @@ components:
           amqp/external: "#/components/schemas/amqp_external_rule_response"
           kafka: "#/components/schemas/kafka_rule_response"
           pulsar: "#/components/schemas/pulsar_rule_response"
+          ingress-postgres-outbox: "#/components/schemas/ingress_postgres_outbox_rule_response"
           unsupported: "#/components/schemas/unsupported_rule_response"
     http_rule_post:
       type: object
@@ -4063,6 +4069,223 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
       - ruleType
       - requestMode
       - source
+      - target
+    ingress_postgres_outbox_rule_post:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Postgres. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
+          enum:
+          - ingress-postgres-outbox
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+              description: Postgres database connection URL.
+              example: postgres://user:password@example.com:5432/your-database-name
+            outboxTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a> in your database which allows for the reliable publication of an ordered sequence of change event messages over Ably.
+              example: public
+            outboxTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a>.
+              example: outbox
+            nodesTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">outbox table</a> in your database to allow for operation as a cluster to provide fault tolerance.
+              example: public
+            nodesTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">outbox table</a>.
+              example: nodes
+            sslMode:
+              type: string
+              description: Determines the level of protection provided by the SSL connection.
+              example: prefer
+              enum:
+              - prefer
+              - require
+              - verify-ca
+              - verify-full
+            sslRootCert:
+              type: string
+              description: Specifies the SSL certificate authority (CA) certificate(s). Required if sslMode is either `verify-ca` or `verify-full`.
+              example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
+              nullable: true
+          required:
+          - url
+          - outboxTableSchema
+          - outboxTableName
+          - nodesTableSchema
+          - nodesTableName
+          - sslMode
+      required:
+      - ruleType
+      - target
+    ingress_postgres_outbox_rule_patch:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        ruleType:
+          type: string
+          description: The type of rule. In this case Postgres. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
+          enum:
+          - ingress-postgres-outbox
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+              description: Postgres database connection URL.
+              example: postgres://user:password@example.com:5432/your-database-name
+            outboxTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a> in your database which allows for the reliable publication of an ordered sequence of change event messages over Ably.
+              example: public
+            outboxTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a>.
+              example: outbox
+            nodesTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">outbox table</a> in your database to allow for operation as a cluster to provide fault tolerance.
+              example: public
+            nodesTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">outbox table</a>.
+              example: nodes
+            sslMode:
+              type: string
+              description: Determines the level of protection provided by the SSL connection.
+              example: prefer
+              enum:
+              - prefer
+              - require
+              - verify-ca
+              - verify-full
+            sslRootCert:
+              type: string
+              description: Specifies the SSL certificate authority (CA) certificate(s). Required if sslMode is either `verify-ca` or `verify-full`.
+              example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
+              nullable: true
+          required:
+          - url
+          - outboxTableSchema
+          - outboxTableName
+          - nodesTableSchema
+          - nodesTableName
+          - sslMode
+      required:
+      - ruleType
+      - target
+    ingress_postgres_outbox_rule_response:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The rule ID.
+          example: 83IzAB
+        appId:
+          type: string
+          description: The Ably application ID.
+          example: 28GY6a
+        version:
+          type: string
+          description: API version. Events and the format of their payloads are versioned. Please see the Ably <a href="https://ably.com/docs/general/webhooks">webhooks docs</a>.
+          example: '1.2'
+        status:
+          type: string
+          description: The status of the rule. Rules can be enabled or disabled.
+          example: enabled
+        created:
+          type: number
+          description: Unix timestamp representing the date and time of creation of the rule.
+          example: 1602844091815
+        modified:
+          type: number
+          description: Unix timestamp representing the date and time of last modification of the rule.
+          example: 1602844091815
+        _links:
+          type: object
+          nullable: true
+        ruleType:
+          type: string
+          description: The type of rule. See the Ably <a href="https://ably.com/docs/general/integrations">integrations docs</a> for further information.
+          enum:
+          - ingress-postgres-outbox
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            url:
+              type: string
+              description: Postgres database connection URL.
+              example: postgres://user:password@example.com:5432/your-database-name
+            outboxTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a> in your database which allows for the reliable publication of an ordered sequence of change event messages over Ably.
+              example: public
+            outboxTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#outbox-table">outbox table</a>.
+              example: outbox
+            nodesTableSchema:
+              type: string
+              description: Schema for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">nodes table</a>, which is used to store available nodes. The nodes are used to automatically redistribute work in the event of failures.
+              example: public
+            nodesTableName:
+              type: string
+              description: Table name for the <a href="https://ably.com/docs/livesync/outbox-nodes-tables#nodes-table">nodes table</a>.
+              example: nodes
+            sslMode:
+              type: string
+              description: Determines the level of protection provided by the SSL connection.
+              example: prefer
+              enum:
+              - prefer
+              - require
+              - verify-ca
+              - verify-full
+            sslRootCert:
+              type: string
+              description: Specifies the SSL certificate authority (CA) certificate(s). Required if sslMode is either `verify-ca` or `verify-full`.
+              example: "-----BEGIN CERTIFICATE-----
+MIIFiTCCA3GgAwIBAgIUYO1Lomxzj7VRawWwEFiQht9OLpUwDQYJKoZIhvcNAQEL
+BQAwTDELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE1pY2hpZ2FuMQ8wDQYDVQQHDAZX
+...snip...
+TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
+7Y+sUx6eIl4dlNl9kVrH1TD3EwwtGsjUNlFSZhg=
+-----END CERTIFICATE-----"
+              nullable: true
+      required:
+      - ruleType
       - target
     unsupported_rule_response:
       type: object
