@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Platform API
   description: The [REST API specification](https://www.ably.io/documentation/rest-api) for Ably.
-  version: "1.1.0"
+  version: "1.1.1"
   contact:
     name: "Ably Support"
     url: "https://www.ably.io/contact"
@@ -362,7 +362,7 @@ components:
         platform:
           type: string
           description: Platform of the push device.
-          enum: [ ios, android ]
+          enum: [ ios, android, browser ]
         deviceSecret:
           type: string
           description: Secret value for the device.
@@ -374,7 +374,6 @@ components:
           enum: [ Active, Failing, Failed ]
           readOnly: true
 
-    # Excludes web for now due to not being supported
     Recipient:
       type: object
       description: Push recipient details for a device.
@@ -382,7 +381,7 @@ components:
         transportType:
           type: string
           description: Defines which push platform is being used.
-          enum: [ apns, fcm, gcm ]
+          enum: [ apns, fcm, gcm, web ]
         deviceToken:
           type: string
           # TODO: Link to above enum for required
@@ -391,6 +390,18 @@ components:
           type: string
           # TODO: Link to above enum for required
           description: when using GCM or FCM, specifies the required registration token.
+          properties:
+            auth:
+              type: string
+              description: An Elliptic curve Diffie-Hellman public key on the P-256 curve. Obtained from a PushDescription using the `getKey` method.
+            p256dh:
+              type: string
+              description: An authentication secret, as described by [Message Encryption for Web Push](https://datatracker.ietf.org/doc/html/draft-ietf-webpush-encryption-08).
+        encryptionKey:
+          type: object
+          # TODO: Link to above enum for required
+          description: when using web push, specifies the required encryptionKey.
+
         clientId:
           type: string
           # TODO: Link to no transportType
