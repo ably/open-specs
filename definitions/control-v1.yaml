@@ -4503,6 +4503,11 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           default: false
           description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
           example: false
+        batchingEnabled:
+          type: boolean
+          default: false
+          description: If `true`, channels within this namespace will start batching inbound messages instead of sending them out immediately to subscribers.
+          example: false
         tlsOnly:
           type: boolean
           default: false
@@ -4538,6 +4543,10 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           default: false
           description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
           example: false
+        batchingEnabled:
+          type: boolean
+          default: false
+          description: If `true`, channels within this namespace will start batching inbound messages instead of sending them out immediately to subscribers.
         tlsOnly:
           type: boolean
           default: false
@@ -4581,6 +4590,21 @@ TOfReTlUQzgpXRW5h3n2LVXbXQhPGcVitb88Cm2R8cxQwgB1VncM8yvmKhREo2tz
           type: boolean
           default: false
           description: If `true`, publishing messages with a push payload in the extras field is permitted and can trigger the delivery of a native push notification to registered devices for the channel.
+          example: false
+        batchingEnabled:
+          type: boolean
+          default: false
+          description: If `true`, channels within this namespace will start batching inbound messages instead of sending them out immediately to subscribers.
+          example: false
+        batchingPolicy:
+          type: string
+          default: false
+          description: If `true`, groups multiple incoming messages into a single batch without altering their content or metadata.
+          example: false
+        batchingInterval:
+          type: integer
+          default: false
+          description: If `true`, the batching interval, configurable from 10ms to 1s, temporarily holds and aggregates incoming messages, which are then combined and delivered as a single batch once the interval elapses.
           example: false
         tlsOnly:
           type: boolean
