@@ -1,5 +1,8 @@
 # Ably OpenAPI documents
 
+> [!IMPORTANT]
+> The specs in this repository are deprecated in favor of those found in the [Ably docs](https://github.com/ably/docs/tree/main/static/open-specs) repository as of August 2024.
+
 This repository contains [OpenAPI Specification v3](https://swagger.io/specification/) documents for the following Ably REST APIs:
 
 - Platform API
